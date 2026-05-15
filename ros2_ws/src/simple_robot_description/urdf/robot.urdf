@@ -158,4 +158,32 @@
 
   </joint>
 
+
+    <!-- LiDAR Link -->
+  <link name="lidar_link">
+
+    <visual>
+      <geometry>
+        <cylinder radius="0.04" length="0.03"/>
+      </geometry>
+
+      <material name="green">
+        <color rgba="0 1 0 1"/>
+      </material>
+
+      <origin xyz="0 0 0"/>
+    </visual>
+
+  </link>
+
+  <!-- LiDAR Joint -->
+  <joint name="lidar_joint" type="fixed">
+
+    <parent link="base_link"/>
+    <child link="lidar_link"/>
+
+    <origin xyz="0.1 0 0.1"/>
+
+  </joint>
+
 </robot>

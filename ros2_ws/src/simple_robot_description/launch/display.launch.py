@@ -33,7 +33,8 @@ def generate_launch_description():
 
         Node(
             package='rviz2',
-            executable='rviz2'
+            executable='rviz2',
+            arguments=['-d', os.path.join(pkg_path, 'rviz', 'robot.rviz')]
         )
 
     ])
