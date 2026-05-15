@@ -102,4 +102,32 @@
 
   </joint>
 
+
+    <!-- Caster Wheel -->
+  <link name="caster_wheel">
+
+    <visual>
+      <geometry>
+        <sphere radius="0.035"/>
+      </geometry>
+
+      <material name="grey">
+        <color rgba="0.5 0.5 0.5 1"/>
+      </material>
+
+      <origin xyz="0 0 0"/>
+    </visual>
+
+  </link>
+
+  <!-- Caster Joint -->
+  <joint name="caster_joint" type="fixed">
+
+    <parent link="base_link"/>
+    <child link="caster_wheel"/>
+
+    <origin xyz="-0.18 0 -0.06"/>
+
+  </joint>
+
 </robot>
