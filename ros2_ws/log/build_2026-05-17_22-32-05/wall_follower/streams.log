@@ -1,0 +1,21 @@
+[6.115s] Invoking command in '/work/ros2_ws/src/wall_follower': PYTHONPATH=/work/ros2_ws/build/wall_follower/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/work/ros2_ws/install/wall_follower/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/wall_follower build --build-base /work/ros2_ws/build/wall_follower/build install --record /work/ros2_ws/build/wall_follower/install.log --single-version-externally-managed install_data
+[7.563s] running egg_info
+[7.577s] writing ../../build/wall_follower/wall_follower.egg-info/PKG-INFO
+[7.592s] writing dependency_links to ../../build/wall_follower/wall_follower.egg-info/dependency_links.txt
+[7.605s] writing entry points to ../../build/wall_follower/wall_follower.egg-info/entry_points.txt
+[7.621s] writing requirements to ../../build/wall_follower/wall_follower.egg-info/requires.txt
+[7.638s] writing top-level names to ../../build/wall_follower/wall_follower.egg-info/top_level.txt
+[7.724s] reading manifest file '../../build/wall_follower/wall_follower.egg-info/SOURCES.txt'
+[7.903s] writing manifest file '../../build/wall_follower/wall_follower.egg-info/SOURCES.txt'
+[7.910s] running build
+[7.912s] running build_py
+[7.987s] running install
+[7.988s] running install_lib
+[8.206s] running install_data
+[8.272s] running install_egg_info
+[8.298s] removing '/work/ros2_ws/install/wall_follower/lib/python3.10/site-packages/wall_follower-0.0.0-py3.10.egg-info' (and everything under it)
+[8.439s] Copying ../../build/wall_follower/wall_follower.egg-info to /work/ros2_ws/install/wall_follower/lib/python3.10/site-packages/wall_follower-0.0.0-py3.10.egg-info
+[8.981s] running install_scripts
+[9.127s] Installing wall_follower_node script to /work/ros2_ws/install/wall_follower/lib/wall_follower
+[9.168s] writing list of installed files to '/work/ros2_ws/build/wall_follower/install.log'
+[9.230s] Invoked command in '/work/ros2_ws/src/wall_follower' returned '0': PYTHONPATH=/work/ros2_ws/build/wall_follower/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/work/ros2_ws/install/wall_follower/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/wall_follower build --build-base /work/ros2_ws/build/wall_follower/build install --record /work/ros2_ws/build/wall_follower/install.log --single-version-externally-managed install_data
