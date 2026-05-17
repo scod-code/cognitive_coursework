@@ -1,0 +1,31 @@
+[0.222s] Invoking command in '/work/ros2_ws/build/simple_robot_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /work/ros2_ws/build/simple_robot_description -- -j20 -l20
+[0.425s] Invoked command in '/work/ros2_ws/build/simple_robot_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /work/ros2_ws/build/simple_robot_description -- -j20 -l20
+[0.491s] Invoking command in '/work/ros2_ws/build/simple_robot_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /work/ros2_ws/build/simple_robot_description
+[0.507s] -- Install configuration: ""
+[0.530s] -- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/urdf
+[0.597s] -- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/urdf/robot.urdf
+[0.633s] -- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/launch
+[0.706s] -- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/launch/display.launch.py
+[0.760s] -- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/launch/gazebo.launch.py
+[0.796s] -- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/rviz
+[0.867s] -- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/rviz/robot.rviz
+[0.909s] -- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/config
+[0.973s] -- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/worlds
+[1.056s] -- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/worlds/simple_world.world
+[1.100s] -- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/models
+[1.198s] -- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/ament_index/resource_index/package_run_dependencies/simple_robot_description
+[1.281s] -- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/ament_index/resource_index/parent_prefix_path/simple_robot_description
+[1.326s] -- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/environment/ament_prefix_path.sh
+[1.378s] -- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/environment/ament_prefix_path.dsv
+[1.418s] -- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/environment/path.sh
+[1.473s] -- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/environment/path.dsv
+[1.522s] -- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/local_setup.bash
+[1.569s] -- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/local_setup.sh
+[1.615s] -- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/local_setup.zsh
+[1.662s] -- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/local_setup.dsv
+[1.709s] -- Installing: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/package.dsv
+[1.899s] -- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/ament_index/resource_index/packages/simple_robot_description
+[1.960s] -- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/cmake/simple_robot_descriptionConfig.cmake
+[2.001s] -- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/cmake/simple_robot_descriptionConfig-version.cmake
+[2.057s] -- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/package.xml
+[2.080s] Invoked command in '/work/ros2_ws/build/simple_robot_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /work/ros2_ws/build/simple_robot_description
