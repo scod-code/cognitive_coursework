@@ -1,0 +1,175 @@
+[0.000000] (-) TimerEvent: {}
+[0.000657] (scan_filter) JobQueued: {'identifier': 'scan_filter', 'dependencies': OrderedDict()}
+[0.000990] (simple_robot_description) JobQueued: {'identifier': 'simple_robot_description', 'dependencies': OrderedDict()}
+[0.001416] (wall_follower) JobQueued: {'identifier': 'wall_follower', 'dependencies': OrderedDict()}
+[0.001886] (scan_filter) JobStarted: {'identifier': 'scan_filter'}
+[0.098963] (-) TimerEvent: {}
+[0.148511] (simple_robot_description) JobStarted: {'identifier': 'simple_robot_description'}
+[0.168735] (wall_follower) JobStarted: {'identifier': 'wall_follower'}
+[0.200466] (-) TimerEvent: {}
+[0.302362] (-) TimerEvent: {}
+[0.403913] (-) TimerEvent: {}
+[0.504496] (-) TimerEvent: {}
+[0.605151] (-) TimerEvent: {}
+[0.705837] (-) TimerEvent: {}
+[0.710268] (simple_robot_description) JobProgress: {'identifier': 'simple_robot_description', 'progress': 'cmake'}
+[0.757424] (simple_robot_description) JobProgress: {'identifier': 'simple_robot_description', 'progress': 'build'}
+[0.766094] (simple_robot_description) Command: {'cmd': ['/usr/bin/cmake', '--build', '/work/ros2_ws/build/simple_robot_description', '--', '-j20', '-l20'], 'cwd': '/work/ros2_ws/build/simple_robot_description', 'env': OrderedDict([('HOSTNAME', 'f339f6da0e4a'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/root'), ('OLDPWD', '/'), ('ROS_PYTHON_VERSION', '3'), ('ROS_DISTRO', 'humble'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('TERM', 'xterm'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'), ('DISPLAY', 'host.docker.internal:0.0'), ('LANG', 'C.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('PWD', '/work/ros2_ws/build/simple_robot_description'), ('LC_ALL', 'C.UTF-8'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.809733] (-) TimerEvent: {}
+[0.910359] (-) TimerEvent: {}
+[1.011027] (-) TimerEvent: {}
+[1.111699] (-) TimerEvent: {}
+[1.212816] (-) TimerEvent: {}
+[1.250574] (simple_robot_description) CommandEnded: {'returncode': 0}
+[1.292827] (simple_robot_description) JobProgress: {'identifier': 'simple_robot_description', 'progress': 'install'}
+[1.313042] (-) TimerEvent: {}
+[1.317615] (simple_robot_description) Command: {'cmd': ['/usr/bin/cmake', '--install', '/work/ros2_ws/build/simple_robot_description'], 'cwd': '/work/ros2_ws/build/simple_robot_description', 'env': OrderedDict([('HOSTNAME', 'f339f6da0e4a'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/root'), ('OLDPWD', '/'), ('ROS_PYTHON_VERSION', '3'), ('ROS_DISTRO', 'humble'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('TERM', 'xterm'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'), ('DISPLAY', 'host.docker.internal:0.0'), ('LANG', 'C.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('PWD', '/work/ros2_ws/build/simple_robot_description'), ('LC_ALL', 'C.UTF-8'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[1.348506] (simple_robot_description) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[1.350323] (simple_robot_description) StdoutLine: {'line': b'-- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/urdf\n'}
+[1.413196] (-) TimerEvent: {}
+[1.418420] (simple_robot_description) StdoutLine: {'line': b'-- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/urdf/robot.urdf\n'}
+[1.441968] (simple_robot_description) StdoutLine: {'line': b'-- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/launch\n'}
+[1.503241] (simple_robot_description) StdoutLine: {'line': b'-- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/launch/display.launch.py\n'}
+[1.513326] (-) TimerEvent: {}
+[1.535776] (simple_robot_description) StdoutLine: {'line': b'-- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/launch/gazebo.launch.py\n'}
+[1.565798] (simple_robot_description) StdoutLine: {'line': b'-- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/rviz\n'}
+[1.613509] (-) TimerEvent: {}
+[1.621970] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/rviz/robot.rviz\n'}
+[1.713673] (-) TimerEvent: {}
+[1.781772] (simple_robot_description) StdoutLine: {'line': b'-- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/config\n'}
+[1.814140] (-) TimerEvent: {}
+[1.831070] (simple_robot_description) StdoutLine: {'line': b'-- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/worlds\n'}
+[1.887635] (simple_robot_description) StdoutLine: {'line': b'-- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/worlds/simple_world.world\n'}
+[1.914192] (-) TimerEvent: {}
+[1.916443] (simple_robot_description) StdoutLine: {'line': b'-- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/models\n'}
+[2.003301] (simple_robot_description) StdoutLine: {'line': b'-- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/ament_index/resource_index/package_run_dependencies/simple_robot_description\n'}
+[2.014363] (-) TimerEvent: {}
+[2.086100] (simple_robot_description) StdoutLine: {'line': b'-- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/ament_index/resource_index/parent_prefix_path/simple_robot_description\n'}
+[2.114515] (-) TimerEvent: {}
+[2.130083] (simple_robot_description) StdoutLine: {'line': b'-- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/environment/ament_prefix_path.sh\n'}
+[2.169585] (simple_robot_description) StdoutLine: {'line': b'-- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/environment/ament_prefix_path.dsv\n'}
+[2.212735] (simple_robot_description) StdoutLine: {'line': b'-- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/environment/path.sh\n'}
+[2.214670] (-) TimerEvent: {}
+[2.257438] (simple_robot_description) StdoutLine: {'line': b'-- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/environment/path.dsv\n'}
+[2.305788] (simple_robot_description) StdoutLine: {'line': b'-- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/local_setup.bash\n'}
+[2.315036] (-) TimerEvent: {}
+[2.342282] (simple_robot_description) StdoutLine: {'line': b'-- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/local_setup.sh\n'}
+[2.385138] (simple_robot_description) StdoutLine: {'line': b'-- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/local_setup.zsh\n'}
+[2.415150] (-) TimerEvent: {}
+[2.421978] (simple_robot_description) StdoutLine: {'line': b'-- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/local_setup.dsv\n'}
+[2.466526] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/package.dsv\n'}
+[2.515289] (-) TimerEvent: {}
+[2.616278] (-) TimerEvent: {}
+[2.629298] (simple_robot_description) StdoutLine: {'line': b'-- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/ament_index/resource_index/packages/simple_robot_description\n'}
+[2.678832] (simple_robot_description) StdoutLine: {'line': b'-- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/cmake/simple_robot_descriptionConfig.cmake\n'}
+[2.716389] (-) TimerEvent: {}
+[2.718050] (simple_robot_description) StdoutLine: {'line': b'-- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/cmake/simple_robot_descriptionConfig-version.cmake\n'}
+[2.769408] (simple_robot_description) StdoutLine: {'line': b'-- Up-to-date: /work/ros2_ws/install/simple_robot_description/share/simple_robot_description/package.xml\n'}
+[2.788660] (simple_robot_description) CommandEnded: {'returncode': 0}
+[2.816560] (-) TimerEvent: {}
+[2.917233] (-) TimerEvent: {}
+[3.018173] (-) TimerEvent: {}
+[3.119129] (-) TimerEvent: {}
+[3.219804] (-) TimerEvent: {}
+[3.320574] (-) TimerEvent: {}
+[3.422131] (-) TimerEvent: {}
+[3.522760] (-) TimerEvent: {}
+[3.623404] (-) TimerEvent: {}
+[3.724165] (-) TimerEvent: {}
+[3.825197] (-) TimerEvent: {}
+[3.926034] (-) TimerEvent: {}
+[4.027313] (-) TimerEvent: {}
+[4.078810] (simple_robot_description) JobEnded: {'identifier': 'simple_robot_description', 'rc': 0}
+[4.115807] (scan_filter) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../build/scan_filter', 'build', '--build-base', '/work/ros2_ws/build/scan_filter/build', 'install', '--record', '/work/ros2_ws/build/scan_filter/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/work/ros2_ws/src/scan_filter', 'env': {'HOSTNAME': 'f339f6da0e4a', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib', 'HOME': '/root', 'OLDPWD': '/', 'ROS_PYTHON_VERSION': '3', 'ROS_DISTRO': 'humble', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'TERM': 'xterm', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'DISPLAY': 'host.docker.internal:0.0', 'LANG': 'C.UTF-8', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'AMENT_PREFIX_PATH': '/opt/ros/humble', 'PWD': '/work/ros2_ws/build/scan_filter', 'LC_ALL': 'C.UTF-8', 'PYTHONPATH': '/work/ros2_ws/build/scan_filter/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/work/ros2_ws/install/scan_filter/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'COLCON': '1'}, 'shell': False}
+[4.132880] (-) TimerEvent: {}
+[4.134436] (wall_follower) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../build/wall_follower', 'build', '--build-base', '/work/ros2_ws/build/wall_follower/build', 'install', '--record', '/work/ros2_ws/build/wall_follower/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/work/ros2_ws/src/wall_follower', 'env': {'HOSTNAME': 'f339f6da0e4a', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib', 'HOME': '/root', 'OLDPWD': '/', 'ROS_PYTHON_VERSION': '3', 'ROS_DISTRO': 'humble', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'TERM': 'xterm', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'DISPLAY': 'host.docker.internal:0.0', 'LANG': 'C.UTF-8', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'AMENT_PREFIX_PATH': '/opt/ros/humble', 'PWD': '/work/ros2_ws/build/wall_follower', 'LC_ALL': 'C.UTF-8', 'PYTHONPATH': '/work/ros2_ws/build/wall_follower/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/work/ros2_ws/install/wall_follower/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'COLCON': '1'}, 'shell': False}
+[4.233120] (-) TimerEvent: {}
+[4.334441] (-) TimerEvent: {}
+[4.435967] (-) TimerEvent: {}
+[4.536680] (-) TimerEvent: {}
+[4.637487] (-) TimerEvent: {}
+[4.738212] (-) TimerEvent: {}
+[4.839838] (-) TimerEvent: {}
+[4.940821] (-) TimerEvent: {}
+[5.041483] (-) TimerEvent: {}
+[5.142193] (-) TimerEvent: {}
+[5.242955] (-) TimerEvent: {}
+[5.344614] (-) TimerEvent: {}
+[5.445579] (-) TimerEvent: {}
+[5.547463] (-) TimerEvent: {}
+[5.649284] (-) TimerEvent: {}
+[5.720745] (scan_filter) StdoutLine: {'line': b'running egg_info\n'}
+[5.743590] (scan_filter) StdoutLine: {'line': b'writing ../../build/scan_filter/scan_filter.egg-info/PKG-INFO\n'}
+[5.749402] (-) TimerEvent: {}
+[5.758444] (scan_filter) StdoutLine: {'line': b'writing dependency_links to ../../build/scan_filter/scan_filter.egg-info/dependency_links.txt\n'}
+[5.762112] (wall_follower) StdoutLine: {'line': b'running egg_info\n'}
+[5.773192] (scan_filter) StdoutLine: {'line': b'writing entry points to ../../build/scan_filter/scan_filter.egg-info/entry_points.txt\n'}
+[5.774719] (wall_follower) StdoutLine: {'line': b'writing ../../build/wall_follower/wall_follower.egg-info/PKG-INFO\n'}
+[5.785772] (scan_filter) StdoutLine: {'line': b'writing requirements to ../../build/scan_filter/scan_filter.egg-info/requires.txt\n'}
+[5.791860] (wall_follower) StdoutLine: {'line': b'writing dependency_links to ../../build/wall_follower/wall_follower.egg-info/dependency_links.txt\n'}
+[5.794316] (scan_filter) StdoutLine: {'line': b'writing top-level names to ../../build/scan_filter/scan_filter.egg-info/top_level.txt\n'}
+[5.801370] (wall_follower) StdoutLine: {'line': b'writing entry points to ../../build/wall_follower/wall_follower.egg-info/entry_points.txt\n'}
+[5.814179] (wall_follower) StdoutLine: {'line': b'writing requirements to ../../build/wall_follower/wall_follower.egg-info/requires.txt\n'}
+[5.830488] (wall_follower) StdoutLine: {'line': b'writing top-level names to ../../build/wall_follower/wall_follower.egg-info/top_level.txt\n'}
+[5.851477] (-) TimerEvent: {}
+[5.882124] (scan_filter) StdoutLine: {'line': b"reading manifest file '../../build/scan_filter/scan_filter.egg-info/SOURCES.txt'\n"}
+[5.911694] (wall_follower) StdoutLine: {'line': b"reading manifest file '../../build/wall_follower/wall_follower.egg-info/SOURCES.txt'\n"}
+[5.951626] (-) TimerEvent: {}
+[6.042827] (scan_filter) StdoutLine: {'line': b"writing manifest file '../../build/scan_filter/scan_filter.egg-info/SOURCES.txt'\n"}
+[6.048064] (scan_filter) StdoutLine: {'line': b'running build\n'}
+[6.049979] (scan_filter) StdoutLine: {'line': b'running build_py\n'}
+[6.051723] (-) TimerEvent: {}
+[6.071157] (wall_follower) StdoutLine: {'line': b"writing manifest file '../../build/wall_follower/wall_follower.egg-info/SOURCES.txt'\n"}
+[6.083175] (wall_follower) StdoutLine: {'line': b'running build\n'}
+[6.087507] (wall_follower) StdoutLine: {'line': b'running build_py\n'}
+[6.118079] (wall_follower) StdoutLine: {'line': b'copying wall_follower/wall_follower_node.py -> /work/ros2_ws/build/wall_follower/build/lib/wall_follower\n'}
+[6.120925] (scan_filter) StdoutLine: {'line': b'running install\n'}
+[6.123441] (scan_filter) StdoutLine: {'line': b'running install_lib\n'}
+[6.151913] (-) TimerEvent: {}
+[6.204076] (wall_follower) StdoutLine: {'line': b'running install\n'}
+[6.206459] (wall_follower) StdoutLine: {'line': b'running install_lib\n'}
+[6.252118] (-) TimerEvent: {}
+[6.296833] (wall_follower) StdoutLine: {'line': b'copying /work/ros2_ws/build/wall_follower/build/lib/wall_follower/wall_follower_node.py -> /work/ros2_ws/install/wall_follower/lib/python3.10/site-packages/wall_follower\n'}
+[6.345317] (scan_filter) StdoutLine: {'line': b'running install_data\n'}
+[6.352307] (-) TimerEvent: {}
+[6.402599] (scan_filter) StdoutLine: {'line': b'running install_egg_info\n'}
+[6.426180] (scan_filter) StdoutLine: {'line': b"removing '/work/ros2_ws/install/scan_filter/lib/python3.10/site-packages/scan_filter-0.0.0-py3.10.egg-info' (and everything under it)\n"}
+[6.436641] (wall_follower) StdoutLine: {'line': b'byte-compiling /work/ros2_ws/install/wall_follower/lib/python3.10/site-packages/wall_follower/wall_follower_node.py to wall_follower_node.cpython-310.pyc\n'}
+[6.452533] (-) TimerEvent: {}
+[6.555378] (-) TimerEvent: {}
+[6.557969] (scan_filter) StdoutLine: {'line': b'Copying ../../build/scan_filter/scan_filter.egg-info to /work/ros2_ws/install/scan_filter/lib/python3.10/site-packages/scan_filter-0.0.0-py3.10.egg-info\n'}
+[6.562603] (wall_follower) StdoutLine: {'line': b'running install_data\n'}
+[6.620270] (wall_follower) StdoutLine: {'line': b'running install_egg_info\n'}
+[6.642354] (wall_follower) StdoutLine: {'line': b"removing '/work/ros2_ws/install/wall_follower/lib/python3.10/site-packages/wall_follower-0.0.0-py3.10.egg-info' (and everything under it)\n"}
+[6.655555] (-) TimerEvent: {}
+[6.756170] (-) TimerEvent: {}
+[6.774176] (wall_follower) StdoutLine: {'line': b'Copying ../../build/wall_follower/wall_follower.egg-info to /work/ros2_ws/install/wall_follower/lib/python3.10/site-packages/wall_follower-0.0.0-py3.10.egg-info\n'}
+[6.856322] (-) TimerEvent: {}
+[6.957052] (-) TimerEvent: {}
+[7.058153] (-) TimerEvent: {}
+[7.127693] (scan_filter) StdoutLine: {'line': b'running install_scripts\n'}
+[7.158400] (-) TimerEvent: {}
+[7.259361] (-) TimerEvent: {}
+[7.292482] (scan_filter) StdoutLine: {'line': b'Installing scan_filter_node script to /work/ros2_ws/install/scan_filter/lib/scan_filter\n'}
+[7.313260] (scan_filter) StdoutLine: {'line': b"writing list of installed files to '/work/ros2_ws/build/scan_filter/install.log'\n"}
+[7.357076] (scan_filter) CommandEnded: {'returncode': 0}
+[7.361471] (-) TimerEvent: {}
+[7.362152] (wall_follower) StdoutLine: {'line': b'running install_scripts\n'}
+[7.461708] (-) TimerEvent: {}
+[7.516658] (wall_follower) StdoutLine: {'line': b'Installing wall_follower_node script to /work/ros2_ws/install/wall_follower/lib/wall_follower\n'}
+[7.535070] (wall_follower) StdoutLine: {'line': b"writing list of installed files to '/work/ros2_ws/build/wall_follower/install.log'\n"}
+[7.561841] (-) TimerEvent: {}
+[7.662656] (-) TimerEvent: {}
+[7.763476] (-) TimerEvent: {}
+[7.864285] (-) TimerEvent: {}
+[7.942496] (scan_filter) JobEnded: {'identifier': 'scan_filter', 'rc': 0}
+[7.961264] (wall_follower) CommandEnded: {'returncode': 0}
+[7.964449] (-) TimerEvent: {}
+[8.065201] (-) TimerEvent: {}
+[8.166283] (-) TimerEvent: {}
+[8.267311] (-) TimerEvent: {}
+[8.367951] (-) TimerEvent: {}
+[8.468677] (-) TimerEvent: {}
+[8.569393] (-) TimerEvent: {}
+[8.576644] (wall_follower) JobEnded: {'identifier': 'wall_follower', 'rc': 0}
+[8.592315] (-) EventReactorShutdown: {}

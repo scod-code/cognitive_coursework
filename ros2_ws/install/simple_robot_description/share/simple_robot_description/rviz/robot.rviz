@@ -5,23 +5,11 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Robot Model1
-        - /Robot Model1/Description Topic1
+        - /RobotModel1
         - /LaserScan1
-        - /LaserScan21
+        - /LaserScan2
       Splitter Ratio: 0.5
     Tree Height: 578
-  - Class: rviz_common/Displays
-    Help Height: 70
-    Name: Displays
-    Property Tree Widget:
-      Expanded: ~
-      Splitter Ratio: 0.5
-    Tree Height: 70
-  - Class: rviz_common/Views
-    Expanded:
-      - /Current View1
-    Name: Views
-    Splitter Ratio: 0.5
 Visualization Manager:
   Class: ""
   Displays:
@@ -100,6 +88,32 @@ Visualization Manager:
       Value: true
       Visual Enabled: true
     - Alpha: 1
+      Class: rviz_default_plugins/RobotModel
+      Collision Enabled: false
+      Description File: ""
+      Description Source: Topic
+      Description Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: ""
+      Enabled: true
+      Links:
+        All Links Enabled: true
+        Expand Joint Details: false
+        Expand Link Details: false
+        Expand Tree: false
+        Link Tree Style: ""
+      Mass Properties:
+        Inertia: false
+        Mass: false
+      Name: RobotModel
+      TF Prefix: ""
+      Update Interval: 0
+      Value: true
+      Visual Enabled: true
+    - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
         Max Value: 10
@@ -151,7 +165,7 @@ Visualization Manager:
       Max Intensity: 0
       Min Color: 0; 0; 0
       Min Intensity: 0
-      Name: LaserScan2
+      Name: LaserScan
       Position Transformer: XYZ
       Selectable: true
       Size (Pixels): 3
@@ -173,9 +187,7 @@ Visualization Manager:
     Fixed Frame: base_link
     Frame Rate: 30
   Name: root
-  Tools:
-    - Class: rviz_default_plugins/MoveCamera
-    - Class: rviz_default_plugins/FocusCamera
+  Tools: ~
   Transformation:
     Current:
       Class: rviz_default_plugins/TF
@@ -183,75 +195,33 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 1.010138988494873
+      Distance: 10
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 8.066492080688477
-        Y: 3.691176652908325
-        Z: 9.996564865112305
+        X: 0
+        Y: 0
+        Z: 0
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.6119062304496765
-      Target Frame: odom
+      Pitch: 0.7853981852531433
+      Target Frame: <Fixed Frame>
       Value: Orbit (rviz_default_plugins)
-      Yaw: 0.1586410254240036
-    Saved:
-      - Class: rviz_default_plugins/Orbit
-        Distance: 1
-        Enable Stereo Rendering:
-          Stereo Eye Separation: 0.05999999865889549
-          Stereo Focal Distance: 1
-          Swap Stereo Eyes: false
-          Value: false
-        Focal Point:
-          X: 4.159137725830078
-          Y: 4.864709854125977
-          Z: 6.524734020233154
-        Focal Shape Fixed Size: true
-        Focal Shape Size: 0.05000000074505806
-        Invert Z Axis: false
-        Name: Orbit
-        Near Clip Distance: 0.009999999776482582
-        Pitch: 0.5703626871109009
-        Target Frame: <Fixed Frame>
-        Value: Orbit (rviz_default_plugins)
-        Yaw: 0.15952736139297485
-      - Class: rviz_default_plugins/Orbit
-        Distance: 2
-        Enable Stereo Rendering:
-          Stereo Eye Separation: 0.05999999865889549
-          Stereo Focal Distance: 1
-          Swap Stereo Eyes: false
-          Value: false
-        Focal Point:
-          X: 5.437707424163818
-          Y: 4.552822113037109
-          Z: 6.847862720489502
-        Focal Shape Fixed Size: true
-        Focal Shape Size: 0.05000000074505806
-        Invert Z Axis: false
-        Name: Orbit
-        Near Clip Distance: 0.009999999776482582
-        Pitch: 0.7870131731033325
-        Target Frame: odom
-        Value: Orbit (rviz_default_plugins)
-        Yaw: 0.883175790309906
+      Yaw: 0.7853981852531433
+    Saved: ~
 Window Geometry:
   Displays:
     collapsed: false
   Height: 793
   Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd000000010000000000000156000002c3fc0200000003fb000000100044006900730070006c006100790073010000003b000002c3000000c700fffffffb000000100044006900730070006c006100790073000000016d000000c7000000c700fffffffb0000000a0056006900650077007300000001e900000115000000a000ffffff000004a4000002c300000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
-  Views:
-    collapsed: false
+  QMainWindow State: 000000ff00000000fd000000010000000000000156000002c3fc0200000001fb000000100044006900730070006c006100790073010000003b000002c3000000c700ffffff000004a4000002c300000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Width: 1536
   X: 0
   Y: 23

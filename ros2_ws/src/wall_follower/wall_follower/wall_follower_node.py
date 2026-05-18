@@ -23,34 +23,43 @@ class WallFollower(Node):
             10
         )
 
-        self.get_logger().info('Wall follower node started')
+        # PID target distance from wall
+        self.target_distance = 0.6
+
+        # PID proportional gain
+        self.kp = 1.0
+
+        self.get_logger().info('PID Wall follower node started')
 
     def scan_callback(self, msg):
 
+        # front obstacle detection
         front_distance = min(msg.ranges[0:20])
+
+        # right wall detection
         right_distance = min(msg.ranges[80:100])
 
         move = Twist()
 
         # obstacle in front
         if front_distance < 0.6:
+
             move.linear.x = 0.0
             move.angular.z = 0.8
 
-        # too far from right wall
-        elif right_distance > 0.7:
-            move.linear.x = 0.12
-            move.angular.z = 0.2
-
-        # too close to right wall
-        elif right_distance < 0.4:
-            move.linear.x = 0.12
-            move.angular.z = -0.2
-
-        # correct distance
         else:
-            move.linear.x = 0.2
-            move.angular.z = 0.0
+
+            # PID error
+            error = self.target_distance - right_distance
+
+            # proportional controller
+            correction = self.kp * error
+
+            # forward speed
+            move.linear.x = 0.15
+
+            # steering correction
+            move.angular.z = correction
 
         self.publisher_.publish(move)
 
