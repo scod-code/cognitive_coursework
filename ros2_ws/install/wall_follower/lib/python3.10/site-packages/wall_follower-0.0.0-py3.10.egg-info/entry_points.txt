@@ -1,3 +1,0 @@
-[console_scripts]
-wall_follower_node = wall_follower.wall_follower_node:main
-

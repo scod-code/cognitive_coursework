@@ -1,0 +1,382 @@
+[0.000000] (-) TimerEvent: {}
+[0.001379] (-) JobUnselected: {'identifier': 'scan_filter'}
+[0.001827] (-) JobUnselected: {'identifier': 'wall_follower'}
+[0.002360] (simple_robot_description) JobQueued: {'identifier': 'simple_robot_description', 'dependencies': OrderedDict()}
+[0.002938] (simple_robot_description) JobStarted: {'identifier': 'simple_robot_description'}
+[0.083796] (simple_robot_description) JobProgress: {'identifier': 'simple_robot_description', 'progress': 'cmake'}
+[0.100735] (-) TimerEvent: {}
+[0.202863] (-) TimerEvent: {}
+[0.215554] (simple_robot_description) Command: {'cmd': ['/usr/bin/cmake', '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/src/simple_robot_description', '-DCMAKE_INSTALL_PREFIX=/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description'], 'cwd': '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description', 'env': OrderedDict([('USER', 'somto'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/somto'), ('OLDPWD', '/mnt/c/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws'), ('ROS_PYTHON_VERSION', '3'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('WSL_DISTRO_NAME', 'Ubuntu-22.04'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'somto'), ('NAME', 'Machine'), ('WSL_INTEROP', '/run/WSL/6111_interop'), ('PULSE_SERVER', 'unix:/mnt/wslg/PulseServer'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('TERM', 'xterm-256color'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Users/somto/.vscode/extensions/vadimcn.vscode-lldb-1.12.2/bin:/mnt/c/Users/somto/AppData/Roaming/Code/User/globalStorage/github.copilot-chat/debugCommand:/mnt/c/Users/somto/AppData/Roaming/Code/User/globalStorage/github.copilot-chat/copilotCli:/mnt/c/Users/somto/AppData/Local/Programs/Microsoft VS Code:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files/Git/bin:/mnt/c/yt-dlp/ffmpeg-8.1-full_build/bin:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Users/somto/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/somto/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/somto/AppData/Local/Microsoft/WinGet/Packages/GNU.Nano_Microsoft.Winget.Source_8wekyb3d8bbwe:/mnt/c/Users/somto/AppData/Local/Python/bin:/mnt/c/Users/somto/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/somto/.lmstudio/bin:/mnt/c/Users/somto/AppData/Local/Programs/Kiro/bin:/mnt/c/Users/somto/.vscode/extensions/ms-python.debugpy-2026.6.0-win32-x64/bundled/scripts/noConfigScripts'), ('XDG_RUNTIME_DIR', '/run/user/1000/'), ('DISPLAY', ':0'), ('LANG', 'C.UTF-8'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('PWD', '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('WSL2_GUI_APPS_ENABLED', '1'), ('HOSTTYPE', 'x86_64'), ('WSLENV', ''), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.309412] (-) TimerEvent: {}
+[0.415039] (-) TimerEvent: {}
+[0.516146] (-) TimerEvent: {}
+[0.625553] (-) TimerEvent: {}
+[0.729882] (-) TimerEvent: {}
+[0.836751] (-) TimerEvent: {}
+[0.937963] (-) TimerEvent: {}
+[1.045613] (-) TimerEvent: {}
+[1.147378] (-) TimerEvent: {}
+[1.256754] (-) TimerEvent: {}
+[1.358267] (-) TimerEvent: {}
+[1.460032] (-) TimerEvent: {}
+[1.561530] (-) TimerEvent: {}
+[1.665553] (-) TimerEvent: {}
+[1.766966] (-) TimerEvent: {}
+[1.874597] (-) TimerEvent: {}
+[1.980488] (-) TimerEvent: {}
+[2.083342] (-) TimerEvent: {}
+[2.184734] (-) TimerEvent: {}
+[2.289695] (-) TimerEvent: {}
+[2.297587] (simple_robot_description) StdoutLine: {'line': b'-- The C compiler identification is GNU 11.4.0\n'}
+[2.393560] (-) TimerEvent: {}
+[2.496179] (-) TimerEvent: {}
+[2.602126] (-) TimerEvent: {}
+[2.709975] (-) TimerEvent: {}
+[2.817813] (-) TimerEvent: {}
+[2.925209] (-) TimerEvent: {}
+[3.030008] (-) TimerEvent: {}
+[3.134907] (-) TimerEvent: {}
+[3.241554] (-) TimerEvent: {}
+[3.343049] (-) TimerEvent: {}
+[3.445612] (-) TimerEvent: {}
+[3.546413] (-) TimerEvent: {}
+[3.647848] (-) TimerEvent: {}
+[3.749815] (-) TimerEvent: {}
+[3.851953] (-) TimerEvent: {}
+[3.957057] (-) TimerEvent: {}
+[4.058441] (-) TimerEvent: {}
+[4.163967] (-) TimerEvent: {}
+[4.264898] (-) TimerEvent: {}
+[4.369650] (-) TimerEvent: {}
+[4.471329] (-) TimerEvent: {}
+[4.574550] (-) TimerEvent: {}
+[4.675599] (-) TimerEvent: {}
+[4.778174] (-) TimerEvent: {}
+[4.879405] (-) TimerEvent: {}
+[4.983791] (-) TimerEvent: {}
+[5.086465] (-) TimerEvent: {}
+[5.191236] (-) TimerEvent: {}
+[5.292459] (-) TimerEvent: {}
+[5.397574] (-) TimerEvent: {}
+[5.502382] (-) TimerEvent: {}
+[5.606428] (-) TimerEvent: {}
+[5.711112] (-) TimerEvent: {}
+[5.794632] (simple_robot_description) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 11.4.0\n'}
+[5.811146] (-) TimerEvent: {}
+[5.912343] (-) TimerEvent: {}
+[6.013512] (-) TimerEvent: {}
+[6.116025] (-) TimerEvent: {}
+[6.220405] (-) TimerEvent: {}
+[6.322005] (-) TimerEvent: {}
+[6.425916] (-) TimerEvent: {}
+[6.531767] (-) TimerEvent: {}
+[6.635996] (-) TimerEvent: {}
+[6.738413] (-) TimerEvent: {}
+[6.841164] (-) TimerEvent: {}
+[6.946334] (-) TimerEvent: {}
+[7.049728] (-) TimerEvent: {}
+[7.152729] (-) TimerEvent: {}
+[7.256437] (-) TimerEvent: {}
+[7.358452] (-) TimerEvent: {}
+[7.459624] (-) TimerEvent: {}
+[7.568541] (-) TimerEvent: {}
+[7.669640] (-) TimerEvent: {}
+[7.777740] (-) TimerEvent: {}
+[7.878507] (-) TimerEvent: {}
+[7.972095] (simple_robot_description) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[7.979561] (-) TimerEvent: {}
+[8.083333] (-) TimerEvent: {}
+[8.189702] (-) TimerEvent: {}
+[8.305639] (-) TimerEvent: {}
+[8.409619] (-) TimerEvent: {}
+[8.517041] (-) TimerEvent: {}
+[8.622802] (-) TimerEvent: {}
+[8.732812] (-) TimerEvent: {}
+[8.837550] (-) TimerEvent: {}
+[8.940329] (-) TimerEvent: {}
+[9.041756] (-) TimerEvent: {}
+[9.142763] (-) TimerEvent: {}
+[9.246386] (-) TimerEvent: {}
+[9.353029] (-) TimerEvent: {}
+[9.454119] (-) TimerEvent: {}
+[9.557312] (-) TimerEvent: {}
+[9.661831] (-) TimerEvent: {}
+[9.765561] (-) TimerEvent: {}
+[9.884815] (-) TimerEvent: {}
+[9.985536] (-) TimerEvent: {}
+[10.086548] (-) TimerEvent: {}
+[10.189567] (-) TimerEvent: {}
+[10.290217] (-) TimerEvent: {}
+[10.395029] (-) TimerEvent: {}
+[10.496126] (-) TimerEvent: {}
+[10.598385] (-) TimerEvent: {}
+[10.699347] (-) TimerEvent: {}
+[10.800632] (-) TimerEvent: {}
+[10.906919] (-) TimerEvent: {}
+[11.009749] (-) TimerEvent: {}
+[11.041987] (simple_robot_description) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[11.111091] (-) TimerEvent: {}
+[11.161527] (simple_robot_description) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[11.167470] (simple_robot_description) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[11.169268] (simple_robot_description) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[11.211293] (-) TimerEvent: {}
+[11.315511] (-) TimerEvent: {}
+[11.382745] (simple_robot_description) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[11.415830] (-) TimerEvent: {}
+[11.517068] (-) TimerEvent: {}
+[11.620104] (-) TimerEvent: {}
+[11.727984] (-) TimerEvent: {}
+[11.833080] (-) TimerEvent: {}
+[11.934217] (-) TimerEvent: {}
+[12.038639] (-) TimerEvent: {}
+[12.140395] (-) TimerEvent: {}
+[12.255951] (-) TimerEvent: {}
+[12.367006] (-) TimerEvent: {}
+[12.472516] (-) TimerEvent: {}
+[12.577833] (-) TimerEvent: {}
+[12.679861] (-) TimerEvent: {}
+[12.782214] (-) TimerEvent: {}
+[12.886527] (-) TimerEvent: {}
+[12.987529] (-) TimerEvent: {}
+[13.088349] (-) TimerEvent: {}
+[13.189379] (-) TimerEvent: {}
+[13.292485] (-) TimerEvent: {}
+[13.394828] (-) TimerEvent: {}
+[13.496624] (-) TimerEvent: {}
+[13.597855] (-) TimerEvent: {}
+[13.700236] (-) TimerEvent: {}
+[13.801759] (-) TimerEvent: {}
+[13.907030] (-) TimerEvent: {}
+[14.008352] (-) TimerEvent: {}
+[14.110565] (-) TimerEvent: {}
+[14.213131] (-) TimerEvent: {}
+[14.316667] (-) TimerEvent: {}
+[14.419395] (-) TimerEvent: {}
+[14.523522] (-) TimerEvent: {}
+[14.626791] (-) TimerEvent: {}
+[14.634533] (simple_robot_description) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[14.715281] (simple_robot_description) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[14.718489] (simple_robot_description) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[14.732622] (-) TimerEvent: {}
+[14.733695] (simple_robot_description) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[14.832846] (-) TimerEvent: {}
+[14.934448] (-) TimerEvent: {}
+[15.038847] (-) TimerEvent: {}
+[15.133796] (simple_robot_description) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[15.150135] (-) TimerEvent: {}
+[15.252987] (-) TimerEvent: {}
+[15.354004] (-) TimerEvent: {}
+[15.457269] (-) TimerEvent: {}
+[15.559905] (-) TimerEvent: {}
+[15.661125] (-) TimerEvent: {}
+[15.677741] (simple_robot_description) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter \n'}
+[15.761307] (-) TimerEvent: {}
+[15.862200] (-) TimerEvent: {}
+[15.965513] (-) TimerEvent: {}
+[16.066595] (-) TimerEvent: {}
+[16.173540] (-) TimerEvent: {}
+[16.275664] (-) TimerEvent: {}
+[16.376996] (-) TimerEvent: {}
+[16.480441] (-) TimerEvent: {}
+[16.581298] (-) TimerEvent: {}
+[16.683236] (-) TimerEvent: {}
+[16.784638] (-) TimerEvent: {}
+[16.885642] (-) TimerEvent: {}
+[16.988295] (-) TimerEvent: {}
+[17.091340] (-) TimerEvent: {}
+[17.192459] (-) TimerEvent: {}
+[17.294624] (-) TimerEvent: {}
+[17.400046] (-) TimerEvent: {}
+[17.501548] (-) TimerEvent: {}
+[17.606171] (-) TimerEvent: {}
+[17.710240] (-) TimerEvent: {}
+[17.811956] (-) TimerEvent: {}
+[17.913847] (-) TimerEvent: {}
+[18.016561] (-) TimerEvent: {}
+[18.125724] (-) TimerEvent: {}
+[18.227057] (-) TimerEvent: {}
+[18.338317] (-) TimerEvent: {}
+[18.449378] (-) TimerEvent: {}
+[18.474514] (simple_robot_description) StdoutLine: {'line': b'-- Configuring done\n'}
+[18.550724] (-) TimerEvent: {}
+[18.653533] (-) TimerEvent: {}
+[18.754593] (-) TimerEvent: {}
+[18.856324] (-) TimerEvent: {}
+[18.957126] (-) TimerEvent: {}
+[19.058202] (-) TimerEvent: {}
+[19.159065] (-) TimerEvent: {}
+[19.261112] (-) TimerEvent: {}
+[19.362543] (-) TimerEvent: {}
+[19.468586] (-) TimerEvent: {}
+[19.570920] (-) TimerEvent: {}
+[19.577621] (simple_robot_description) StdoutLine: {'line': b'-- Generating done\n'}
+[19.671111] (-) TimerEvent: {}
+[19.775529] (-) TimerEvent: {}
+[19.877101] (-) TimerEvent: {}
+[19.980015] (-) TimerEvent: {}
+[20.085299] (-) TimerEvent: {}
+[20.186640] (-) TimerEvent: {}
+[20.289904] (-) TimerEvent: {}
+[20.328599] (simple_robot_description) StdoutLine: {'line': b'-- Build files have been written to: /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description\n'}
+[20.351510] (simple_robot_description) CommandEnded: {'returncode': 0}
+[20.362581] (simple_robot_description) JobProgress: {'identifier': 'simple_robot_description', 'progress': 'build'}
+[20.395861] (simple_robot_description) Command: {'cmd': ['/usr/bin/cmake', '--build', '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description', '--', '-j12', '-l12'], 'cwd': '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description', 'env': OrderedDict([('USER', 'somto'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/somto'), ('OLDPWD', '/mnt/c/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws'), ('ROS_PYTHON_VERSION', '3'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('WSL_DISTRO_NAME', 'Ubuntu-22.04'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'somto'), ('NAME', 'Machine'), ('WSL_INTEROP', '/run/WSL/6111_interop'), ('PULSE_SERVER', 'unix:/mnt/wslg/PulseServer'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('TERM', 'xterm-256color'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Users/somto/.vscode/extensions/vadimcn.vscode-lldb-1.12.2/bin:/mnt/c/Users/somto/AppData/Roaming/Code/User/globalStorage/github.copilot-chat/debugCommand:/mnt/c/Users/somto/AppData/Roaming/Code/User/globalStorage/github.copilot-chat/copilotCli:/mnt/c/Users/somto/AppData/Local/Programs/Microsoft VS Code:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files/Git/bin:/mnt/c/yt-dlp/ffmpeg-8.1-full_build/bin:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Users/somto/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/somto/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/somto/AppData/Local/Microsoft/WinGet/Packages/GNU.Nano_Microsoft.Winget.Source_8wekyb3d8bbwe:/mnt/c/Users/somto/AppData/Local/Python/bin:/mnt/c/Users/somto/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/somto/.lmstudio/bin:/mnt/c/Users/somto/AppData/Local/Programs/Kiro/bin:/mnt/c/Users/somto/.vscode/extensions/ms-python.debugpy-2026.6.0-win32-x64/bundled/scripts/noConfigScripts'), ('XDG_RUNTIME_DIR', '/run/user/1000/'), ('DISPLAY', ':0'), ('LANG', 'C.UTF-8'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('PWD', '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('WSL2_GUI_APPS_ENABLED', '1'), ('HOSTTYPE', 'x86_64'), ('WSLENV', ''), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[20.405319] (-) TimerEvent: {}
+[20.506031] (-) TimerEvent: {}
+[20.607302] (-) TimerEvent: {}
+[20.707997] (-) TimerEvent: {}
+[20.809899] (-) TimerEvent: {}
+[20.913710] (-) TimerEvent: {}
+[20.967369] (simple_robot_description) CommandEnded: {'returncode': 0}
+[21.017550] (-) TimerEvent: {}
+[21.036017] (simple_robot_description) JobProgress: {'identifier': 'simple_robot_description', 'progress': 'install'}
+[21.088485] (simple_robot_description) Command: {'cmd': ['/usr/bin/cmake', '--install', '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description'], 'cwd': '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description', 'env': OrderedDict([('USER', 'somto'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/somto'), ('OLDPWD', '/mnt/c/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws'), ('ROS_PYTHON_VERSION', '3'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('WSL_DISTRO_NAME', 'Ubuntu-22.04'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'somto'), ('NAME', 'Machine'), ('WSL_INTEROP', '/run/WSL/6111_interop'), ('PULSE_SERVER', 'unix:/mnt/wslg/PulseServer'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('TERM', 'xterm-256color'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Users/somto/.vscode/extensions/vadimcn.vscode-lldb-1.12.2/bin:/mnt/c/Users/somto/AppData/Roaming/Code/User/globalStorage/github.copilot-chat/debugCommand:/mnt/c/Users/somto/AppData/Roaming/Code/User/globalStorage/github.copilot-chat/copilotCli:/mnt/c/Users/somto/AppData/Local/Programs/Microsoft VS Code:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files/Git/bin:/mnt/c/yt-dlp/ffmpeg-8.1-full_build/bin:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Users/somto/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/somto/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/somto/AppData/Local/Microsoft/WinGet/Packages/GNU.Nano_Microsoft.Winget.Source_8wekyb3d8bbwe:/mnt/c/Users/somto/AppData/Local/Python/bin:/mnt/c/Users/somto/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/somto/.lmstudio/bin:/mnt/c/Users/somto/AppData/Local/Programs/Kiro/bin:/mnt/c/Users/somto/.vscode/extensions/ms-python.debugpy-2026.6.0-win32-x64/bundled/scripts/noConfigScripts'), ('XDG_RUNTIME_DIR', '/run/user/1000/'), ('DISPLAY', ':0'), ('LANG', 'C.UTF-8'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('PWD', '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('WSL2_GUI_APPS_ENABLED', '1'), ('HOSTTYPE', 'x86_64'), ('WSLENV', ''), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[21.117764] (-) TimerEvent: {}
+[21.123608] (simple_robot_description) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[21.140794] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/urdf\n'}
+[21.218189] (-) TimerEvent: {}
+[21.297297] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/urdf/robot.urdf\n'}
+[21.321532] (-) TimerEvent: {}
+[21.422289] (-) TimerEvent: {}
+[21.530297] (-) TimerEvent: {}
+[21.616037] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/launch\n'}
+[21.633553] (-) TimerEvent: {}
+[21.689855] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/launch/display.launch.py\n'}
+[21.733729] (-) TimerEvent: {}
+[21.834646] (-) TimerEvent: {}
+[21.935524] (-) TimerEvent: {}
+[22.002903] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/launch/gazebo.launch.py\n'}
+[22.035808] (-) TimerEvent: {}
+[22.139347] (-) TimerEvent: {}
+[22.246868] (-) TimerEvent: {}
+[22.352972] (-) TimerEvent: {}
+[22.387340] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/rviz\n'}
+[22.455088] (-) TimerEvent: {}
+[22.520718] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/rviz/robot.rviz\n'}
+[22.555326] (-) TimerEvent: {}
+[22.660475] (-) TimerEvent: {}
+[22.761367] (-) TimerEvent: {}
+[22.842425] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/worlds\n'}
+[22.861635] (-) TimerEvent: {}
+[22.973578] (-) TimerEvent: {}
+[23.074259] (-) TimerEvent: {}
+[23.098570] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/worlds/diff_drive\n'}
+[23.178588] (-) TimerEvent: {}
+[23.281027] (-) TimerEvent: {}
+[23.308144] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/worlds/diff_drive/detection_world.sdf\n'}
+[23.381189] (-) TimerEvent: {}
+[23.486071] (-) TimerEvent: {}
+[23.586887] (-) TimerEvent: {}
+[23.694447] (-) TimerEvent: {}
+[23.721669] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/worlds/simple_world.world\n'}
+[23.797248] (-) TimerEvent: {}
+[23.901342] (-) TimerEvent: {}
+[24.003230] (-) TimerEvent: {}
+[24.108002] (-) TimerEvent: {}
+[24.126819] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/ament_index/resource_index/package_run_dependencies/simple_robot_description\n'}
+[24.208289] (-) TimerEvent: {}
+[24.309452] (-) TimerEvent: {}
+[24.415851] (-) TimerEvent: {}
+[24.523493] (-) TimerEvent: {}
+[24.626362] (-) TimerEvent: {}
+[24.686028] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/ament_index/resource_index/parent_prefix_path/simple_robot_description\n'}
+[24.726506] (-) TimerEvent: {}
+[24.829955] (-) TimerEvent: {}
+[24.933583] (-) TimerEvent: {}
+[25.034630] (-) TimerEvent: {}
+[25.092574] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/environment/ament_prefix_path.sh\n'}
+[25.145544] (-) TimerEvent: {}
+[25.246482] (-) TimerEvent: {}
+[25.304827] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/environment/ament_prefix_path.dsv\n'}
+[25.349531] (-) TimerEvent: {}
+[25.451553] (-) TimerEvent: {}
+[25.553183] (-) TimerEvent: {}
+[25.657929] (-) TimerEvent: {}
+[25.676948] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/environment/path.sh\n'}
+[25.759369] (-) TimerEvent: {}
+[25.863458] (-) TimerEvent: {}
+[25.969595] (-) TimerEvent: {}
+[26.043564] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/environment/path.dsv\n'}
+[26.073532] (-) TimerEvent: {}
+[26.177525] (-) TimerEvent: {}
+[26.278549] (-) TimerEvent: {}
+[26.379626] (-) TimerEvent: {}
+[26.400392] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/local_setup.bash\n'}
+[26.481900] (-) TimerEvent: {}
+[26.589679] (-) TimerEvent: {}
+[26.697919] (-) TimerEvent: {}
+[26.769632] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/local_setup.sh\n'}
+[26.798276] (-) TimerEvent: {}
+[26.901049] (-) TimerEvent: {}
+[27.002090] (-) TimerEvent: {}
+[27.103036] (-) TimerEvent: {}
+[27.117006] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/local_setup.zsh\n'}
+[27.206053] (-) TimerEvent: {}
+[27.311499] (-) TimerEvent: {}
+[27.413286] (-) TimerEvent: {}
+[27.453288] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/local_setup.dsv\n'}
+[27.513954] (-) TimerEvent: {}
+[27.614651] (-) TimerEvent: {}
+[27.720616] (-) TimerEvent: {}
+[27.821533] (-) TimerEvent: {}
+[27.861735] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/package.dsv\n'}
+[27.922603] (-) TimerEvent: {}
+[28.025713] (-) TimerEvent: {}
+[28.129718] (-) TimerEvent: {}
+[28.260501] (-) TimerEvent: {}
+[28.339281] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/ament_index/resource_index/packages/simple_robot_description\n'}
+[28.360685] (-) TimerEvent: {}
+[28.464086] (-) TimerEvent: {}
+[28.564812] (-) TimerEvent: {}
+[28.669929] (-) TimerEvent: {}
+[28.771258] (-) TimerEvent: {}
+[28.872654] (-) TimerEvent: {}
+[28.946774] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/cmake/simple_robot_descriptionConfig.cmake\n'}
+[28.972865] (-) TimerEvent: {}
+[29.074993] (-) TimerEvent: {}
+[29.181028] (-) TimerEvent: {}
+[29.284323] (-) TimerEvent: {}
+[29.388947] (-) TimerEvent: {}
+[29.491842] (-) TimerEvent: {}
+[29.492799] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/cmake/simple_robot_descriptionConfig-version.cmake\n'}
+[29.592017] (-) TimerEvent: {}
+[29.694261] (-) TimerEvent: {}
+[29.795604] (-) TimerEvent: {}
+[29.846375] (simple_robot_description) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/package.xml\n'}
+[29.897565] (-) TimerEvent: {}
+[30.003218] (-) TimerEvent: {}
+[30.104758] (-) TimerEvent: {}
+[30.211476] (-) TimerEvent: {}
+[30.233500] (simple_robot_description) CommandEnded: {'returncode': 0}
+[30.313604] (-) TimerEvent: {}
+[30.414435] (-) TimerEvent: {}
+[30.515469] (-) TimerEvent: {}
+[30.616539] (-) TimerEvent: {}
+[30.721786] (-) TimerEvent: {}
+[30.822934] (-) TimerEvent: {}
+[30.925822] (-) TimerEvent: {}
+[31.027070] (-) TimerEvent: {}
+[31.128088] (-) TimerEvent: {}
+[31.231288] (-) TimerEvent: {}
+[31.334508] (-) TimerEvent: {}
+[31.435308] (-) TimerEvent: {}
+[31.536693] (-) TimerEvent: {}
+[31.641351] (-) TimerEvent: {}
+[31.743723] (-) TimerEvent: {}
+[31.847359] (-) TimerEvent: {}
+[31.950379] (-) TimerEvent: {}
+[32.051807] (-) TimerEvent: {}
+[32.153171] (-) TimerEvent: {}
+[32.257549] (-) TimerEvent: {}
+[32.386460] (-) TimerEvent: {}
+[32.489898] (-) TimerEvent: {}
+[32.592609] (-) TimerEvent: {}
+[32.695300] (-) TimerEvent: {}
+[32.796136] (-) TimerEvent: {}
+[32.897602] (-) TimerEvent: {}
+[32.999531] (-) TimerEvent: {}
+[33.100239] (-) TimerEvent: {}
+[33.201386] (-) TimerEvent: {}
+[33.303105] (-) TimerEvent: {}
+[33.306391] (simple_robot_description) JobEnded: {'identifier': 'simple_robot_description', 'rc': 0}
+[33.335908] (-) EventReactorShutdown: {}

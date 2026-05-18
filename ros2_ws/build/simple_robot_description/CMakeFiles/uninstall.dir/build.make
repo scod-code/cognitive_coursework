@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /work/ros2_ws/src/simple_robot_description
+CMAKE_SOURCE_DIR = "/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/src/simple_robot_description"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /work/ros2_ws/build/simple_robot_description
+CMAKE_BINARY_DIR = "/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description"
 
 # Utility rule file for uninstall.
 
@@ -78,6 +78,6 @@ CMakeFiles/uninstall.dir/clean:
 .PHONY : CMakeFiles/uninstall.dir/clean
 
 CMakeFiles/uninstall.dir/depend:
-	cd /work/ros2_ws/build/simple_robot_description && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work/ros2_ws/src/simple_robot_description /work/ros2_ws/src/simple_robot_description /work/ros2_ws/build/simple_robot_description /work/ros2_ws/build/simple_robot_description /work/ros2_ws/build/simple_robot_description/CMakeFiles/uninstall.dir/DependInfo.cmake --color=$(COLOR)
+	cd "/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/src/simple_robot_description" "/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/src/simple_robot_description" "/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description" "/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description" "/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description/CMakeFiles/uninstall.dir/DependInfo.cmake" --color=$(COLOR)
 .PHONY : CMakeFiles/uninstall.dir/depend
 

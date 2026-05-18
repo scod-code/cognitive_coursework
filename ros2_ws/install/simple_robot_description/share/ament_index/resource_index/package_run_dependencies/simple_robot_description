@@ -1,1 +1,1 @@
-robot_state_publisher;joint_state_publisher_gui;rviz2;xacro;gazebo_ros;geometry_msgs;sensor_msgs;nav_msgs
+robot_state_publisher;joint_state_publisher_gui;rviz2;xacro;gazebo_ros;gazebo_plugins;geometry_msgs;sensor_msgs;nav_msgs

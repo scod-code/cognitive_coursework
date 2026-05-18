@@ -1,0 +1,164 @@
+[0.919s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build', '--packages-select', 'simple_robot_description']
+[0.920s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=False, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=12, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=['simple_robot_description'], packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0x7f52775277c0>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7f52775271f0>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7f52775271f0>>)
+[1.772s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[1.775s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[1.777s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[1.780s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[1.781s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[1.784s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[1.785s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws'
+[1.796s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[1.797s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[1.798s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[1.800s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[1.800s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[1.801s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[1.802s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[1.814s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[1.815s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[1.926s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[1.934s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[1.939s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[1.945s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[1.946s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[1.956s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[1.956s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[1.960s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[1.993s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[1.995s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[2.025s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[2.046s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[2.047s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[2.054s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[2.068s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[2.069s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[2.070s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[2.073s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[2.073s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[2.077s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[2.078s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[2.097s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[2.098s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[2.122s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[2.125s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[2.127s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[2.128s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[2.129s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[2.141s] Level 1:colcon.colcon_core.package_identification:_identify(src/scan_filter) by extensions ['ignore', 'ignore_ament_install']
+[2.142s] Level 1:colcon.colcon_core.package_identification:_identify(src/scan_filter) by extension 'ignore'
+[2.149s] Level 1:colcon.colcon_core.package_identification:_identify(src/scan_filter) by extension 'ignore_ament_install'
+[2.168s] Level 1:colcon.colcon_core.package_identification:_identify(src/scan_filter) by extensions ['colcon_pkg']
+[2.169s] Level 1:colcon.colcon_core.package_identification:_identify(src/scan_filter) by extension 'colcon_pkg'
+[2.171s] Level 1:colcon.colcon_core.package_identification:_identify(src/scan_filter) by extensions ['colcon_meta']
+[2.172s] Level 1:colcon.colcon_core.package_identification:_identify(src/scan_filter) by extension 'colcon_meta'
+[2.176s] Level 1:colcon.colcon_core.package_identification:_identify(src/scan_filter) by extensions ['ros']
+[2.180s] Level 1:colcon.colcon_core.package_identification:_identify(src/scan_filter) by extension 'ros'
+[2.294s] DEBUG:colcon.colcon_core.package_identification:Package 'src/scan_filter' with type 'ros.ament_python' and name 'scan_filter'
+[2.319s] Level 1:colcon.colcon_core.package_identification:_identify(src/simple_robot_description) by extensions ['ignore', 'ignore_ament_install']
+[2.322s] Level 1:colcon.colcon_core.package_identification:_identify(src/simple_robot_description) by extension 'ignore'
+[2.326s] Level 1:colcon.colcon_core.package_identification:_identify(src/simple_robot_description) by extension 'ignore_ament_install'
+[2.337s] Level 1:colcon.colcon_core.package_identification:_identify(src/simple_robot_description) by extensions ['colcon_pkg']
+[2.338s] Level 1:colcon.colcon_core.package_identification:_identify(src/simple_robot_description) by extension 'colcon_pkg'
+[2.340s] Level 1:colcon.colcon_core.package_identification:_identify(src/simple_robot_description) by extensions ['colcon_meta']
+[2.343s] Level 1:colcon.colcon_core.package_identification:_identify(src/simple_robot_description) by extension 'colcon_meta'
+[2.351s] Level 1:colcon.colcon_core.package_identification:_identify(src/simple_robot_description) by extensions ['ros']
+[2.351s] Level 1:colcon.colcon_core.package_identification:_identify(src/simple_robot_description) by extension 'ros'
+[2.443s] DEBUG:colcon.colcon_core.package_identification:Package 'src/simple_robot_description' with type 'ros.ament_cmake' and name 'simple_robot_description'
+[2.473s] Level 1:colcon.colcon_core.package_identification:_identify(src/wall_follower) by extensions ['ignore', 'ignore_ament_install']
+[2.473s] Level 1:colcon.colcon_core.package_identification:_identify(src/wall_follower) by extension 'ignore'
+[2.487s] Level 1:colcon.colcon_core.package_identification:_identify(src/wall_follower) by extension 'ignore_ament_install'
+[2.491s] Level 1:colcon.colcon_core.package_identification:_identify(src/wall_follower) by extensions ['colcon_pkg']
+[2.492s] Level 1:colcon.colcon_core.package_identification:_identify(src/wall_follower) by extension 'colcon_pkg'
+[2.495s] Level 1:colcon.colcon_core.package_identification:_identify(src/wall_follower) by extensions ['colcon_meta']
+[2.496s] Level 1:colcon.colcon_core.package_identification:_identify(src/wall_follower) by extension 'colcon_meta'
+[2.499s] Level 1:colcon.colcon_core.package_identification:_identify(src/wall_follower) by extensions ['ros']
+[2.500s] Level 1:colcon.colcon_core.package_identification:_identify(src/wall_follower) by extension 'ros'
+[2.549s] DEBUG:colcon.colcon_core.package_identification:Package 'src/wall_follower' with type 'ros.ament_python' and name 'wall_follower'
+[2.550s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[2.551s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[2.551s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[2.552s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[2.552s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[2.810s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'scan_filter' in 'src/scan_filter'
+[2.811s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'wall_follower' in 'src/wall_follower'
+[2.812s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[2.813s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[2.823s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 320 installed packages in /opt/ros/humble
+[2.830s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[2.987s] Level 5:colcon.colcon_core.verb:set package 'simple_robot_description' build argument 'cmake_args' from command line to 'None'
+[2.987s] Level 5:colcon.colcon_core.verb:set package 'simple_robot_description' build argument 'cmake_target' from command line to 'None'
+[2.988s] Level 5:colcon.colcon_core.verb:set package 'simple_robot_description' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[2.988s] Level 5:colcon.colcon_core.verb:set package 'simple_robot_description' build argument 'cmake_clean_cache' from command line to 'False'
+[2.989s] Level 5:colcon.colcon_core.verb:set package 'simple_robot_description' build argument 'cmake_clean_first' from command line to 'False'
+[2.989s] Level 5:colcon.colcon_core.verb:set package 'simple_robot_description' build argument 'cmake_force_configure' from command line to 'False'
+[2.994s] Level 5:colcon.colcon_core.verb:set package 'simple_robot_description' build argument 'ament_cmake_args' from command line to 'None'
+[2.996s] Level 5:colcon.colcon_core.verb:set package 'simple_robot_description' build argument 'catkin_cmake_args' from command line to 'None'
+[2.997s] Level 5:colcon.colcon_core.verb:set package 'simple_robot_description' build argument 'catkin_skip_building_tests' from command line to 'False'
+[3.005s] DEBUG:colcon.colcon_core.verb:Building package 'simple_robot_description' with the following arguments: {'ament_cmake_args': None, 'build_base': '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description', 'merge_install': False, 'path': '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/src/simple_robot_description', 'symlink_install': False, 'test_result_base': None}
+[3.010s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[3.013s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[3.014s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/src/simple_robot_description' with build type 'ament_cmake'
+[3.015s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/src/simple_robot_description'
+[3.021s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[3.023s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[3.024s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[3.324s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/src/simple_robot_description -DCMAKE_INSTALL_PREFIX=/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description
+[23.368s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/src/simple_robot_description -DCMAKE_INSTALL_PREFIX=/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description
+[23.420s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description -- -j12 -l12
+[23.996s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description -- -j12 -l12
+[24.112s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description
+[33.248s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(simple_robot_description)
+[33.251s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description
+[33.262s] Level 1:colcon.colcon_core.environment:checking '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description' for CMake module files
+[33.771s] Level 1:colcon.colcon_core.environment:checking '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description' for CMake config files
+[34.043s] Level 1:colcon.colcon_core.shell:create_environment_hook('simple_robot_description', 'cmake_prefix_path')
+[34.044s] INFO:colcon.colcon_core.shell:Creating environment hook '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/hook/cmake_prefix_path.ps1'
+[34.092s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/hook/cmake_prefix_path.dsv'
+[34.180s] INFO:colcon.colcon_core.shell:Creating environment hook '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/hook/cmake_prefix_path.sh'
+[34.281s] Level 1:colcon.colcon_core.environment:checking '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/bin'
+[34.286s] Level 1:colcon.colcon_core.environment:checking '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/lib/pkgconfig/simple_robot_description.pc'
+[34.302s] Level 1:colcon.colcon_core.environment:checking '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/lib/python3.10/site-packages'
+[34.319s] Level 1:colcon.colcon_core.environment:checking '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/bin'
+[34.336s] INFO:colcon.colcon_core.shell:Creating package script '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/package.ps1'
+[34.432s] INFO:colcon.colcon_core.shell:Creating package descriptor '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/package.dsv'
+[34.545s] INFO:colcon.colcon_core.shell:Creating package script '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/package.sh'
+[34.593s] INFO:colcon.colcon_core.shell:Creating package script '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/package.bash'
+[34.651s] INFO:colcon.colcon_core.shell:Creating package script '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/package.zsh'
+[34.737s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/colcon-core/packages/simple_robot_description)
+[34.831s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(simple_robot_description)
+[34.832s] Level 1:colcon.colcon_core.environment:checking '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description' for CMake module files
+[35.305s] Level 1:colcon.colcon_core.environment:checking '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description' for CMake config files
+[35.657s] Level 1:colcon.colcon_core.shell:create_environment_hook('simple_robot_description', 'cmake_prefix_path')
+[35.658s] INFO:colcon.colcon_core.shell:Creating environment hook '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/hook/cmake_prefix_path.ps1'
+[35.729s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/hook/cmake_prefix_path.dsv'
+[35.780s] INFO:colcon.colcon_core.shell:Creating environment hook '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/hook/cmake_prefix_path.sh'
+[35.885s] Level 1:colcon.colcon_core.environment:checking '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/bin'
+[35.900s] Level 1:colcon.colcon_core.environment:checking '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/lib/pkgconfig/simple_robot_description.pc'
+[35.903s] Level 1:colcon.colcon_core.environment:checking '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/lib/python3.10/site-packages'
+[35.908s] Level 1:colcon.colcon_core.environment:checking '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/bin'
+[35.914s] INFO:colcon.colcon_core.shell:Creating package script '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/package.ps1'
+[36.019s] INFO:colcon.colcon_core.shell:Creating package descriptor '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/package.dsv'
+[36.121s] INFO:colcon.colcon_core.shell:Creating package script '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/package.sh'
+[36.167s] INFO:colcon.colcon_core.shell:Creating package script '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/package.bash'
+[36.226s] INFO:colcon.colcon_core.shell:Creating package script '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/simple_robot_description/package.zsh'
+[36.274s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description/share/colcon-core/packages/simple_robot_description)
+[36.321s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[36.322s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[36.325s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[36.327s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[36.759s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.notify_send': Could not find 'notify-send'
+[36.759s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[36.760s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[36.760s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[36.775s] DEBUG:colcon.colcon_notification.desktop_notification.notify2:Failed to initialize notify2: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.Notifications was not provided by any .service files
+[36.776s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[36.777s] INFO:colcon.colcon_core.shell:Creating prefix script '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/local_setup.ps1'
+[36.806s] INFO:colcon.colcon_core.shell:Creating prefix util module '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/_local_setup_util_ps1.py'
+[36.852s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/setup.ps1'
+[36.884s] INFO:colcon.colcon_core.shell:Creating prefix script '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/local_setup.sh'
+[36.895s] INFO:colcon.colcon_core.shell:Creating prefix util module '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/_local_setup_util_sh.py'
+[36.923s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/setup.sh'
+[36.950s] INFO:colcon.colcon_core.shell:Creating prefix script '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/local_setup.bash'
+[36.970s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/setup.bash'
+[36.990s] INFO:colcon.colcon_core.shell:Creating prefix script '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/local_setup.zsh'
+[37.015s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/setup.zsh'

@@ -2,7 +2,7 @@
 
 # since this file is sourced use either the provided AMENT_CURRENT_PREFIX
 # or fall back to the destination set at configure time
-: ${AMENT_CURRENT_PREFIX:="/work/ros2_ws/install/simple_robot_description"}
+: ${AMENT_CURRENT_PREFIX:="/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/install/simple_robot_description"}
 if [ ! -d "$AMENT_CURRENT_PREFIX" ]; then
   if [ -z "$COLCON_CURRENT_PREFIX" ]; then
     echo "The compile time prefix path '$AMENT_CURRENT_PREFIX' doesn't " \

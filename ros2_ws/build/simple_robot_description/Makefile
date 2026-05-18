@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /work/ros2_ws/src/simple_robot_description
+CMAKE_SOURCE_DIR = "/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/src/simple_robot_description"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /work/ros2_ws/build/simple_robot_description
+CMAKE_BINARY_DIR = "/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description"
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -142,9 +142,9 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /work/ros2_ws/build/simple_robot_description/CMakeFiles /work/ros2_ws/build/simple_robot_description//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start "/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description/CMakeFiles" "/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description//CMakeFiles/progress.marks"
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /work/ros2_ws/build/simple_robot_description/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/mnt/c/Users/somto/Documents/Graduate Degree Applications/Nottingham Trent University/3. Third Term 2026/Cognitive Robotics/cognitive_coursework/ros2_ws/build/simple_robot_description/CMakeFiles" 0
 .PHONY : all
 
 # The main clean target

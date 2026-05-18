@@ -10,7 +10,7 @@ def generate_launch_description():
     pkg_path = get_package_share_directory('simple_robot_description')
 
     urdf_file = os.path.join(pkg_path, 'urdf', 'robot.urdf')
-    world_file = os.path.join(pkg_path, 'worlds', 'simple_world.world')
+    world_file = os.path.join(pkg_path, 'worlds', 'diff_drive', 'detection_world.sdf')
 
     with open(urdf_file, 'r') as file:
         robot_description = file.read()

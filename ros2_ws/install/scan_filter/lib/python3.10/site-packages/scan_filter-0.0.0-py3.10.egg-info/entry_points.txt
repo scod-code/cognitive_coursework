@@ -1,3 +1,0 @@
-[console_scripts]
-scan_filter_node = scan_filter.scan_filter_node:main
-
