@@ -11,6 +11,11 @@ def generate_launch_description():
 
     urdf_file = os.path.join(pkg_path, 'urdf', 'robot.urdf')
     world_file = os.path.join(pkg_path, 'worlds', 'diff_drive', 'detection_world.sdf')
+    
+    # Set GAZEBO_MODEL_PATH to find sign poster models
+    gazebo_model_path = os.path.join(os.path.dirname(pkg_path), '..', '..', 'models')
+    env = os.environ.copy()
+    env['GAZEBO_MODEL_PATH'] = gazebo_model_path
 
     with open(urdf_file, 'r') as file:
         robot_description = file.read()
@@ -19,7 +24,8 @@ def generate_launch_description():
 
         ExecuteProcess(
             cmd=['gazebo', '--verbose', world_file, '-s', 'libgazebo_ros_factory.so'],
-            output='screen'
+            output='screen',
+            env=env
         ),
 
         Node(
