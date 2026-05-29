@@ -1,0 +1,42 @@
+# Wall Follower Node Configuration
+# 
+# This configuration file sets parameters for the wall-following navigation node.
+# Tuning these values will affect the robot's behavior in the maze.
+
+wall_follower:
+  ros__parameters:
+    # Target distance to maintain from walls (meters)
+    # Typical range: 0.3-1.0 depending on maze width
+    target_wall_distance: 0.5
+    
+    # Constant forward speed (m/s)
+    # Typical range: 0.1-0.5 m/s for safe maze navigation
+    linear_speed: 0.2
+    
+    # PID Control Gains
+    # Kp (Proportional): immediate response to error
+    # Ki (Integral): accumulates steady-state error
+    # Kd (Derivative): dampens oscillations
+    pid_kp: 0.8
+    pid_ki: 0.0
+    pid_kd: 0.2
+    
+    # Maximum angular velocity (rad/s)
+    # Limit sharp turns to avoid tipping
+    angular_max: 1.0
+    
+    # Valid depth range for sensor (meters)
+    # Values outside this range are filtered as invalid
+    depth_valid_range: [0.1, 3.0]
+    
+    # Enable Kalman filtering for sensor noise reduction
+    # Disable if you observe lag or want maximum responsiveness
+    use_kalman_filter: true
+
+# Sensor Filter Node Configuration (optional)
+scan_filter:
+  ros__parameters:
+    input_topic: '/scan'
+    output_topic: '/scan_filtered'
+    # Filter parameters can be tuned here
+    range_max: 3.0
