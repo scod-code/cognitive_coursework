@@ -13,7 +13,7 @@ def generate_launch_description():
     world_file = os.path.join(pkg_path, 'worlds', 'diff_drive', 'detection_world.sdf')
     
     # Set GAZEBO_MODEL_PATH to find sign poster models
-    gazebo_model_path = os.path.join(os.path.dirname(pkg_path), '..', '..', 'models')
+    gazebo_model_path = os.path.join(pkg_path, 'models')
     env = os.environ.copy()
     env['GAZEBO_MODEL_PATH'] = gazebo_model_path
 
