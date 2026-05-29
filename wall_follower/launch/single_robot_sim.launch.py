@@ -26,7 +26,7 @@ def generate_launch_description():
         'world',
         default_value=os.path.join(
             get_package_share_directory('simple_robot_description'),
-            'worlds', 'maze.sdf'
+            'worlds', 'simple_world.world'
         ),
         description='Gazebo world file'
     )

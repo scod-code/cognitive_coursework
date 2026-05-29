@@ -5,117 +5,127 @@ Launches the complete Gazebo simulation of the maze environment.
 
 This includes:
 - Gazebo server and client
-- Simulated JetBot robot
+- Simulated robot
 - Maze world with obstacles
-- Sensor simulation (camera, LiDAR)
-- RViz for visualization
+- RViz visualization
 """
 
 from launch import LaunchDescription
 from launch_ros.actions import Node
 from launch.actions import DeclareLaunchArgument, ExecuteProcess
-from launch.substitutions import LaunchConfiguration, FindExecutable, PathJoinSubstitution
-from launch_ros.substitutions import FindPackageShare
+from launch.substitutions import LaunchConfiguration, FindExecutable
 import os
 from ament_index_python.packages import get_package_share_directory
 
 
 def generate_launch_description():
-    # Arguments
+
     world = DeclareLaunchArgument(
         'world',
         default_value=os.path.join(
             get_package_share_directory('simple_robot_description'),
-            'worlds', 'maze.sdf'
+            'worlds',
+            'simple_world.world'
         ),
         description='Path to maze world file'
     )
-    
-    headless = DeclareLaunchArgument(
-        'headless',
-        default_value='false',
-        description='Run Gazebo in headless mode (no GUI)'
-    )
-    
+
     use_sim_time = DeclareLaunchArgument(
         'use_sim_time',
         default_value='true',
         description='Use simulation time'
     )
-    
+
     # Gazebo server
     gzserver = ExecuteProcess(
         cmd=[
             FindExecutable(name='gzserver'),
+            '-s', 'libgazebo_ros_init.so',
+            '-s', 'libgazebo_ros_factory.so',
             LaunchConfiguration('world'),
             '--verbose',
         ],
         output='screen',
-        env={
-            'GAZEBO_RESOURCE_PATH': os.path.join(
-                get_package_share_directory('simple_robot_description'),
-                'worlds'
-            )
+        additional_env={
+            'GAZEBO_RESOURCE_PATH': os.pathsep.join([
+                os.path.join(get_package_share_directory('simple_robot_description'), 'worlds'),
+                '/usr/share/gazebo-11',
+                '/usr/share/gazebo-11/media'
+            ]),
+            'GAZEBO_MODEL_PATH': os.pathsep.join([
+                os.path.join(get_package_share_directory('simple_robot_description'), 'models'),
+                '/usr/share/gazebo-11/models'
+            ]),
+            'HOME': os.environ.get('HOME', '/root')
         }
     )
-    
-    # Gazebo client (GUI)
+
+    # Gazebo GUI
     gzclient = ExecuteProcess(
         cmd=[FindExecutable(name='gzclient')],
-        output='screen',
-        condition=EqualsCondition(
-            LaunchConfiguration('headless'),
-            'false'
-        )
+        output='screen'
+        ,
+        additional_env={
+            'HOME': os.environ.get('HOME', '/root')
+        }
     )
-    
-    # Spawn robot in Gazebo
+
+    # Spawn robot
     spawn_robot = Node(
         package='gazebo_ros',
         executable='spawn_entity.py',
         arguments=[
             '-entity', 'jetbot',
-            '-file', os.path.join(
+            '-file',
+            os.path.join(
                 get_package_share_directory('simple_robot_description'),
-                'urdf', 'jetbot.urdf'
+                'urdf',
+                'robot.urdf'
             ),
-            '-x', '0', '-y', '0', '-z', '0.1',
+            '-x', '0',
+            '-y', '0',
+            '-z', '0.1',
         ],
         output='screen'
     )
-    
-    # RViz visualization
-    rviz = Node(
-        package='rviz2',
-        executable='rviz2',
-        name='rviz2',
-        arguments=[
-            '-d', os.path.join(
-                get_package_share_directory('simple_robot_description'),
-                'rviz', 'maze_view.rviz'
-            )
-        ],
-        output='screen'
-    )
-    
-    # TF broadcaster for robot state
+
+    # Robot State Publisher
     robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
         arguments=[
             os.path.join(
                 get_package_share_directory('simple_robot_description'),
-                'urdf', 'jetbot.urdf'
+                'urdf',
+                'robot.urdf'
             )
         ],
         parameters=[
-            {'use_sim_time': LaunchConfiguration('use_sim_time')}
-        ]
+            {
+                'use_sim_time': LaunchConfiguration('use_sim_time')
+            }
+        ],
+        output='screen'
     )
-    
+
+    # RViz
+    rviz = Node(
+        package='rviz2',
+        executable='rviz2',
+        name='rviz2',
+        arguments=[
+            '-d',
+            os.path.join(
+                get_package_share_directory('simple_robot_description'),
+                'rviz',
+                'robot.rviz'
+            )
+        ],
+        output='screen'
+    )
+
     return LaunchDescription([
         world,
-        headless,
         use_sim_time,
         gzserver,
         gzclient,

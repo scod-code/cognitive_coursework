@@ -50,7 +50,23 @@ class WallFollowerNode(Node):
     def __init__(self):
         super().__init__('wall_follower')
         
-        # Declare parameters
+        
+        # Reliable QoS for velocity commands.
+        # Gazebo diff_drive expects reliable/default QoS on /cmd_vel.
+        self.cmd_vel_qos = QoSProfile(
+            reliability=ReliabilityPolicy.RELIABLE,
+            history=HistoryPolicy.KEEP_LAST,
+            depth=10
+        )
+
+        # Best-effort QoS for sensor streams such as /scan and depth images.
+        self.sensor_qos = QoSProfile(
+            reliability=ReliabilityPolicy.BEST_EFFORT,
+            history=HistoryPolicy.KEEP_LAST,
+            depth=10
+        )
+
+# Declare parameters
         self.declare_parameter('target_wall_distance', 0.5)
         self.declare_parameter('linear_speed', 0.2)
         self.declare_parameter('pid_kp', 0.8)
@@ -80,7 +96,11 @@ class WallFollowerNode(Node):
         )
         
         # Publishers and subscribers
-        self.twist_pub = self.create_publisher(Twist, '/cmd_vel', qos_profile=qos)
+        self.twist_pub = self.create_publisher(
+            Twist,
+            '/cmd_vel',
+            self.cmd_vel_qos
+        )
         
         # Try depth image first (RealSense)
         if HAVE_CV_BRIDGE:

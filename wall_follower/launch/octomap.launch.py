@@ -65,10 +65,7 @@ def generate_launch_description():
             }
         ],
         remappings=[
-            # Input: depth camera point cloud
             ('/cloud_in', '/camera/depth/points'),
-            # Or use LaserScan as input (comment out cloud_in and uncomment below)
-            # ('/scan', '/scan'),
         ]
     )
     
