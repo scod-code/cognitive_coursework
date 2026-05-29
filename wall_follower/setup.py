@@ -25,12 +25,16 @@ setup(
             os.path.join('share', package_name, 'config'),
             glob('config/*.yaml')
         ),
+        (
+            os.path.join('share', package_name, 'maps'),
+            glob('maps/*')
+        ),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
     maintainer='root',
     maintainer_email='root@todo.todo',
-    description='Wall following, Kalman filtering and mapping',
+    description='Wall following, Kalman filtering, mapping, and Nav2 navigation',
     license='TODO: License declaration',
     extras_require={
         'test': [
@@ -40,6 +44,7 @@ setup(
     entry_points={
         'console_scripts': [
             'wall_follower_node = wall_follower.wall_follower_node:main',
+            'amcl_initializer = wall_follower.amcl_initializer:main',
         ],
     },
 )
