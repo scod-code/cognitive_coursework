@@ -11,10 +11,11 @@
           </box>
         </geometry>
         <material>
-          <ambient>0.0 0.8 0.0 1</ambient>
-          <diffuse>0.0 0.8 0.0 1</diffuse>
+          <ambient>1.0 1.0 1.0 1</ambient>
+          <diffuse>1.0 1.0 1.0 1</diffuse>
           <script>
             <uri>model://fast_sign_poster/materials/scripts</uri>
+            <uri>model://fast_sign_poster/materials/textures</uri>
             <name>FastSignPoster</name>
           </script>
         </material>
