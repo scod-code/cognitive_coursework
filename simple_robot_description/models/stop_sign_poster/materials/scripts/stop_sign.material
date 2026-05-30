@@ -1,0 +1,13 @@
+material StopSignPoster
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture stop_sign.png
+      }
+    }
+  }
+}
