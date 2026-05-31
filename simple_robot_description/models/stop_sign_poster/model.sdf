@@ -11,15 +11,23 @@
           </box>
         </geometry>
         <material>
-          <diffuse>1 1 1 1</diffuse>
-          <specular>0.2 0.2 0.2 1</specular>
-          <pbr>
-            <metal>
-              <albedo_map>model://stop_sign_poster/materials/textures/stop_sign.png</albedo_map>
-            </metal>
-          </pbr>
+          <ambient>1.0 1.0 1.0 1</ambient>
+          <diffuse>1.0 1.0 1.0 1</diffuse>
+          <script>
+            <uri>model://stop_sign_poster/materials/scripts</uri>
+            <uri>model://stop_sign_poster/materials/textures</uri>
+            <name>StopSignPoster</name>
+          </script>
         </material>
       </visual>
+      <collision name="poster_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.04 1.6 1.6</size>
+          </box>
+        </geometry>
+      </collision>
     </link>
   </model>
 </sdf>

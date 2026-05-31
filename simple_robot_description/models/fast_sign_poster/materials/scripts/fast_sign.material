@@ -1,0 +1,13 @@
+material FastSignPoster
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture fast_sign.png
+      }
+    }
+  }
+}
