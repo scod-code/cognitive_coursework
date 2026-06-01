@@ -46,6 +46,7 @@ setup(
             'wall_follower_node = wall_follower.wall_follower_node:main',
             'amcl_initializer = wall_follower.amcl_initializer:main',
             'scan_to_pointcloud = wall_follower.scan_to_pointcloud:main',
+            'pomdp_goal_selector = wall_follower.pomdp_goal_selector:main',
         ],
     },
 )

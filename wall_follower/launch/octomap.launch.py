@@ -19,6 +19,12 @@ from launch.substitutions import LaunchConfiguration
 
 def generate_launch_description():
     # Arguments
+    use_sim_time = DeclareLaunchArgument(
+        'use_sim_time',
+        default_value='true',
+        description='Use simulation time'
+    )
+
     resolution = DeclareLaunchArgument(
         'resolution',
         default_value='0.05',
@@ -30,6 +36,24 @@ def generate_launch_description():
         default_value='3.0',
         description='Maximum sensor range (meters)'
     )
+
+    cloud_in = DeclareLaunchArgument(
+        'cloud_in',
+        default_value='/scan_cloud',
+        description='Input point cloud topic for OctoMap'
+    )
+
+    frame_id = DeclareLaunchArgument(
+        'frame_id',
+        default_value='odom',
+        description='Output frame for OctoMap topics'
+    )
+
+    base_frame_id = DeclareLaunchArgument(
+        'base_frame_id',
+        default_value='base_link',
+        description='Robot base frame used by OctoMap'
+    )
     
     # OctoMap Server Node
     octomap_server = Node(
@@ -39,9 +63,10 @@ def generate_launch_description():
         output='screen',
         parameters=[
             {
+                'use_sim_time': LaunchConfiguration('use_sim_time'),
                 'resolution': LaunchConfiguration('resolution'),
-                'frame_id': 'map',
-                'base_frame_id': 'base_link',
+                'frame_id': LaunchConfiguration('frame_id'),
+                'base_frame_id': LaunchConfiguration('base_frame_id'),
                 
                 # Sensor model (RealSense D435)
                 'sensor_model/max_range': LaunchConfiguration('max_range'),
@@ -65,12 +90,16 @@ def generate_launch_description():
             }
         ],
         remappings=[
-            ('/cloud_in', '/camera/depth/points'),
+            ('/cloud_in', LaunchConfiguration('cloud_in')),
         ]
     )
     
     return LaunchDescription([
+        use_sim_time,
         resolution,
         max_range,
+        cloud_in,
+        frame_id,
+        base_frame_id,
         octomap_server,
     ])
