@@ -1,0 +1,6 @@
+train: /home/somto/ros2_coursework_ws/dataset/train/images
+val: /home/somto/ros2_coursework_ws/dataset/valid/images
+test: /home/somto/ros2_coursework_ws/dataset/test/images
+
+nc: 3
+names: ['fast', 'slow', 'stop']
