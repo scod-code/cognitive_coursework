@@ -14,3 +14,4 @@ perception/resource_usage.csv
 results/
 yolov8n.pt
 *.Zone.Identifier
+generate_signs.py:Zone.Identifier
