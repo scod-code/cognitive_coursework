@@ -13,3 +13,4 @@ perception/landmarks.db
 perception/resource_usage.csv
 results/
 yolov8n.pt
+*.Zone.Identifier
