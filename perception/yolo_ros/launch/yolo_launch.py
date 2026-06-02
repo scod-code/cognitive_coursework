@@ -1,0 +1,26 @@
+from launch import LaunchDescription
+from launch_ros.actions import Node
+
+
+def generate_launch_description():
+    return LaunchDescription([
+        Node(
+            package='yolo_ros',
+            executable='yolo_node',
+            name='yolo_node',
+            output='screen',
+            parameters=[{'model_path': '/home/somto/ros2_coursework_ws/results/traffic_sign_v1-3/weights/best.pt'}]
+        ),
+        Node(
+            package='yolo_ros',
+            executable='sign_controller',
+            name='sign_controller',
+            output='screen'
+        ),
+        Node(
+            package='yolo_ros',
+            executable='goal_publisher',
+            name='goal_publisher',
+            output='screen'
+        ),
+    ])
