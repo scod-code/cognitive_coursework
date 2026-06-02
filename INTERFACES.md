@@ -11,26 +11,34 @@ Both people must use these exact names. Do not rename without updating this file
 | Topic | Publisher | Subscriber | Message Type | Notes |
 |---|---|---|---|---|
 | `/camera/image_raw` | Person A (Gazebo bridge) | Person B (yolo_node) | `sensor_msgs/Image` | Camera feed from robot URDF |
-| `/yolo/detections` | Person B (yolo_node) | Both (debug/logging) | `yolo_msgs/DetectionArray` | Raw YOLO output — bboxes, labels, confidence |
+| `/yolo/detections` | Person B (yolo_node) | Person A adapter, Person B nodes | `yolo_msgs/DetectionArray` | Typed YOLO output with `detections[]` |
+| `/yolo/detections_json` | Person B (yolo_node) | Person B fallback nodes | `std_msgs/String` | JSON fallback: `[{"label": "...", "conf": 0.0, "xyxy": [x1, y1, x2, y2]}]` |
 | `/yolo/dbg_image` | Person B (debug_node) | Both (RViz) | `sensor_msgs/Image` | Annotated camera feed with bounding boxes |
-| `/detection_cmd` | Person B (sign response node) | Person A (nav stack) | `std_msgs/String` | Commands: `"STOP"`, `"FAST"`, `"SLOW"`, `"CLEAR"` |
-| `/goal_pose` | Person B (goal detection node) | Person A (Nav2) | `geometry_msgs/PoseStamped` | Published when goal marker is detected |
+| `/cmd_vel` | Person B (sign_controller) | Gazebo diff drive | `geometry_msgs/Twist` | Stop/slow/fast response commands; stop is held for 3 seconds |
+| `/goal_pose` | Person B (goal detection node) | Person A (Nav2/adapter) | `geometry_msgs/PoseStamped` | Published from detections using depth when available |
 
 ---
 
-## Command Values for `/detection_cmd`
+## `yolo_msgs/DetectionArray`
 
-| Value | Meaning | Expected nav behaviour |
+| Field | Type | Meaning |
 |---|---|---|
-| `"STOP"` | Stop sign detected | Robot halts for 3 seconds |
-| `"FAST"` | Fast sign detected | Increase linear velocity |
-| `"SLOW"` | Slow sign detected | Reduce linear velocity |
-| `"CLEAR"` | No sign in frame | Resume default wall-following speed |
+| `detections` | `yolo_msgs/Detection[]` | One entry per YOLO bounding box |
+
+## `yolo_msgs/Detection`
+
+| Field | Type | Meaning |
+|---|---|---|
+| `label` | `string` | Class label, currently `fast`, `slow`, or `stop` |
+| `confidence` | `float32` | YOLO confidence score |
+| `x1` | `float32` | Bounding box left pixel |
+| `y1` | `float32` | Bounding box top pixel |
+| `x2` | `float32` | Bounding box right pixel |
+| `y2` | `float32` | Bounding box bottom pixel |
 
 ---
 
 ## Notes
 
-- `/goal_pose` uses the `geometry_msgs/PoseStamped` frame `map` — Nav2 standard input
-- `/detection_cmd` uses plain strings for simplicity; upgrade to a custom action if time allows
-- Person A's wall-following node should default to normal speed until a `/detection_cmd` is received
+- `/goal_pose` currently uses the `camera_link` frame because `goal_publisher` back-projects from the camera image/depth stream.
+- `sign_controller` currently publishes directly to `/cmd_vel`; a dedicated mux or `/navigation_enabled` gate would be cleaner if both wall-following and sign control run at the same time.
