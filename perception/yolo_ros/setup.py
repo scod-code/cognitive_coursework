@@ -36,6 +36,7 @@ setup(
             'goal_publisher = yolo_ros.goal_publisher:main',
             'landmark_db = yolo_ros.landmark_db:main',
             'resource_monitor = yolo_ros.resource_monitor:main',
+            'curiosity_explorer = yolo_ros.curiosity_explorer:main',
         ],
     },
 )
