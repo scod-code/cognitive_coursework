@@ -1,5 +1,5 @@
-# traffic-sign-detection > 2026-06-01 5:00am
-https://universe.roboflow.com/somtos-workspace-zguol/traffic-sign-detection-28jt4
+# traffic-sign-detection-v2 > 2026-06-03 11:22pm
+https://universe.roboflow.com/somtos-workspace-zguol/traffic-sign-detection-v2-3poqp
 
 Provided by a Roboflow user
 License: CC BY 4.0

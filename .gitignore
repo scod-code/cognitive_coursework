@@ -14,5 +14,10 @@ perception/resource_usage.csv
 results/
 yolov8n.pt
 data/
+extracted_signs_v2/
+training_signs_v2/
+dataset/raw_frames/
+dataset/README.roboflow.txt
+dataset/README.dataset.txt
 *.Zone.Identifier
 generate_signs.py:Zone.Identifier
