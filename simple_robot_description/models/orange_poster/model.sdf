@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model name="orange_poster">
+    <static>true</static>
+    <link name="poster">
+      <visual name="poster_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.04 1.6 1.6</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>1.0 1.0 1.0 1</ambient>
+          <diffuse>1.0 1.0 1.0 1</diffuse>
+          <script>
+            <uri>model://orange_poster/materials/scripts</uri>
+            <uri>model://orange_poster/materials/textures</uri>
+            <name>OrangePoster</name>
+          </script>
+        </material>
+      </visual>
+      <collision name="poster_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.04 1.6 1.6</size>
+          </box>
+        </geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>

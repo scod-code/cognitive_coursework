@@ -1,0 +1,13 @@
+material OrangePoster
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture orange.png
+      }
+    }
+  }
+}

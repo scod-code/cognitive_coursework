@@ -1,0 +1,13 @@
+material VehiclePoster
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture vehicle.png
+      }
+    }
+  }
+}

@@ -182,6 +182,27 @@
 	  <pose>5 -14.4 1.5 0 0 1.5708</pose>
 	</include>
 
+	<!-- Orange poster on west wall (yaw=0 so box X-axis points east into arena) -->
+	<include>
+	  <uri>model://orange_poster</uri>
+	  <name>orange_poster_1</name>
+	  <pose>-14.4 -5 1.5 0 0 0.0</pose>
+	</include>
+
+	<!-- Vehicle poster on north wall (yaw=-1.5708 so box X-axis points south into arena) -->
+	<include>
+	  <uri>model://vehicle_poster</uri>
+	  <name>vehicle_poster_1</name>
+	  <pose>5 14.4 1.5 0 0 -1.5708</pose>
+	</include>
+
+	<!-- Tree poster on east wall (yaw=3.14159 so box X-axis points west into arena) -->
+	<include>
+	  <uri>model://tree_poster</uri>
+	  <name>tree_poster_1</name>
+	  <pose>14.4 -5 1.5 0 0 3.14159</pose>
+	</include>
+
     <gravity>0 0 -9.8</gravity>
     <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
     <atmosphere type="adiabatic">

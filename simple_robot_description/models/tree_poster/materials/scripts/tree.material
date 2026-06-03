@@ -1,0 +1,13 @@
+material TreePoster
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture tree.png
+      }
+    }
+  }
+}
