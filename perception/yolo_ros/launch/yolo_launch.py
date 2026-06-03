@@ -9,7 +9,7 @@ def generate_launch_description():
             executable='yolo_node',
             name='yolo_node',
             output='screen',
-            parameters=[{'model_path': '/home/somto/ros2_coursework_ws/results/traffic_sign_v1-3/weights/best.pt'}]
+            parameters=[{'model_path': '/home/somto/ros2_coursework_ws/results/trafficsignv2/weights/best.pt'}]
         ),
         Node(
             package='yolo_ros',

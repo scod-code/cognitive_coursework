@@ -3,4 +3,11 @@ val: /home/somto/ros2_coursework_ws/dataset/valid/images
 test: /home/somto/ros2_coursework_ws/dataset/test/images
 
 nc: 6
-names: ['stopsign', 'slowsign', 'fastsign', 'orange', 'tree', 'vehicle']
+names: ['fastsign', 'orange', 'slowsign', 'stopsign', 'tree', 'vehicle']
+
+roboflow:
+  workspace: somtos-workspace-zguol
+  project: traffic-sign-detection-v2-3poqp
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/somtos-workspace-zguol/traffic-sign-detection-v2-3poqp/dataset/1
