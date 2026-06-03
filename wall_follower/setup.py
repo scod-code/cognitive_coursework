@@ -33,6 +33,14 @@ setup(
             os.path.join('share', package_name, 'models'),
             glob('models/*')
         ),
+        (
+            os.path.join('share', package_name, 'rviz'),
+            glob('rviz/*.rviz')
+        ),
+        (
+            os.path.join('share', package_name),
+            glob('README.md')
+        ),
     ],
     install_requires=['setuptools'],
     zip_safe=True,

@@ -1,0 +1,17 @@
+goals:
+  left_corridor:
+    label: "Official maze placeholder: left corridor"
+    goal: [0.0, 0.0, 0.0]
+    reward: 1.0
+  top_corridor:
+    label: "Official maze placeholder: top corridor"
+    goal: [0.0, 0.0, 0.0]
+    reward: 1.1
+  right_corridor:
+    label: "Official maze placeholder: right corridor"
+    goal: [0.0, 0.0, 0.0]
+    reward: 1.0
+  exit_area:
+    label: "Official maze placeholder: exit area"
+    goal: [0.0, 0.0, 0.0]
+    reward: 1.2

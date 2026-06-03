@@ -3,11 +3,21 @@
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import ExecuteProcess
+from launch.actions import DeclareLaunchArgument, ExecuteProcess
+from launch.conditions import IfCondition
+from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
 
 def generate_launch_description():
+    use_rviz = LaunchConfiguration('use_rviz')
+
+    declare_use_rviz = DeclareLaunchArgument(
+        'use_rviz',
+        default_value='true',
+        description='Launch RViz with the official Gazebo Classic world'
+    )
+
     # Paths
     wall_follower_dir = get_package_share_directory('wall_follower')
     simple_robot_description_dir = get_package_share_directory('simple_robot_description')
@@ -84,12 +94,14 @@ def generate_launch_description():
         arguments=['-d', rviz_config],
         parameters=[
             {'use_sim_time': True}
-        ]
+        ],
+        condition=IfCondition(use_rviz)
     )
     
     
     ld = LaunchDescription()
     
+    ld.add_action(declare_use_rviz)
     ld.add_action(gazebo_server)
     ld.add_action(robot_state_publisher)
     ld.add_action(joint_state_publisher_node)
