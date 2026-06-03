@@ -45,6 +45,9 @@
 
     </model>
 
-  </world>
+  
+  <plugin name="gazebo_ros_state" filename="libgazebo_ros_state.so"/>
+  <plugin name="gazebo_ros_factory" filename="libgazebo_ros_factory.so"/>
+</world>
 
 </sdf>

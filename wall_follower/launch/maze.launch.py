@@ -25,7 +25,7 @@ def generate_launch_description():
         default_value=os.path.join(
             get_package_share_directory('simple_robot_description'),
             'worlds',
-            'simple_world.world'
+            'diff_drive', 'detection_world.sdf'
         ),
         description='Path to maze world file'
     )
@@ -85,6 +85,7 @@ def generate_launch_description():
             '-x', '0',
             '-y', '0',
             '-z', '0.1',
+            '-timeout', '120',
         ],
         output='screen'
     )
