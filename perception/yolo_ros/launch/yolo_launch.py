@@ -33,4 +33,18 @@ def generate_launch_description():
             name='goal_publisher',
             output='screen'
         ),
+        # Landmark database: stores detected object positions via StoreLandmark service
+        Node(
+            package='yolo_ros',
+            executable='landmark_db',
+            name='landmark_db',
+            output='screen'
+        ),
+        # Resource monitor: logs CPU/memory usage to CSV for report figures
+        Node(
+            package='yolo_ros',
+            executable='resource_monitor',
+            name='resource_monitor',
+            output='screen'
+        ),
     ])

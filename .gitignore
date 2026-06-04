@@ -21,3 +21,6 @@ dataset/README.roboflow.txt
 dataset/README.dataset.txt
 *.Zone.Identifier
 generate_signs.py:Zone.Identifier
+proper_images/
+frames_*.pdf
+models/
