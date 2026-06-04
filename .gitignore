@@ -23,4 +23,4 @@ dataset/README.dataset.txt
 generate_signs.py:Zone.Identifier
 proper_images/
 frames_*.pdf
-models/
+/models/
