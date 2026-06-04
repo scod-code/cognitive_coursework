@@ -26,7 +26,10 @@ except Exception:
 class YoloNode(Node):
     def __init__(self):
         super().__init__('yolo_node')
-        self.declare_parameter('model_path', '/home/somto/ros2_coursework_ws/results/trafficsignv2/weights/best.pt')
+        self.declare_parameter('model_path', os.path.join(
+            os.path.expanduser('~'),
+            'ros2_coursework_ws', 'results', 'trafficsignv2', 'weights', 'best.pt'
+        ))
         self.declare_parameter('confidence', 0.40)
         model_path = self.get_parameter('model_path').get_parameter_value().string_value
         self.confidence = self.get_parameter('confidence').get_parameter_value().double_value

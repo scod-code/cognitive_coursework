@@ -1,6 +1,6 @@
-train: /home/somto/ros2_coursework_ws/dataset/train/images
-val: /home/somto/ros2_coursework_ws/dataset/valid/images
-test: /home/somto/ros2_coursework_ws/dataset/test/images
+train: ../dataset/train/images
+val: ../dataset/valid/images
+test: ../dataset/test/images
 
 nc: 6
 names: ['fastsign', 'orange', 'slowsign', 'stopsign', 'tree', 'vehicle']

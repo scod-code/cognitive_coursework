@@ -1,8 +1,15 @@
 from launch import LaunchDescription
 from launch_ros.actions import Node
+import os
 
 
 def generate_launch_description():
+    # Resolve model path relative to home directory (portable across machines)
+    model_path = os.path.join(
+        os.path.expanduser('~'),
+        'ros2_coursework_ws', 'results', 'trafficsignv2', 'weights', 'best.pt'
+    )
+
     return LaunchDescription([
         # Wall follower: publishes navigation commands to /wall_follower/cmd_vel
         Node(
@@ -17,10 +24,10 @@ def generate_launch_description():
             executable='yolo_node',
             name='yolo_node',
             output='screen',
-            parameters=[{'model_path': '/home/somto/ros2_coursework_ws/results/trafficsignv2/weights/best.pt'}]
+            parameters=[{'model_path': model_path}]
         ),
         # Sign controller: reads /wall_follower/cmd_vel + /yolo/detections_json
-        # → publishes modified speed to /cmd_vel
+        # -> publishes modified speed to /cmd_vel
         Node(
             package='yolo_ros',
             executable='sign_controller',

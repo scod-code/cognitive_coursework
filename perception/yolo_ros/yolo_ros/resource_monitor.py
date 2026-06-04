@@ -1,4 +1,5 @@
 import csv
+import os
 import time
 import psutil
 
@@ -10,7 +11,10 @@ from std_msgs.msg import String
 class ResourceMonitor(Node):
     def __init__(self):
         super().__init__('resource_monitor')
-        self.declare_parameter('csv_path', '/home/somto/ros2_coursework_ws/perception/resource_usage.csv')
+        self.declare_parameter('csv_path', os.path.join(
+            os.path.expanduser('~'),
+            'ros2_coursework_ws', 'perception', 'resource_usage.csv'
+        ))
         self.csv_path = self.get_parameter('csv_path').get_parameter_value().string_value
         self.pub = self.create_publisher(String, '/resource_monitor', 10)
         self._file = open(self.csv_path, 'a', newline='')

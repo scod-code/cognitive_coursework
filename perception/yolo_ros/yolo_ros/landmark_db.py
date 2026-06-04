@@ -1,3 +1,4 @@
+import os
 import sqlite3
 import threading
 import time
@@ -11,7 +12,10 @@ from yolo_msgs.msg import Detection
 class LandmarkDB(Node):
     def __init__(self):
         super().__init__('landmark_db')
-        self.declare_parameter('db_path', '/home/somto/ros2_coursework_ws/perception/landmarks.db')
+        self.declare_parameter('db_path', os.path.join(
+            os.path.expanduser('~'),
+            'ros2_coursework_ws', 'perception', 'landmarks.db'
+        ))
         self.db_path = self.get_parameter('db_path').get_parameter_value().string_value
         self._conn = sqlite3.connect(self.db_path, check_same_thread=False)
         self._lock = threading.Lock()
