@@ -8,6 +8,6 @@ names: ['fastsign', 'orange', 'slowsign', 'stopsign', 'tree', 'vehicle']
 roboflow:
   workspace: somtos-workspace-zguol
   project: traffic-sign-detection-v2-3poqp
-  version: 1
+  version: 2
   license: CC BY 4.0
-  url: https://universe.roboflow.com/somtos-workspace-zguol/traffic-sign-detection-v2-3poqp/dataset/1
+  url: https://universe.roboflow.com/somtos-workspace-zguol/traffic-sign-detection-v2-3poqp/dataset/2
