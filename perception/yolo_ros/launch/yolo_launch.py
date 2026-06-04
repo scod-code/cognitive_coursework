@@ -4,6 +4,14 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     return LaunchDescription([
+        # Wall follower: publishes navigation commands to /wall_follower/cmd_vel
+        Node(
+            package='wall_follower',
+            executable='wall_follower',
+            name='wall_follower',
+            output='screen',
+        ),
+        # YOLO detector: publishes detections to /yolo/detections_json
         Node(
             package='yolo_ros',
             executable='yolo_node',
@@ -11,6 +19,8 @@ def generate_launch_description():
             output='screen',
             parameters=[{'model_path': '/home/somto/ros2_coursework_ws/results/trafficsignv2/weights/best.pt'}]
         ),
+        # Sign controller: reads /wall_follower/cmd_vel + /yolo/detections_json
+        # → publishes modified speed to /cmd_vel
         Node(
             package='yolo_ros',
             executable='sign_controller',

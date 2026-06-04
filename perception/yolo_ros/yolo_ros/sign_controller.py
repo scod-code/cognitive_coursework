@@ -23,6 +23,9 @@ BEHAVIOUR_MAP = {
     "vehicle":   "COUNT_OBJ",  # robot slows and counts vehicles
 }
 
+# Minimum confidence required to act on a detection (filters false positives)
+MIN_CONFIDENCE = 0.45
+
 class SignController(Node):
     def __init__(self):
         super().__init__('sign_controller')
@@ -43,9 +46,19 @@ class SignController(Node):
         self.stop_until = None
         self.stop_timer = self.create_timer(0.1, self.enforce_stop)
 
+        # Track the latest angular.z from the wall-follower so we preserve turning
+        # while only modifying linear speed for SLOW/FAST/COUNT behaviours.
+        self.last_wall_angular_z = 0.0
+        self.sub_wall_cmd = self.create_subscription(
+            Twist, '/wall_follower/cmd_vel', self._wall_cmd_cb, 10)
+
         # Sector counting state
         self.sector_counts = {"orange": 0, "tree": 0, "vehicle": 0}
         self.current_sector = None  # which counting class is currently active
+
+    def _wall_cmd_cb(self, msg: Twist):
+        """Cache the wall-follower's angular command so we don't zero it out."""
+        self.last_wall_angular_z = msg.angular.z
 
     def detections_json_cb(self, msg: String):
         try:
@@ -65,6 +78,9 @@ class SignController(Node):
         self.handle_detections(detections)
 
     def handle_detections(self, detections):
+        # Filter to detections above the confidence threshold
+        detections = [d for d in detections if d.get('conf', 0) >= MIN_CONFIDENCE]
+
         # pick highest confidence detection
         best = None
         for d in detections:
@@ -72,7 +88,7 @@ class SignController(Node):
                 best = d
         cmd = Twist()
         if best is None:
-            # no detections: do nothing
+            # No confident detections — do nothing, let wall-follower drive
             return
         label = best.get('label', '')
         behaviour = BEHAVIOUR_MAP.get(label)
@@ -81,22 +97,25 @@ class SignController(Node):
             return
 
         if behaviour == "STOP":
+            # Full stop: zero both axes and hold
             self.stop_until = self.get_clock().now() + Duration(seconds=self.stop_timeout)
             cmd.linear.x = 0.0
             cmd.angular.z = 0.0
             self.get_logger().info(f'Stop sign detected: holding zero velocity for {self.stop_timeout:.1f}s')
         elif behaviour == "SLOW":
+            # Reduce linear speed but KEEP the wall-follower's angular correction
             cmd.linear.x = float(self.slow_speed)
-            cmd.angular.z = 0.0
+            cmd.angular.z = self.last_wall_angular_z
             self.get_logger().info('Slow sign detected: reducing speed')
         elif behaviour == "FAST":
+            # Increase linear speed but KEEP the wall-follower's angular correction
             cmd.linear.x = float(self.fast_speed)
-            cmd.angular.z = 0.0
+            cmd.angular.z = self.last_wall_angular_z
             self.get_logger().info('Fast sign detected: increasing speed')
         elif behaviour == "COUNT_OBJ":
-            # Slow down for accurate counting
+            # Slow to crawl but KEEP wall-follower angular so robot doesn't drive into wall
             cmd.linear.x = float(self.count_speed)
-            cmd.angular.z = 0.0
+            cmd.angular.z = self.last_wall_angular_z
 
             # Count all detections of counting classes in this frame
             count_in_frame = {}

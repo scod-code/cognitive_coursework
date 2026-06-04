@@ -98,7 +98,7 @@ class WallFollowerNode(Node):
         # Publishers and subscribers
         self.twist_pub = self.create_publisher(
             Twist,
-            '/cmd_vel',
+            '/wall_follower/cmd_vel',
             self.cmd_vel_qos
         )
         
