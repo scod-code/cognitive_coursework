@@ -4,6 +4,10 @@ import os
 
 package_name = 'wall_follower'
 
+
+def files(pattern):
+    return [path for path in glob(pattern) if os.path.isfile(path)]
+
 setup(
     name=package_name,
     version='0.0.0',
@@ -27,7 +31,7 @@ setup(
         ),
         (
             os.path.join('share', package_name, 'maps'),
-            glob('maps/*')
+            files('maps/*')
         ),
     ],
     install_requires=['setuptools'],
@@ -45,6 +49,8 @@ setup(
         'console_scripts': [
             'wall_follower_node = wall_follower.wall_follower_node:main',
             'amcl_initializer = wall_follower.amcl_initializer:main',
+            'topic2_yolo_counter = wall_follower.topic2_yolo_counter:main',
+            'topic2_nav2_traffic_rules = wall_follower.topic2_nav2_traffic_rules:main',
         ],
     },
 )
