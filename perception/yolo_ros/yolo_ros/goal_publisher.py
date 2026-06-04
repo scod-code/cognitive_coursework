@@ -74,6 +74,10 @@ class GoalPublisher(Node):
     def handle_detections(self, detections):
         if not detections:
             return
+        # Filter to confident detections only
+        detections = [d for d in detections if d.get('conf', 0) >= 0.45]
+        if not detections:
+            return
         # pick best detection
         best = max(detections, key=lambda d: d.get('conf',0))
         x1, y1, x2, y2 = map(int, best.get('xyxy', [0,0,0,0]))
