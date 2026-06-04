@@ -11,6 +11,7 @@ extracted_frames - Shortcut.lnk
 *.Zone.Identifier
 perception/landmarks.db
 perception/resource_usage.csv
+# results/ is gitignored, but results/trafficsignv2/weights/best.pt is force-tracked
 results/
 yolov8n.pt
 data/
