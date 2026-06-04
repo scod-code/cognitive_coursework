@@ -7,7 +7,7 @@ def generate_launch_description():
         # Wall follower: publishes navigation commands to /wall_follower/cmd_vel
         Node(
             package='wall_follower',
-            executable='wall_follower',
+            executable='wall_follower_node',
             name='wall_follower',
             output='screen',
         ),
