@@ -173,15 +173,16 @@ The `evidence/` folder contains:
 - [x] Performance evaluation and metrics tracking
 
 ### Completed (Person A - Navigation)  
-- [x] Robot URDF with sensors
+- [x] Robot URDF with sensors (RGB camera, depth camera, LiDAR, differential drive)
 - [x] Gazebo world with traffic signs
-- [x] Wall following algorithm
+- [x] Wall following algorithm (PID control with obstacle avoidance)
+- [x] Kalman filter for sensor noise reduction
+- [x] Scan filter node (EMA smoothing on LaserScan)
 - [x] Basic navigation control
 - [x] RViz configuration for visualization
 
 ### In Progress / Future Work
 - [ ] Advanced navigation (OctoMap/Nav2)
-- [ ] Kalman filter for sensor fusion
 - [ ] POMDP-based goal selection
 - [ ] Visual odometry implementation
 - [ ] Full SLAM pipeline
@@ -220,7 +221,7 @@ This project is part of a coursework submission for Cognitive Robotics. Dataset 
 - **Person B**: Perception and machine learning components
 
 ## Repository Status
-- **Git Branch**: `person-b/yolo-pipeline`
-- **Last Commit**: Model retraining completed with 0.845 mAP@50
+- **Git Branch**: `main` (default, unified with `person-b/yolo-pipeline`)
+- **Last Commit**: All work unified and pushed
 - **Synced**: Local and remote branches fully synchronized
 - **Documentation**: Complete with performance metrics and evidence

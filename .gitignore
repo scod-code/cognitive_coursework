@@ -11,8 +11,11 @@ extracted_frames - Shortcut.lnk
 *.Zone.Identifier
 perception/landmarks.db
 perception/resource_usage.csv
-# results/ is gitignored, but results/trafficsignv2/weights/best.pt is force-tracked
+# results/ is gitignored; best.pt and traffic_sign_v1-3/ are force-tracked via git add -f
 results/
+!results/.gitkeep
+!results/trafficsignv2/weights/best.pt
+!results/traffic_sign_v1-3/
 yolov8n.pt
 data/
 extracted_signs_v2/

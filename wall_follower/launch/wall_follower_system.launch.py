@@ -70,8 +70,3 @@ def generate_launch_description():
         scan_filter_node,
         octomap_server_node,
     ])
-
-    return LaunchDescription([
-        scan_filter_node,
-        wall_follower_node
-    ])
