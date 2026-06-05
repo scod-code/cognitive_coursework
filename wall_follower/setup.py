@@ -51,6 +51,7 @@ setup(
             'amcl_initializer = wall_follower.amcl_initializer:main',
             'topic2_yolo_counter = wall_follower.topic2_yolo_counter:main',
             'topic2_nav2_traffic_rules = wall_follower.topic2_nav2_traffic_rules:main',
+            'topic2_yolo_landmark_bridge = wall_follower.topic2_yolo_landmark_bridge:main',
         ],
     },
 )
