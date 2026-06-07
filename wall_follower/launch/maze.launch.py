@@ -63,9 +63,17 @@ def generate_launch_description():
     # Gazebo GUI
     gzclient = ExecuteProcess(
         cmd=[FindExecutable(name='gzclient')],
-        output='screen'
-        ,
+        output='screen',
         additional_env={
+            'GAZEBO_RESOURCE_PATH': os.pathsep.join([
+                os.path.join(get_package_share_directory('simple_robot_description'), 'worlds'),
+                '/usr/share/gazebo-11',
+                '/usr/share/gazebo-11/media'
+            ]),
+            'GAZEBO_MODEL_PATH': os.pathsep.join([
+                os.path.join(get_package_share_directory('simple_robot_description'), 'models'),
+                '/usr/share/gazebo-11/models'
+            ]),
             'HOME': os.environ.get('HOME', '/root')
         }
     )

@@ -64,25 +64,51 @@ source install/setup.bash
 
 ### Running the System
 
-**1. Launch Gazebo Simulation**
-```bash
-ros2 launch simple_robot_description gazebo.launch.py
-```
+Depending on the task, you can launch either the **Arena Environment** (for sign detection and YOLO training/evaluation) or the **Maze Environment** (for wall-following and Nav2 path planning).
 
-**2. Start YOLO Perception Node**
-```bash
-ros2 run yolo_ros yolo_node
-```
+#### Option A: Arena Environment (Object Detection & Data Collection)
+This environment includes traffic signs (stop, fast, slow) and object posters (orange, tree, vehicle) for perception and classification.
 
-**3. Start Wall Following Navigation**
-```bash
-ros2 run wall_follower wall_follower_node
-```
+1. **Launch the Arena Simulation**:
+   ```bash
+   ros2 launch simple_robot_description gazebo.launch.py
+   ```
+2. **Start the YOLO Perception Node**:
+   ```bash
+   ros2 run yolo_ros yolo_node
+   ```
+3. **Start Wall Following Navigation (optional)**:
+   ```bash
+   ros2 run wall_follower wall_follower_node
+   ```
+4. **Visualize in RViz**:
+   ```bash
+   ros2 run rviz2 rviz2 -d install/simple_robot_description/share/simple_robot_description/rviz/robot.rviz
+   ```
 
-**4. Visualize in RViz**
-```bash
-ros2 run rviz2 rviz2 -d install/simple_robot_description/share/simple_robot_description/rviz/config.rviz
-```
+#### Option B: Maze Environment (Autonomous Navigation & Mapping)
+This environment includes a complete maze layout. You can run it with either basic wall-following or the advanced Nav2 navigation stack.
+
+1. **Launch the Maze Simulation (Basic Wall-Following)**:
+   ```bash
+   ros2 launch wall_follower maze.launch.py
+   ```
+   Then start the wall follower node:
+   ```bash
+   ros2 run wall_follower wall_follower_node
+   ```
+
+2. **Launch the Maze Simulation with Nav2 Stack**:
+   ```bash
+   ros2 launch wall_follower nav2_sim.launch.py
+   ```
+   This starts the maze simulation, RViz with path visualization, and the full Nav2 navigation suite (AMCL localization, map server, path planner, and obstacle avoidance controller). You can command the robot using the **2D Goal Pose** tool in RViz to make it plan a path and navigate to the selected goal.
+
+3. **Start the YOLO Perception Node (optional)**:
+   You can also run YOLOv8 in the maze to detect signs and publish traffic rules:
+   ```bash
+   ros2 run yolo_ros yolo_node
+   ```
 
 ## Project Structure
 
