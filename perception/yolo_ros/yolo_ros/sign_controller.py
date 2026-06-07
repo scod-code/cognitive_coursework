@@ -88,7 +88,33 @@ class SignController(Node):
         self.sector_counts = {"orange": 0, "tree": 0, "vehicle": 0}
         self.current_sector = None
 
+        # Heartbeat: if wall_follower hasn't published in 1 second, publish a gentle forward command
+        # This ensures the robot is never frozen due to launch timing.
+        self._last_wall_cmd_time = self.get_clock().now()
+        self._heartbeat_timer = self.create_timer(0.2, self._heartbeat_cb)
+
         self.get_logger().info('SignController initialized — forwarding wall_follower commands')
+
+    # ------------------------------------------------------------------ #
+    #  Heartbeat: ensure robot moves even before wall_follower starts
+    # ------------------------------------------------------------------ #
+    def _heartbeat_cb(self):
+        """If we haven't received wall_follower cmd in 1s, publish default forward."""
+        now = self.get_clock().now()
+        elapsed = (now - self._last_wall_cmd_time).nanoseconds / 1e9
+        if elapsed > 1.0:
+            # No wall_follower data — apply stop/override if active, else crawl forward
+            if self.stop_until is not None and now < self.stop_until:
+                self.pub_cmd.publish(Twist())
+            elif self.speed_override is not None and self.override_expires is not None and now < self.override_expires:
+                cmd = Twist()
+                cmd.linear.x = self.speed_override
+                self.pub_cmd.publish(cmd)
+            else:
+                cmd = Twist()
+                cmd.linear.x = 0.2
+                cmd.angular.z = 0.1
+                self.pub_cmd.publish(cmd)
 
     # ------------------------------------------------------------------ #
     #  Core forwarding: wall_follower → /cmd_vel (always runs)
@@ -96,6 +122,7 @@ class SignController(Node):
     def _wall_cmd_cb(self, msg: Twist):
         """Receive wall_follower command and forward to /cmd_vel with any active override."""
         now = self.get_clock().now()
+        self._last_wall_cmd_time = now
 
         # 1. If in STOP hold, publish zero and return
         if self.stop_until is not None:

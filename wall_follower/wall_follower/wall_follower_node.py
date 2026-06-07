@@ -1,22 +1,23 @@
 """
 Wall-Following Navigation Node.
 
-This node implements reactive wall-following navigation for the JetBot maze runner.
-It uses depth sensor data and a PID controller to maintain a target distance from walls.
+Reactive wall-following + open-area wandering for the detection arena.
 
-The robot follows walls by:
-1. Reading depth/lidar data from the RealSense camera
-2. Filtering noisy readings with a Kalman filter
-3. Computing the desired distance error from the target wall distance
-4. Applying PID control to generate twist commands
-5. Publishing velocity commands for robot movement
+Strategy:
+    1. Subscribe to /scan (LiDAR, 360 degrees, 0.12-8.0 m range).
+    2. Divide scan into left, centre, right sectors.
+    3. If walls are detected (valid readings exist in range):
+       - Use PID control to balance left/right distance (wall-following).
+       - Slow down if obstacle ahead.
+    4. If NO walls are detected (robot is in open space):
+       - Drive forward with a gentle turn to eventually reach a wall.
+    5. Publish to /wall_follower/cmd_vel (sign_controller forwards to /cmd_vel).
 
 Topics:
     Subscriptions:
-        /camera/depth/image_raw: Depth image from RealSense (sensor_msgs/Image)
-        /scan: LaserScan for backup (sensor_msgs/LaserScan)
+        /scan: LaserScan (sensor_msgs/LaserScan)
     Publications:
-        /cmd_vel: Twist commands for robot motion (geometry_msgs/Twist)
+        /wall_follower/cmd_vel: Twist commands (geometry_msgs/Twist)
 """
 
 import rclpy
@@ -25,232 +26,203 @@ from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy
 
 import numpy as np
 from geometry_msgs.msg import Twist
-from sensor_msgs.msg import Image, LaserScan
-
-try:
-    from cv_bridge import CvBridge
-    HAVE_CV_BRIDGE = True
-except ImportError:
-    HAVE_CV_BRIDGE = False
+from sensor_msgs.msg import LaserScan
 
 from .kalman_filter import KalmanFilter1D
 
 
 class WallFollowerNode(Node):
     """
-    ROS2 node implementing reactive wall-following using PID control.
-    
-    The wall-follower uses a simple but robust strategy:
-    - Divide the depth image into three regions: left, center, right
-    - Compute average depth in each region
-    - If left side is closer to target distance, steer right (and vice versa)
-    - Use center depth to avoid obstacles ahead
+    Reactive wall-following with open-area wandering.
+
+    In the detection arena (30 m × 30 m), the robot starts at the centre
+    and initially has no walls within LiDAR range.  The node will drive
+    forward (with a slight angular bias) until it reaches a wall, then
+    switch to PID-based wall-following.
     """
-    
+
     def __init__(self):
         super().__init__('wall_follower')
-        
-        
-        # Reliable QoS for velocity commands.
-        # Gazebo diff_drive expects reliable/default QoS on /cmd_vel.
-        self.cmd_vel_qos = QoSProfile(
+
+        # Declare parameters
+        self.declare_parameter('target_wall_distance', 1.0)
+        self.declare_parameter('linear_speed', 0.25)
+        self.declare_parameter('wander_speed', 0.3)
+        self.declare_parameter('wander_turn', 0.15)
+        self.declare_parameter('pid_kp', 0.8)
+        self.declare_parameter('pid_ki', 0.0)
+        self.declare_parameter('pid_kd', 0.2)
+        self.declare_parameter('angular_max', 1.0)
+        self.declare_parameter('use_kalman_filter', True)
+
+        # Get parameters
+        self.target_wall_distance = self.get_parameter('target_wall_distance').value
+        self.linear_speed = self.get_parameter('linear_speed').value
+        self.wander_speed = self.get_parameter('wander_speed').value
+        self.wander_turn = self.get_parameter('wander_turn').value
+        self.pid_kp = self.get_parameter('pid_kp').value
+        self.pid_ki = self.get_parameter('pid_ki').value
+        self.pid_kd = self.get_parameter('pid_kd').value
+        self.angular_max = self.get_parameter('angular_max').value
+        self.use_kalman = self.get_parameter('use_kalman_filter').value
+
+        # Sensor range limits (must match LiDAR config in URDF: 0.12 - 8.0 m)
+        self.range_min = 0.12
+        self.range_max = 7.9  # slightly below sensor max to exclude inf
+
+        # QoS profiles
+        sensor_qos = QoSProfile(
+            reliability=ReliabilityPolicy.BEST_EFFORT,
+            history=HistoryPolicy.KEEP_LAST,
+            depth=5
+        )
+        cmd_qos = QoSProfile(
             reliability=ReliabilityPolicy.RELIABLE,
             history=HistoryPolicy.KEEP_LAST,
             depth=10
         )
 
-        # Best-effort QoS for sensor streams such as /scan and depth images.
-        self.sensor_qos = QoSProfile(
-            reliability=ReliabilityPolicy.BEST_EFFORT,
-            history=HistoryPolicy.KEEP_LAST,
-            depth=10
+        # Publisher
+        self.twist_pub = self.create_publisher(Twist, '/wall_follower/cmd_vel', cmd_qos)
+
+        # Subscriber (LiDAR only — primary sensor, always available)
+        self.scan_sub = self.create_subscription(
+            LaserScan, '/scan', self.scan_callback, qos_profile=sensor_qos
         )
 
-# Declare parameters
-        self.declare_parameter('target_wall_distance', 0.5)
-        self.declare_parameter('linear_speed', 0.2)
-        self.declare_parameter('pid_kp', 0.8)
-        self.declare_parameter('pid_ki', 0.0)
-        self.declare_parameter('pid_kd', 0.2)
-        self.declare_parameter('angular_max', 1.0)
-        self.declare_parameter('depth_valid_range', [0.1, 3.0])
-        self.declare_parameter('use_kalman_filter', True)
-        
-        # Get parameters
-        self.target_wall_distance = self.get_parameter('target_wall_distance').value
-        self.linear_speed = self.get_parameter('linear_speed').value
-        self.pid_kp = self.get_parameter('pid_kp').value
-        self.pid_ki = self.get_parameter('pid_ki').value
-        self.pid_kd = self.get_parameter('pid_kd').value
-        self.angular_max = self.get_parameter('angular_max').value
-        depth_range = self.get_parameter('depth_valid_range').value
-        self.depth_min = depth_range[0]
-        self.depth_max = depth_range[1]
-        self.use_kalman = self.get_parameter('use_kalman_filter').value
-        
-        # QoS profile for sensor data (best effort, low latency)
-        qos = QoSProfile(
-            reliability=ReliabilityPolicy.BEST_EFFORT,
-            history=HistoryPolicy.KEEP_LAST,
-            depth=1
-        )
-        
-        # Publishers and subscribers
-        self.twist_pub = self.create_publisher(
-            Twist,
-            '/wall_follower/cmd_vel',
-            self.cmd_vel_qos
-        )
-        
-        # Try depth image first (RealSense)
-        if HAVE_CV_BRIDGE:
-            self.depth_sub = self.create_subscription(
-                Image,
-                '/camera/depth/image_raw',
-                self.depth_callback,
-                qos_profile=qos
-            )
-            self.bridge = CvBridge()
-        
-        # LaserScan fallback
-        self.scan_sub = self.create_subscription(
-            LaserScan,
-            '/scan',
-            self.scan_callback,
-            qos_profile=qos
-        )
-        
-        # PID controller state
+        # PID state
         self.prev_error = 0.0
         self.integral_error = 0.0
-        
-        # Kalman filters for noise reduction
+
+        # Kalman filters for left/centre/right regions
         self.kalman_left = KalmanFilter1D(process_noise=0.01, measurement_noise=0.05)
         self.kalman_right = KalmanFilter1D(process_noise=0.01, measurement_noise=0.05)
         self.kalman_center = KalmanFilter1D(process_noise=0.01, measurement_noise=0.05)
-        
+
+        # Publish a steady command even before first scan arrives
+        self.timer = self.create_timer(0.1, self._heartbeat)
+        self._last_twist = Twist()
+        self._last_twist.linear.x = self.wander_speed
+        self._last_twist.angular.z = self.wander_turn
+
         self.get_logger().info(
-            f'Wall-Follower initialized. Target: {self.target_wall_distance}m, '
-            f'Speed: {self.linear_speed}m/s, Kalman: {self.use_kalman}'
+            f'Wall-Follower ready. target={self.target_wall_distance}m, '
+            f'speed={self.linear_speed}m/s, wander={self.wander_speed}m/s'
         )
-    
-    def depth_callback(self, msg):
-        """Process depth image from RealSense camera."""
-        if not HAVE_CV_BRIDGE:
-            return
-            
-        try:
-            import cv2
-            depth_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='32FC1')
-            
-            height, width = depth_image.shape
-            
-            # Mask invalid depth
-            depth_valid = np.where(
-                (depth_image > self.depth_min) & (depth_image < self.depth_max),
-                depth_image,
-                np.nan
-            )
-            
-            # Left, center, right regions
-            third = width // 3
-            depth_left = np.nanmean(depth_valid[:, :third])
-            depth_center = np.nanmean(depth_valid[:, third:2*third])
-            depth_right = np.nanmean(depth_valid[:, 2*third:])
-            
-            # Handle NaN
-            if np.isnan(depth_left):
-                depth_left = self.target_wall_distance
-            if np.isnan(depth_center):
-                depth_center = self.target_wall_distance
-            if np.isnan(depth_right):
-                depth_right = self.target_wall_distance
-            
-            # Kalman filter
-            if self.use_kalman:
-                depth_left = self.kalman_left.filter_measurement(depth_left)
-                depth_center = self.kalman_center.filter_measurement(depth_center)
-                depth_right = self.kalman_right.filter_measurement(depth_right)
-            
-            self.compute_control(depth_left, depth_center, depth_right)
-            
-        except Exception as e:
-            self.get_logger().error(f'Depth callback error: {e}')
-    
+
+    # ----------------------------------------------------------
+    # Heartbeat: always publish so sign_controller always has data
+    # ----------------------------------------------------------
+    def _heartbeat(self):
+        self.twist_pub.publish(self._last_twist)
+
+    # ----------------------------------------------------------
+    # Main sensor callback
+    # ----------------------------------------------------------
     def scan_callback(self, msg):
-        """Process LaserScan data."""
-        try:
-            ranges = np.array(msg.ranges)
-            
-            # Filter invalid readings
-            valid_mask = (ranges > self.depth_min) & (ranges < self.depth_max)
-            ranges[~valid_mask] = np.nan
-            
-            # Divide into sectors
-            n = len(ranges)
-            third = n // 3
-            
-            depth_left = np.nanmean(ranges[:third])
-            depth_center = np.nanmean(ranges[third:2*third])
-            depth_right = np.nanmean(ranges[2*third:])
-            
-            # Handle NaN
-            if np.isnan(depth_left):
-                depth_left = self.target_wall_distance
-            if np.isnan(depth_center):
-                depth_center = self.target_wall_distance
-            if np.isnan(depth_right):
-                depth_right = self.target_wall_distance
-            
-            # Kalman filter
-            if self.use_kalman:
-                depth_left = self.kalman_left.filter_measurement(depth_left)
-                depth_center = self.kalman_center.filter_measurement(depth_center)
-                depth_right = self.kalman_right.filter_measurement(depth_right)
-            
-            self.compute_control(depth_left, depth_center, depth_right)
-            
-        except Exception as e:
-            self.get_logger().error(f'Scan callback error: {e}')
-    
-    def compute_control(self, depth_left, depth_center, depth_right):
-        """Compute PID-based wall-following control."""
-        # Wall-following error (positive = right side too close, steer left)
+        """Process LaserScan from Gazebo LiDAR."""
+        ranges = np.array(msg.ranges, dtype=np.float64)
+        n = len(ranges)
+        if n == 0:
+            return
+
+        # Replace invalid readings with NaN
+        invalid = (ranges < self.range_min) | (ranges > self.range_max) | np.isinf(ranges)
+        ranges[invalid] = np.nan
+
+        # Divide into three sectors (front-left, front-centre, front-right)
+        # LiDAR convention: index 0 = front, going counter-clockwise
+        # Front sector: -60° to +60° (indices roughly 0..60 and 300..360)
+        # Left sector: 30° to 150° (indices 30..150)
+        # Right sector: 210° to 330° (indices 210..330)
+        sector_left = ranges[30:150]
+        sector_center = np.concatenate([ranges[0:30], ranges[330:]])
+        sector_right = ranges[210:330]
+
+        left_valid = sector_left[~np.isnan(sector_left)]
+        center_valid = sector_center[~np.isnan(sector_center)]
+        right_valid = sector_right[~np.isnan(sector_right)]
+
+        has_left = len(left_valid) > 5
+        has_center = len(center_valid) > 5
+        has_right = len(right_valid) > 5
+
+        # If we have almost no valid readings in any sector, wander
+        if not has_left and not has_right and not has_center:
+            self._last_twist = Twist()
+            self._last_twist.linear.x = self.wander_speed
+            self._last_twist.angular.z = self.wander_turn
+            return
+
+        # Compute mean distances (use large fallback for missing sectors)
+        depth_left = float(np.mean(left_valid)) if has_left else 8.0
+        depth_center = float(np.mean(center_valid)) if has_center else 8.0
+        depth_right = float(np.mean(right_valid)) if has_right else 8.0
+
+        # Kalman filtering
+        if self.use_kalman:
+            depth_left = self.kalman_left.filter_measurement(depth_left)
+            depth_center = self.kalman_center.filter_measurement(depth_center)
+            depth_right = self.kalman_right.filter_measurement(depth_right)
+
+        # Compute control
+        self._compute_control(depth_left, depth_center, depth_right)
+
+    # ----------------------------------------------------------
+    # PID wall-following control
+    # ----------------------------------------------------------
+    def _compute_control(self, depth_left, depth_center, depth_right):
+        """PID-based wall-following with obstacle avoidance."""
+        # Error: positive means right is closer, steer left (positive angular.z)
         error = (depth_right - depth_left) / 2.0
-        
-        # Front obstacle avoidance
+
+        # Front obstacle check
         if depth_center < self.target_wall_distance * 0.7:
+            # Something very close ahead — stop forward, turn away
             forward_speed = 0.0
+            # Turn toward the side with more space
+            if depth_left > depth_right:
+                angular_velocity = self.angular_max * 0.7
+            else:
+                angular_velocity = -self.angular_max * 0.7
         else:
-            forward_speed = self.linear_speed
-        
-        # PID
-        self.integral_error += error * 0.1
-        self.integral_error = np.clip(self.integral_error, -1.0, 1.0)
-        
-        derivative = (error - self.prev_error) / 0.1
-        self.prev_error = error
-        
-        angular_velocity = (
-            self.pid_kp * error +
-            self.pid_ki * self.integral_error +
-            self.pid_kd * derivative
-        )
-        angular_velocity = np.clip(angular_velocity, -self.angular_max, self.angular_max)
-        
-        # Publish
+            # Normal wall-following
+            if depth_center < self.target_wall_distance * 1.5:
+                # Wall ahead but not critical — slow down
+                forward_speed = self.linear_speed * 0.5
+            else:
+                forward_speed = self.linear_speed
+
+            # PID
+            self.integral_error += error * 0.1
+            self.integral_error = float(np.clip(self.integral_error, -1.0, 1.0))
+
+            derivative = (error - self.prev_error) / 0.1
+            self.prev_error = error
+
+            angular_velocity = (
+                self.pid_kp * error +
+                self.pid_ki * self.integral_error +
+                self.pid_kd * derivative
+            )
+            angular_velocity = float(np.clip(angular_velocity, -self.angular_max, self.angular_max))
+
         twist = Twist()
         twist.linear.x = float(forward_speed)
         twist.angular.z = float(angular_velocity)
-        self.twist_pub.publish(twist)
+        self._last_twist = twist
 
 
 def main(args=None):
     rclpy.init(args=args)
     node = WallFollowerNode()
-    rclpy.spin(node)
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
     node.destroy_node()
-    rclpy.shutdown()
+    if rclpy.ok():
+        rclpy.shutdown()
 
 
 if __name__ == '__main__':
