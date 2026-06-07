@@ -1,23 +1,27 @@
 # How to Run the Complete System
 
-This gets the robot moving in the detection arena with signs, wall-following, and YOLO perception.
+This document covers how to run the full cognitive robotics system in the **official Topic 2 maze** (the cwmaze coursework environment with the atlas robot).
 
 ---
 
 ## Prerequisites
 
-**System**: Ubuntu 22.04 with ROS2 Humble + Gazebo Classic 11
-
-**Python packages** (install once):
 ```bash
+# Ubuntu 22.04 with ROS2 Humble
+sudo apt install ros-humble-desktop ros-humble-navigation2 ros-humble-nav2-bringup \
+  ros-humble-octomap-server ros-humble-pointcloud-to-laserscan \
+  ros-humble-robot-state-publisher ros-humble-tf2-ros \
+  ros-gz-bridge ros-gz-sim
+
+# Python packages
 pip3 install ultralytics opencv-python psutil numpy==1.24.4
 ```
 
-Note: `numpy==1.24.4` is needed because ROS2 Humble's `cv_bridge` was compiled against numpy 1.x. If you have numpy 2.x installed, cv_bridge will print errors.
+The `ntu_robotsim` package must be installed (provided by the university). It provides the `cwmaze.launch.py` and `spawn_robot.launch.py` for the official maze world.
 
 ---
 
-## Step 1: Build the workspace
+## Build the Workspace
 
 ```bash
 cd ~/ros2_coursework_ws
@@ -26,37 +30,138 @@ colcon build --symlink-install
 source install/setup.bash
 ```
 
-If you get errors about missing packages, install them:
-```bash
-sudo apt install ros-humble-gazebo-ros-pkgs ros-humble-robot-state-publisher ros-humble-cv-bridge
-```
-
 ---
 
-## Step 2: Launch Gazebo with the detection arena
+## Option A: Full Topic 2 Official Maze (Primary Demo)
 
-Open **Terminal 1**:
+This is the main system — the atlas robot navigates the official cwmaze using Nav2, detects signs with YOLO, adapts speed to traffic rules, and counts objects.
+
+### Terminal 1 — Start the official maze simulation
+
 ```bash
 cd ~/ros2_coursework_ws
 source /opt/ros/humble/setup.bash
 source install/setup.bash
-ros2 launch simple_robot_description gazebo.launch.py
+ros2 launch wall_follower topic2_official_system.launch.py
 ```
 
-**What you should see**: Gazebo opens with a 30m×30m arena with coloured walls (red, green, blue, yellow) and 6 sign/poster models on the walls. The robot (blue box) spawns at the centre.
+This launches:
+- Ignition Gazebo with the cwmaze world
+- The atlas robot (spawns at x=-3, y=-3)
+- The ROS-Ignition bridge (clock, odom, RGB-D camera, IMU, cmd_vel)
 
-**If you see the plain maze instead**: You may have launched `maze.launch.py` by mistake. Use `gazebo.launch.py`.
+Wait ~15 seconds for everything to load.
 
-**If signs/posters are missing**: The GAZEBO_MODEL_PATH wasn't set. The launch file should handle this automatically. If not:
+### Terminal 2 — Start Nav2 + RViz
+
 ```bash
-export GAZEBO_MODEL_PATH=~/ros2_coursework_ws/install/simple_robot_description/share/simple_robot_description/models:$GAZEBO_MODEL_PATH
+cd ~/ros2_coursework_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+ros2 launch wall_follower topic2_nav2.launch.py
+```
+
+This launches:
+- TF helper (map → odom → atlas/base_link)
+- Map server (loads `topic2_nav2_clean_map.yaml`)
+- Nav2 planner (NavFn with A*)
+- Nav2 controller (DWB local planner)
+- BT navigator
+- Behavior server (spin, backup, wait recoveries)
+- Goal pose bridge
+- Lifecycle manager (auto-starts all Nav2 nodes)
+- RViz with Nav2 visualization
+
+### Terminal 3 — Start YOLO perception
+
+```bash
+cd ~/ros2_coursework_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+ros2 run yolo_ros yolo_node --ros-args -p model_path:=$HOME/ros2_coursework_ws/results/trafficsignv2/weights/best.pt
+```
+
+### Terminal 4 — Start traffic rule adaptation
+
+```bash
+cd ~/ros2_coursework_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+ros2 run wall_follower topic2_nav2_traffic_rules
+```
+
+This adapts Nav2 speed based on YOLO detections:
+- `fastsign` → speed_limit = 0.28
+- `slowsign` → speed_limit = 0.05
+- `stopsign` → speed_limit = 0.01
+- no sign   → speed_limit = 0.18
+
+### Terminal 5 — Start object counter
+
+```bash
+cd ~/ros2_coursework_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+ros2 run wall_follower topic2_yolo_counter
+```
+
+Counts oranges, trees, and vehicles when visible and publishes to `/counting/status`.
+
+### Terminal 6 (optional) — Start OctoMap 3D mapping
+
+```bash
+cd ~/ros2_coursework_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+ros2 launch wall_follower topic2_octomap_with_nav2.launch.py
+```
+
+### How to navigate
+
+Once everything is running:
+1. In **RViz**, use the **2D Goal Pose** tool to click a destination in the maze
+2. Nav2 will plan a path and the robot will autonomously navigate there
+3. As it passes signs, YOLO detects them and traffic rules adapt the speed
+4. When it sees counting posters, the counter publishes object counts
+
+### Verify it's working
+
+```bash
+# Check robot is moving
+ros2 topic echo /atlas/cmd_vel --once
+
+# Check YOLO is detecting
+ros2 topic echo /yolo/detections_json --once
+
+# Check traffic rules
+ros2 topic echo /traffic_rule_state
+
+# Check counting
+ros2 topic echo /counting/status
+
+# Check OctoMap
+ros2 topic echo /occupied_cells_vis_array --once
 ```
 
 ---
 
-## Step 3: Launch all perception + navigation nodes
+## Option B: Simple Maze with Gazebo Classic (Fallback)
 
-Open **Terminal 2**:
+If `ntu_robotsim` is not available, use the built-in maze with the simple_robot URDF.
+
+### Terminal 1 — Launch Gazebo with maze world
+
+```bash
+cd ~/ros2_coursework_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+ros2 launch wall_follower maze.launch.py
+```
+
+This opens Gazebo Classic with `simple_world.world` (a 12m×12m maze with corridors) and spawns the robot at the centre.
+
+### Terminal 2 — Launch perception + wall-following
+
 ```bash
 cd ~/ros2_coursework_ws
 source /opt/ros/humble/setup.bash
@@ -64,130 +169,135 @@ source install/setup.bash
 ros2 launch yolo_ros yolo_launch.py
 ```
 
-**What this starts**:
-- `wall_follower_node` — drives the robot (wanders until it finds walls, then follows them)
-- `yolo_node` — detects signs and objects from camera feed
-- `sign_controller` — modifies speed based on detections (stop/slow/fast/count)
-- `goal_publisher` — logs 3D positions of detected objects
-- `landmark_db` — stores landmarks in SQLite database
-- `resource_monitor` — logs CPU/RAM usage
-
-**The robot should start moving immediately** — it wanders forward until it reaches a wall, then follows the wall around the arena.
+The robot will wall-follow autonomously through the maze. When it sees signs (if they are in this world), it reacts.
 
 ---
 
-## Step 4: Verify the system is working
+## Option C: Detection Arena (Sign Testing Only)
 
-Open **Terminal 3** and check topics:
+For testing YOLO detection with coloured walls and all 6 sign posters:
+
+### Terminal 1
+
 ```bash
-source /opt/ros/humble/setup.bash
-source install/setup.bash
+ros2 launch simple_robot_description gazebo.launch.py
+```
 
-# Robot should be receiving velocity commands:
-ros2 topic echo /cmd_vel --once
+### Terminal 2
 
-# Wall-follower should be publishing:
-ros2 topic echo /wall_follower/cmd_vel --once
-
-# LiDAR should be active:
-ros2 topic hz /scan
-
-# Camera should be active:
-ros2 topic hz /camera/image_raw
-
-# YOLO should be detecting (when robot faces a sign):
-ros2 topic echo /yolo/detections_json --once
+```bash
+ros2 launch yolo_ros yolo_launch.py
 ```
 
 ---
 
-## What Should Happen
+## Architecture Overview
 
-1. **First 30-60 seconds**: Robot drives forward from the centre toward a wall (wander mode). The arena is large (15m to each wall) and LiDAR range is 8m, so it takes time to reach a wall.
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    OFFICIAL TOPIC 2 SYSTEM                       │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  Ignition Gazebo (cwmaze)                                       │
+│       │                                                         │
+│       ├── /atlas/rgbd_camera/image ──────→ yolo_node            │
+│       │                                     │                   │
+│       │                           /yolo/detections_json         │
+│       │                                     │                   │
+│       │                           ┌─────────┼──────────┐        │
+│       │                           │         │          │        │
+│       │                 traffic_rules    counter   goal_pub     │
+│       │                           │                             │
+│       │                    /speed_limit ──→ Nav2 controller     │
+│       │                                                         │
+│       ├── /atlas/odom_ground_truth ──→ TF helper                │
+│       │                                  (map→odom→base_link)   │
+│       │                                                         │
+│       ├── /atlas/rgbd_camera/points ──→ pointcloud_filter       │
+│       │                                      │                  │
+│       │                              /points_filtered           │
+│       │                                      │                  │
+│       │                              OctoMap server             │
+│       │                              (3D occupancy grid)        │
+│       │                                                         │
+│       └── /atlas/cmd_vel ◀── Nav2 controller ◀── Nav2 planner  │
+│                                                    ▲            │
+│                                              RViz 2D Goal       │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
 
-2. **Once near a wall**: Robot switches to wall-following — it balances left/right distances and cruises along the wall.
+---
 
-3. **When it sees a sign**:
-   - **Stop sign** → Robot stops for 3 seconds, then resumes
-   - **Slow sign** → Robot slows to 0.05 m/s for 2 seconds
-   - **Fast sign** → Robot speeds to 0.3 m/s for 2 seconds
-   - **Orange/Tree/Vehicle poster** → Robot slows to a crawl, counts objects, publishes to `/counting/status`
+## Key Topics
 
-4. **Continuously**: Landmarks are stored in SQLite, resource usage is logged to CSV.
+| Topic | Source | Purpose |
+|-------|--------|---------|
+| `/atlas/rgbd_camera/image` | Ignition bridge | RGB camera feed for YOLO |
+| `/atlas/rgbd_camera/points` | Ignition bridge | Point cloud for OctoMap |
+| `/atlas/odom_ground_truth` | Ignition bridge | Robot odometry |
+| `/atlas/cmd_vel` | Nav2 controller | Movement commands |
+| `/yolo/detections_json` | yolo_node | YOLO detection results |
+| `/yolo/dbg_image` | yolo_node | Annotated camera for debugging |
+| `/traffic_rule_state` | traffic_rules node | Current rule (FAST/SLOW/STOP/NORMAL) |
+| `/speed_limit` | traffic_rules node | Current speed limit value |
+| `/counting/status` | counter node | Object counts (orange/tree/vehicle) |
+| `/octomap_binary` | OctoMap server | 3D map data |
+| `/occupied_cells_vis_array` | OctoMap server | Visualization markers |
 
 ---
 
 ## Troubleshooting
 
-### Robot doesn't move at all
+### ntu_robotsim not found
 ```bash
-# Check if wall_follower is running:
-ros2 node list | grep wall_follower
+# Check if it's installed:
+ros2 pkg list | grep ntu_robotsim
 
-# Check if LiDAR is publishing:
-ros2 topic echo /scan --once
-
-# Check if sign_controller is receiving:
-ros2 topic echo /wall_follower/cmd_vel --once
-
-# Check if diff_drive is receiving:
-ros2 topic echo /cmd_vel --once
+# If not, it needs to be in your workspace or installed system-wide.
+# Ask your instructor for the package or check the course materials.
 ```
 
-If `/scan` is not publishing, the robot didn't spawn correctly. Kill Gazebo and relaunch.
-
-### Signs don't appear in Gazebo
-The models directory wasn't found. Check:
+### Robot doesn't move after sending Nav2 goal
 ```bash
-ls ~/ros2_coursework_ws/install/simple_robot_description/share/simple_robot_description/models/
-# Should show: fast_sign_poster/ orange_poster/ slow_sign_poster/ stop_sign_poster/ tree_poster/ vehicle_poster/
+# Check Nav2 lifecycle nodes are active:
+ros2 lifecycle nodes
+
+# Check TF is publishing:
+ros2 run tf2_ros tf2_echo map atlas/base_link
+
+# Check Nav2 action is available:
+ros2 action list | grep navigate
 ```
 
-If empty, rebuild:
+### YOLO not detecting anything
 ```bash
-colcon build --packages-select simple_robot_description
-source install/setup.bash
+# Check camera is publishing:
+ros2 topic hz /atlas/rgbd_camera/image
+
+# View the debug image:
+ros2 run rqt_image_view rqt_image_view /yolo/dbg_image
+
+# Robot needs to be facing a sign for detection
 ```
 
-### YOLO model not loading
+### OctoMap shows nothing
 ```bash
-ls ~/ros2_coursework_ws/results/trafficsignv2/weights/best.pt
-# Should exist (~6.2 MB)
-```
+# Check point cloud filter is running:
+ros2 topic hz /atlas/rgbd_camera/points_filtered
 
-If missing, check that Git LFS pulled the file (or that it's not gitignored).
-
-### Robot moves but YOLO doesn't detect anything
-- The robot needs to be **facing a sign** (within ~5m) for detection
-- Check the debug image: `ros2 run rqt_image_view rqt_image_view /yolo/dbg_image`
-- YOLO confidence threshold is 0.40 — signs far away may not trigger
-
----
-
-## Optional: Watch the counting results
-```bash
-ros2 topic echo /counting/status
-```
-
-## Optional: Check landmark database
-```bash
-sqlite3 ~/ros2_coursework_ws/perception/landmarks.db "SELECT * FROM landmarks ORDER BY ts DESC LIMIT 10;"
-```
-
-## Optional: Run curiosity explorer (requires /map topic)
-```bash
-ros2 run yolo_ros curiosity_explorer --ros-args -p mode:=icm
+# Check TF is correct for OctoMap:
+ros2 run tf2_ros tf2_echo map atlas/base_link
 ```
 
 ---
 
-## Summary of Launch Commands
+## Quick Demo Script (What to show assessor)
 
-| What | Command |
-|------|---------|
-| Build workspace | `colcon build --symlink-install` |
-| Launch Gazebo + robot | `ros2 launch simple_robot_description gazebo.launch.py` |
-| Launch all nodes | `ros2 launch yolo_ros yolo_launch.py` |
-| View YOLO detections | `ros2 run rqt_image_view rqt_image_view /yolo/dbg_image` |
-| Check counts | `ros2 topic echo /counting/status` |
-| Check velocity | `ros2 topic echo /cmd_vel` |
+1. Launch Terminals 1-5 (official system + Nav2 + YOLO + traffic + counter)
+2. In RViz, set a 2D Goal Pose in the maze → robot navigates autonomously
+3. Show `/yolo/dbg_image` in rqt_image_view → bounding boxes on signs
+4. Show `ros2 topic echo /traffic_rule_state` → rules change as robot passes signs
+5. Show `ros2 topic echo /counting/status` → counts objects in posters
+6. Show OctoMap blue voxels in RViz → 3D mapping happening live
+7. Explain: "Nav2 plans the route, YOLO detects signs, traffic adapter changes speed, counter tallies objects, OctoMap builds a 3D map — all integrated through ROS2 topics"
