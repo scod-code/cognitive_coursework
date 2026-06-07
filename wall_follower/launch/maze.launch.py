@@ -25,7 +25,7 @@ def generate_launch_description():
         default_value=os.path.join(
             get_package_share_directory('simple_robot_description'),
             'worlds',
-            'diff_drive', 'detection_world.sdf'
+            'simple_world.world'
         ),
         description='Path to maze world file'
     )
@@ -70,22 +70,19 @@ def generate_launch_description():
         }
     )
 
-    # Spawn robot
-    spawn_robot = Node(
-        package='gazebo_ros',
-        executable='spawn_entity.py',
-        arguments=[
-            '-entity', 'jetbot',
-            '-file',
-            os.path.join(
+    # Spawn robot with delay to let Gazebo initialize
+    spawn_robot = ExecuteProcess(
+        cmd=[
+            'bash', '-c',
+            'sleep 5 && source /opt/ros/humble/setup.bash && '
+            'ros2 run gazebo_ros spawn_entity.py '
+            '-entity jetbot '
+            '-file ' + os.path.join(
                 get_package_share_directory('simple_robot_description'),
                 'urdf',
                 'robot.urdf'
-            ),
-            '-x', '0',
-            '-y', '0',
-            '-z', '0.1',
-            '-timeout', '120',
+            ) + ' '
+            '-x 0 -y 0 -z 0.1'
         ],
         output='screen'
     )
@@ -125,6 +122,8 @@ def generate_launch_description():
         output='screen'
     )
 
+    # Ensure spawn_robot runs (embedded sleep handles timing)
+    
     return LaunchDescription([
         world,
         use_sim_time,

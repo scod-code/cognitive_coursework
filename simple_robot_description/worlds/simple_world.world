@@ -2,7 +2,8 @@
 <sdf version="1.6">
 
   <world name="simple_world">
-<!-- Sun -->
+
+    <!-- Sun -->
     <include>
       <uri>model://sun</uri>
     </include>
@@ -12,37 +13,163 @@
       <uri>model://ground_plane</uri>
     </include>
 
-    <!-- Wall -->
-    <model name="wall_1">
+    <!-- ================= OUTER WALLS ================= -->
+
+    <!-- Top -->
+    <model name="wall_top">
       <static>true</static>
-
       <link name="link">
-
         <collision name="collision">
-          <geometry>
-            <box>
-              <size>5 0.2 1</size>
-            </box>
-          </geometry>
+          <geometry><box><size>12 0.2 1</size></box></geometry>
         </collision>
-
         <visual name="visual">
-          <geometry>
-            <box>
-              <size>5 0.2 1</size>
-            </box>
-          </geometry>
-
-          <material>
-            <ambient>0.7 0.7 0.7 1</ambient>
-          </material>
-
+          <geometry><box><size>12 0.2 1</size></box></geometry>
         </visual>
-
       </link>
+      <pose>0 6 0.5 0 0 0</pose>
+    </model>
 
-      <pose>2 2 0.5 0 0 0</pose>
+    <!-- Bottom -->
+    <model name="wall_bottom">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>12 0.2 1</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>12 0.2 1</size></box></geometry>
+        </visual>
+      </link>
+      <pose>0 -6 0.5 0 0 0</pose>
+    </model>
 
+    <!-- Left -->
+    <model name="wall_left">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.2 12 1</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.2 12 1</size></box></geometry>
+        </visual>
+      </link>
+      <pose>-6 0 0.5 0 0 0</pose>
+    </model>
+
+    <!-- Right -->
+    <model name="wall_right">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.2 12 1</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.2 12 1</size></box></geometry>
+        </visual>
+      </link>
+      <pose>6 0 0.5 0 0 0</pose>
+    </model>
+
+    <!-- ================= START AREA ================= -->
+
+    <model name="start_vertical">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.2 4 1</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.2 4 1</size></box></geometry>
+        </visual>
+      </link>
+      <pose>-3 -2 0.5 0 0 0</pose>
+    </model>
+
+    <model name="start_horizontal">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>2.5 0.2 1</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>2.5 0.2 1</size></box></geometry>
+        </visual>
+      </link>
+      <pose>-4.75 -1 0.5 0 0 0</pose>
+    </model>
+
+    <!-- ================= CENTRE WALL ================= -->
+
+    <model name="center_wall">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.2 8 1</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.2 8 1</size></box></geometry>
+        </visual>
+      </link>
+      <pose>-1 1 0.5 0 0 0</pose>
+    </model>
+
+    <!-- ================= LOWER CORRIDOR ================= -->
+
+    <model name="lower_corridor">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>4 0.2 1</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>4 0.2 1</size></box></geometry>
+        </visual>
+      </link>
+      <pose>0 -3 0.5 0 0 0</pose>
+    </model>
+
+    <!-- ================= FOREST AREA ================= -->
+
+    <model name="forest_wall">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.2 4 1</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.2 4 1</size></box></geometry>
+        </visual>
+      </link>
+      <pose>3 -1 0.5 0 0 0</pose>
+    </model>
+
+    <!-- ================= END AREA ================= -->
+
+    <model name="end_horizontal">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>2.5 0.2 1</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>2.5 0.2 1</size></box></geometry>
+        </visual>
+      </link>
+      <pose>4 2 0.5 0 0 0</pose>
+    </model>
+
+    <model name="end_vertical">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.2 2.5 1</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.2 2.5 1</size></box></geometry>
+        </visual>
+      </link>
+      <pose>4.75 3.25 0.5 0 0 0</pose>
     </model>
 
   

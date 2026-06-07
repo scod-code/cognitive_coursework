@@ -6,7 +6,6 @@ Panels:
       Expanded:
         - /Status1
         - /Robot Model1
-        - /Robot Model1/Status1
         - /Robot Model1/Mass Properties1
         - /Robot Model1/Description Topic1
         - /Robot Model1/Links1
@@ -131,5 +130,5 @@ Window Geometry:
   Hide Right Dock: false
   QMainWindow State: 000000ff00000000fd000000010000000000000156000002c3fc0200000001fb000000100044006900730070006c006100790073010000003b000002c3000000c700ffffff000004a4000002c300000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Width: 1536
-  X: 0
-  Y: 23
+  X: 8
+  Y: 31

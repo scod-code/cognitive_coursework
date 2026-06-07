@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<robot name="topic2_atlas_rviz">
+  <link name="atlas/base_link">
+    <visual>
+      <origin xyz="0 0 0.04" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.34 0.28 0.10"/>
+      </geometry>
+      <material name="atlas_blue">
+        <color rgba="0.05 0.28 0.85 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.04" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.34 0.28 0.10"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="atlas/left_wheel_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.055" length="0.045"/>
+      </geometry>
+      <material name="wheel_dark">
+        <color rgba="0.02 0.02 0.025 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="atlas_left_wheel_joint" type="fixed">
+    <parent link="atlas/base_link"/>
+    <child link="atlas/left_wheel_link"/>
+    <origin xyz="-0.03 0.16 0.0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="atlas/right_wheel_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.055" length="0.045"/>
+      </geometry>
+      <material name="wheel_dark"/>
+    </visual>
+  </link>
+
+  <joint name="atlas_right_wheel_joint" type="fixed">
+    <parent link="atlas/base_link"/>
+    <child link="atlas/right_wheel_link"/>
+    <origin xyz="-0.03 -0.16 0.0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="atlas/rgbd_camera_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.08 0.12 0.045"/>
+      </geometry>
+      <material name="camera_black">
+        <color rgba="0.01 0.01 0.012 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="atlas_rgbd_camera_joint" type="fixed">
+    <parent link="atlas/base_link"/>
+    <child link="atlas/rgbd_camera_link"/>
+    <origin xyz="0.15 0 0.11" rpy="0 0 0"/>
+  </joint>
+</robot>

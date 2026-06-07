@@ -1,30 +1,29 @@
+!results/.gitkeep
+!results/traffic_sign_v1-3/
+!results/trafficsignv2/weights/best.pt
+# results/ is gitignored; best.pt and traffic_sign_v1-3/ are force-tracked via git add -f
+*.Zone.Identifier
+*.lnk
+*.pyc
+.colcon_install_layout
+/models/
+__pycache__/
 build/
+data/
+dataset/README.dataset.txt
+dataset/README.roboflow.txt
+dataset/raw_frames/
+extracted_frames - Shortcut.lnk
+extracted_frames/
+extracted_signs_v2/
+frames_*.pdf
+generate_signs.py:Zone.Identifier
 install/
 log/
-*.pyc
-__pycache__/
-.colcon_install_layout
-training_frames/
-extracted_frames/
-extracted_frames - Shortcut.lnk
-*.lnk
-*.Zone.Identifier
 perception/landmarks.db
 perception/resource_usage.csv
-# results/ is gitignored; best.pt and traffic_sign_v1-3/ are force-tracked via git add -f
-results/
-!results/.gitkeep
-!results/trafficsignv2/weights/best.pt
-!results/traffic_sign_v1-3/
-yolov8n.pt
-data/
-extracted_signs_v2/
-training_signs_v2/
-dataset/raw_frames/
-dataset/README.roboflow.txt
-dataset/README.dataset.txt
-*.Zone.Identifier
-generate_signs.py:Zone.Identifier
 proper_images/
-frames_*.pdf
-/models/
+results/
+training_frames/
+training_signs_v2/
+yolov8n.pt
