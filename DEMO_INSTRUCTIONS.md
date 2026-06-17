@@ -15,7 +15,6 @@ This is your **only** guidance document. Use it for:
 - ✅ Troubleshooting
 - ✅ Coursework submission
 
-Delete or ignore: `HOW_TO_RUN.md`, `FINAL_STATUS.md`, `README.md` (if outdated), `GIT_COMMIT_INSTRUCTIONS.txt`
 
 ---
 
@@ -86,7 +85,7 @@ ros2 launch wall_follower topic2_octomap_with_nav2.launch.py
 cd ~/ros2_coursework_ws
 source /opt/ros/humble/setup.bash
 source install/setup.bash
-ros2 run yolo_ros yolo_node --ros-args -p model_path:=$HOME/ros2_coursework_ws/results/trafficsignv2/weights/best.pt
+ros2 run yolo_ros yolo_node --ros-args -p model_path:=$HOME/ros2_coursework_ws/results/trafficsignv3/weights/best.pt
 ```
 ✅ You'll see: `Loaded YOLO model` and `Model ready for inference`
 
@@ -224,7 +223,7 @@ ros2 run rqt_image_view rqt_image_view /yolo/dbg_image
 **Fix:**
 1. Check camera is publishing: `ros2 topic hz /atlas/rgbd_camera/image`
 2. Robot must face a poster to detect (move closer with 2D Goal Pose)
-3. Verify model path exists: `ls $HOME/ros2_coursework_ws/results/trafficsignv2/weights/best.pt`
+3. Verify model path exists: `ls $HOME/ros2_coursework_ws/results/trafficsignv3/weights/best.pt`
 
 ### OctoMap not showing blue voxels
 **Fix:**

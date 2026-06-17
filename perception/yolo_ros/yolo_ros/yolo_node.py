@@ -29,7 +29,7 @@ class YoloNode(Node):
 
         self.declare_parameter(
             'model_path',
-            '/work/results/trafficsignv2/weights/best.pt'
+            '/home/somto/ros2_coursework_ws/results/trafficsignv3/weights/best.pt'
         )
         self.declare_parameter('confidence', 0.40)
 
