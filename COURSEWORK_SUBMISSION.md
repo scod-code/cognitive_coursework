@@ -6,9 +6,9 @@
 
 ## 📌 Submission Checklist
 
-- [ ] System builds cleanly: `colcon build --symlink-install`
+- [ ] System builds cleanly: `colcon build --symlink-install --packages-select ntu_robotsim yolo_msgs yolo_ros wall_follower`
 - [ ] NumPy installed correctly: `pip3 install "numpy<2"`
-- [ ] All 6 components launch without errors
+- [ ] `ros2 launch wall_follower topic2_full_demo.launch.py` starts all components without errors
 - [ ] Robot responds to 2D Goal Pose clicks in RViz
 - [ ] YOLO detects objects at sectors
 - [ ] Traffic rules adapt speed on sign detection
@@ -99,6 +99,7 @@ Include screenshots or terminal output showing:
 
 | File | Purpose | Lines |
 |------|---------|-------|
+| `wall_follower/launch/topic2_full_demo.launch.py` | Single-command demo launch | ~160 |
 | `wall_follower/launch/topic2_official_system.launch.py` | Gazebo integration + ROS bridge | ~50 |
 | `wall_follower/launch/topic2_nav2.launch.py` | Nav2 stack initialization | ~80 |
 | `wall_follower/wall_follower/topic2_nav2_traffic_rules.py` | Traffic rule logic | ~120 |
@@ -130,7 +131,7 @@ ros2 topic hz /octomap_binary
 
 ## 🎓 What Assessors Will Look For
 
-1. **System Integration:** Can all 6 components work together?
+1. **System Integration:** Do all components work together from one launch?
 2. **Navigation:** Does robot reach goals autonomously?
 3. **Perception:** Do detections match actual objects?
 4. **Reasoning:** Does traffic adapt robot speed correctly?
@@ -147,6 +148,7 @@ Ensure these are in your repository:
 ```
 wall_follower/
 ├── launch/
+│   ├── topic2_full_demo.launch.py           ✅
 │   ├── topic2_official_system.launch.py     ✅
 │   ├── topic2_nav2.launch.py                ✅
 │   └── topic2_octomap_with_nav2.launch.py   ✅
@@ -194,7 +196,7 @@ git push origin merge/integrate-person-a
 
 **Show this in 3 minutes:**
 
-1. Launch all 6 terminals (60 seconds)
+1. Run `ros2 launch wall_follower topic2_full_demo.launch.py` (~30 s startup)
 2. Click 2D Goal Pose → robot moves to orange sector (30 seconds)
 3. Show `/counting/status` with orange count (20 seconds)
 4. Click goal → robot moves to trees (30 seconds)

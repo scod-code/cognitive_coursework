@@ -17,6 +17,7 @@ def generate_launch_description():
     map_file = LaunchConfiguration('map')
     params_file = LaunchConfiguration('params_file')
     use_rviz = LaunchConfiguration('use_rviz')
+    use_goal_pose_bridge = LaunchConfiguration('use_goal_pose_bridge')
     robot_description_path = os.path.join(
         pkg_share,
         'urdf',
@@ -48,6 +49,16 @@ def generate_launch_description():
         'use_rviz',
         default_value='true',
         description='Launch RViz for Route A Nav2',
+    )
+
+    declare_use_goal_pose_bridge = DeclareLaunchArgument(
+        'use_goal_pose_bridge',
+        default_value='true',
+        description=(
+            'Start topic2_goal_pose_bridge (/goal_pose -> NavigateToPose). '
+            'bt_navigator already handles /goal_pose natively, so with the '
+            'bridge each RViz goal is sent twice'
+        ),
     )
 
     nav2_tf_helper = Node(
@@ -125,6 +136,7 @@ def generate_launch_description():
         name='topic2_goal_pose_bridge',
         output='screen',
         parameters=[{'use_sim_time': use_sim_time}],
+        condition=IfCondition(use_goal_pose_bridge),
     )
 
     lifecycle_manager = Node(
@@ -153,6 +165,7 @@ def generate_launch_description():
         declare_map,
         declare_params_file,
         declare_use_rviz,
+        declare_use_goal_pose_bridge,
         nav2_tf_helper,
         robot_state_publisher,
         map_server,

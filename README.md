@@ -39,11 +39,15 @@ cd ~/ros2_coursework_ws            # contains this repo and ntu_robotsim/
 source /opt/ros/humble/setup.bash
 pip3 install "numpy<2" ultralytics opencv-python psutil
 rosdep install --from-paths . --ignore-src -r -y
-colcon build --symlink-install
+colcon build --symlink-install --packages-select ntu_robotsim yolo_msgs yolo_ros wall_follower
 source install/setup.bash
 ```
 
-Then open 6 terminals and follow `DEMO_INSTRUCTIONS.md` for launch commands.
+Then start the whole demo with one command (see `DEMO_INSTRUCTIONS.md` for options):
+
+```bash
+ros2 launch wall_follower topic2_full_demo.launch.py
+```
 
 ---
 
@@ -126,9 +130,9 @@ ntu_robotsim (module-provided cwmaze simulation — external)
 **Problem solving:**
 
 1. Read troubleshooting section in `DEMO_INSTRUCTIONS.md`
-2. Check that all 6 terminals launched in correct order
+2. Check the `topic2_full_demo.launch.py` output for errors (raise `nav2_delay` and `perception_delay` together on slow machines)
 3. Verify NumPy version: `pip3 install "numpy<2"`
-4. Clean rebuild: `rm -rf build install && colcon build --symlink-install`
+4. Clean rebuild: `rm -rf build install log && colcon build --symlink-install --packages-select ntu_robotsim yolo_msgs yolo_ros wall_follower`
 
 ---
 
@@ -161,7 +165,7 @@ Gazebo Robot (/atlas/cmd_vel)
 - **Adaptive Behavior:** Speed changes based on traffic signs
 - **3D Mapping:** Live occupancy grid during exploration
 - **Integrated System:** All components communicate via ROS2 topics (see `INTERFACES.md`)
-- **Modular Demo:** Six independent launch/run commands, so any subsystem can be restarted alone
+- **One-Command Demo:** `topic2_full_demo.launch.py` starts everything; each part can still be launched alone
 
 ---
 

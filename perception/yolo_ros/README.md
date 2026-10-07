@@ -11,6 +11,10 @@ Nodes (all `ros2 run yolo_ros <name>`):
 | `resource_monitor` | — | `/resource_monitor`, CSV | 1 Hz CPU / RAM metacognition log |
 | `curiosity_explorer` | `/projected_map` (OctoMap 2D projection), `/odom` | `/goal_pose`, `/curiosity_explorer/metrics` | Frontier vs novelty-weighted exploration goals |
 
+In the Topic 2 demo, `ros2 launch wall_follower topic2_full_demo.launch.py` starts `yolo_node`
+(override weights with `model_path:=`), and `goal_publisher` / `curiosity_explorer` with
+`enable_goal_publisher:=true` / `enable_curiosity:=true`.
+
 Full topic contract: `../../INTERFACES.md`.
 
 ## Model

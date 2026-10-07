@@ -8,7 +8,8 @@ name changes in code, change it here in the same commit.
 
 The robot is the official `atlas` model spawned by the module-provided
 `ntu_robotsim` package (cwmaze world) and bridged by
-`wall_follower/launch/topic2_official_system.launch.py`.
+`wall_follower/launch/topic2_official_system.launch.py`. The whole graph below is started by
+`ros2 launch wall_follower topic2_full_demo.launch.py`.
 
 ---
 
@@ -43,7 +44,7 @@ The robot is the official `atlas` model spawned by the module-provided
 | --- | --- | --- | --- | --- |
 | `/odom` | `nav_msgs/Odometry` | `topic2_nav2_tf_helper` | Nav2, `curiosity_explorer` | Republished ground truth in `odom`/`atlas/base_link` frames |
 | `/map` | `nav_msgs/OccupancyGrid` | Nav2 `map_server` (latched) | Nav2 costmaps | Static pre-built map `topic2_nav2_clean_map.yaml` |
-| `/goal_pose` | `geometry_msgs/PoseStamped` | RViz 2D Goal Pose, `goal_publisher`, `curiosity_explorer` | `bt_navigator`, `topic2_goal_pose_bridge` | Must be in `map` frame. Note `bt_navigator` already consumes `/goal_pose` natively; the bridge duplicates this and each click produces two `NavigateToPose` goals (second preempts first) |
+| `/goal_pose` | `geometry_msgs/PoseStamped` | RViz 2D Goal Pose, `goal_publisher`, `curiosity_explorer` | `bt_navigator`, `topic2_goal_pose_bridge` | Must be in `map` frame. Note `bt_navigator` already consumes `/goal_pose` natively; the bridge duplicates this and each click produces two `NavigateToPose` goals (second preempts first). The bridge is kept by default; disable it with `use_goal_pose_bridge:=false` on `topic2_full_demo.launch.py` / `topic2_nav2.launch.py` |
 | `navigate_to_pose` | `nav2_msgs/action/NavigateToPose` | — | `topic2_goal_pose_bridge`, `pomdp_goal_selector` (clients) | |
 | `/speed_limit` | `nav2_msgs/SpeedLimit` | `topic2_nav2_traffic_rules` | Nav2 `controller_server` | Absolute (`percentage=false`). Requires DWB `max_vel_x` ≥ highest limit (0.28) |
 | `/traffic_rule_state` | `std_msgs/String` (JSON `{"rule","speed_limit"}`) | `topic2_nav2_traffic_rules` | monitoring | NORMAL 0.18 / FAST 0.28 / SLOW 0.05 / STOP 0.01, 2.5 s expiry |
@@ -51,7 +52,7 @@ The robot is the official `atlas` model spawned by the module-provided
 | `/octomap_binary`, `/octomap_full` | `octomap_msgs/Octomap` | `octomap_server` | RViz | |
 | `/occupied_cells_vis_array` | `visualization_msgs/MarkerArray` | `octomap_server` | RViz | The "blue voxels" |
 | `/projected_map` | `nav_msgs/OccupancyGrid` | `octomap_server` (latched) | `curiosity_explorer` | 2D projection that grows as the robot explores |
-| `/scan` | `sensor_msgs/LaserScan` | `pointcloud_to_laserscan` via `topic2_official_adapters.launch.py` | `wall_follower_node` | **Only exists if the adapters launch is running.** Not part of the six-terminal demo |
+| `/scan` | `sensor_msgs/LaserScan` | `pointcloud_to_laserscan` via `topic2_official_adapters.launch.py` | `wall_follower_node` | **Only exists if the adapters launch is running.** Not part of `topic2_full_demo.launch.py` |
 | `/wall_follower/cmd_vel` | `geometry_msgs/Twist` | `wall_follower_node` | `sign_controller` | Baseline motion for the Person-B stack |
 | `/atlas/footprint_marker` | `visualization_msgs/Marker` | `topic2_nav2_tf_helper` | RViz | |
 
