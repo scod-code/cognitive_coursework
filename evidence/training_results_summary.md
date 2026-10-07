@@ -3,6 +3,17 @@
 ## Overview
 This document summarizes the training results for the YOLOv8 traffic sign detection model used in the ROS2 cognitive robotics coursework.
 
+## Where the artefacts are
+
+| Artefact | Location in this repository |
+| --- | --- |
+| Final (100-epoch, "trafficsignv3") training log | `evidence/results.csv` — the figures below (mAP@50 0.845, P 0.796, R 0.865 at epoch 100) are read from this file by `generate_training_plots.py` |
+| Final model weights deployed by `yolo_node` | `results/trafficsignv2/weights/best.pt` (the run was saved under the v2 folder name; this is the only copy of the final weights) |
+| Earlier 50-epoch run with full Ultralytics output | `results/traffic_sign_v1-3/` (`results.csv`, curves, confusion matrices, weights) |
+| Plots generated from `evidence/results.csv` | `evidence/*.png` |
+
+The per-epoch log of the original 3-class "trafficsignv2" run (mAP@50 0.684) was not retained; only its summary numbers below survive. No folder named `trafficsignv3` exists — that was the Ultralytics run name, whose log is `evidence/results.csv`.
+
 ## Dataset Statistics
 
 ### Original Dataset (v1)

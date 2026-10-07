@@ -4,6 +4,7 @@ Training Results Visualization Script
 Generates performance plots from YOLOv8 training results CSV files.
 """
 
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
@@ -231,7 +232,7 @@ def main():
     """Main function to generate all visualizations and reports."""
     
     # Path to training results
-    csv_path = "../results/trafficsignv3/results.csv"
+    csv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results.csv")
     
     # Load data
     df = load_training_results(csv_path)

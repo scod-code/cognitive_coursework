@@ -33,7 +33,6 @@ setup(
             # Person A — core
             'wall_follower_node = wall_follower.wall_follower_node:main',
             # Person A — Nav2 additions
-            'amcl_initializer            = wall_follower.amcl_initializer:main',
             'topic2_nav2_tf_helper       = wall_follower.topic2_nav2_tf_helper:main',
             'topic2_goal_pose_bridge     = wall_follower.topic2_goal_pose_bridge:main',
             'topic2_pointcloud_filter    = wall_follower.topic2_pointcloud_filter:main',

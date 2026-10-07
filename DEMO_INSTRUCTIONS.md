@@ -1,7 +1,7 @@
 # Topic 2 Cognitive Robotics - Complete Guide
 
 **Status:** ✅ Ready for Demo and Submission  
-**Branch:** `merge/integrate-person-a`
+**Branch:** `main` (default). `merge/integrate-person-a` is kept level with `main`.
 
 ---
 
@@ -15,15 +15,33 @@ This is your **only** guidance document. Use it for:
 - ✅ Troubleshooting
 - ✅ Coursework submission
 
-
 ---
 
 ## 🔧 Prerequisites (One-Time Setup)
+
+**External package required: `ntu_robotsim` (official cwmaze simulation).**
+Terminal 1 includes `ntu_robotsim/launch/cwmaze.launch.py` and `spawn_robot.launch.py`.
+This package is provided by the COMP40761 module (it contains the `cwmaze` world and the
+`atlas`/jetbot model) and is **not** part of this repository. Clone it into the same
+workspace before building:
+
+```bash
+mkdir -p ~/ros2_coursework_ws && cd ~/ros2_coursework_ws
+# this repository
+git clone https://github.com/scod-code/cognitive_coursework.git .
+# module-provided simulation package (obtain the URL from the module's NOW learning room)
+git clone <ntu_robotsim-repository-url> ntu_robotsim
+```
+
+Also required: Ubuntu 22.04, ROS 2 Humble, Gazebo Fortress with `ros_gz`, Nav2,
+`octomap_server`, `pointcloud_to_laserscan`, and the Python packages `ultralytics`,
+`opencv-python`, `psutil`.
 
 ```bash
 # Ubuntu 22.04 with ROS2 Humble (already installed)
 cd ~/ros2_coursework_ws
 source /opt/ros/humble/setup.bash
+rosdep install --from-paths . --ignore-src -r -y
 
 # Critical: Fix NumPy version for cv_bridge
 pip3 install "numpy<2"
@@ -35,8 +53,9 @@ source install/setup.bash
 
 **Verify build succeeded:**
 ```bash
-ros2 pkg list | grep wall_follower
+ros2 pkg list | grep -E "wall_follower|yolo_ros|yolo_msgs|ntu_robotsim"
 ```
+All four packages must be listed.
 
 ---
 
@@ -85,7 +104,7 @@ ros2 launch wall_follower topic2_octomap_with_nav2.launch.py
 cd ~/ros2_coursework_ws
 source /opt/ros/humble/setup.bash
 source install/setup.bash
-ros2 run yolo_ros yolo_node --ros-args -p model_path:=$HOME/ros2_coursework_ws/results/trafficsignv3/weights/best.pt
+ros2 run yolo_ros yolo_node --ros-args -p model_path:=$HOME/ros2_coursework_ws/results/trafficsignv2/weights/best.pt
 ```
 ✅ You'll see: `Loaded YOLO model` and `Model ready for inference`
 
@@ -160,11 +179,13 @@ ros2 run wall_follower topic2_yolo_counter
   - `{"orange": 0, "tree": 0, "vehicle": 8}` ← at vehicles sector
 
 ### When Robot Passes Signs:
-- ✅ Traffic rules adapt speed on `/speed_limit`:
+- ✅ Traffic rules adapt speed on `/speed_limit` (consumed by Nav2 `controller_server`):
   - `0.28` (FAST sign)
   - `0.05` (SLOW sign)
   - `0.01` (STOP sign)
   - `0.18` (normal, no sign)
+  DWB `max_vel_x` is 0.28 so every one of these limits takes effect; the robot
+  cruises at the NORMAL limit and only reaches 0.28 after a FAST sign.
 
 ---
 
@@ -173,10 +194,10 @@ ros2 run wall_follower topic2_yolo_counter
 | Requirement | Implementation |
 |------------|-----------------|
 | **Basic Navigation** | Nav2 path planning + DWB local control |
-| **Basic Mapping** | OctoMap 3D occupancy grid from point cloud |
+| **Basic Mapping** | OctoMap 3D occupancy grid from the RGB-D point cloud (visualisation and `/projected_map`; Nav2 plans on the pre-built static map) |
 | **Object Detection** | YOLO detects 6 classes (signs, oranges, trees, vehicles) |
 | **Traffic Rules** | Speed adaptation based on detected signs |
-| **Enhanced Navigation** | Nav2 with AMCL localisation, NavFn planner, costmaps |
+| **Enhanced Navigation** | Nav2 with NavFn planner, DWB controller, static-map costmaps; localisation from ground-truth odometry (`topic2_nav2_tf_helper`), not AMCL |
 | **Advanced Object Detection** | YOLO counts objects in sectors (oranges, trees, vehicles) |
 | **Sector Recognition** | Confirms robot location by object detections |
 
@@ -223,7 +244,7 @@ ros2 run rqt_image_view rqt_image_view /yolo/dbg_image
 **Fix:**
 1. Check camera is publishing: `ros2 topic hz /atlas/rgbd_camera/image`
 2. Robot must face a poster to detect (move closer with 2D Goal Pose)
-3. Verify model path exists: `ls $HOME/ros2_coursework_ws/results/trafficsignv3/weights/best.pt`
+3. Verify model path exists: `ls $HOME/ros2_coursework_ws/results/trafficsignv2/weights/best.pt`
 
 ### OctoMap not showing blue voxels
 **Fix:**
@@ -293,17 +314,29 @@ Gazebo (cwmaze + atlas robot)
     │
     ├─ Point cloud → topic2_pointcloud_filter → OctoMap (/occupied_cells_vis_array)
     │
-    ├─ Odometry → topic2_nav2_tf_helper → map→odom→base_link (TF chain)
+    ├─ Ground-truth odometry → topic2_nav2_tf_helper → map→odom→atlas/base_link (TF chain, no AMCL)
     │
     └─ Nav2 Stack (planner + controller) ← RViz 2D Goal Pose
+       ├─ /speed_limit ← topic2_nav2_traffic_rules
        └─ /atlas/cmd_vel (to Gazebo robot)
 ```
+
+### Optional: Person-B cognition stack
+
+Not part of the six-terminal demo. `ros2 launch yolo_ros yolo_launch.py` starts
+`sign_controller`, `goal_publisher`, `landmark_db`, `resource_monitor` and a second
+`yolo_node`; run `ros2 launch wall_follower topic2_official_adapters.launch.py` first so
+`wall_follower_node` gets a `/scan`. `sign_controller` drives `/atlas/cmd_vel` directly and
+will fight Nav2 for the robot, so use it instead of — not alongside — RViz goals.
+`pomdp_goal_selector` and `curiosity_explorer` can be run individually with `ros2 run`;
+both default to not dispatching Nav2 goals until `-p dry_run:=false` /
+`-p publish_goals:=true` respectively. See `INTERFACES.md` for every topic.
 
 ---
 
 ## ✨ Final Notes
 
-- **No waypoint tuning needed** — Uses manual RViz navigation
+- **No waypoint tuning needed** — Uses manual RViz navigation (autonomous goal dispatch from `pomdp_goal_selector` / `goal_publisher` is optional)
 - **NumPy critical** — Must be <2.0 or YOLO crashes
 - **Terminal order matters** — Gazebo (T1) must start before Nav2 (T2)
 - **Don't close terminals** — Keep all 6 running for complete demo

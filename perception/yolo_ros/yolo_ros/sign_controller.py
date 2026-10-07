@@ -2,9 +2,13 @@
 Sign Controller Node — Behaviour modifier for wall-following navigation.
 
 Architecture:
-    wall_follower → /wall_follower/cmd_vel → sign_controller → /cmd_vel → robot
+    wall_follower → /wall_follower/cmd_vel → sign_controller → /atlas/cmd_vel → robot
 
-The sign_controller ALWAYS forwards the wall_follower's Twist to /cmd_vel.
+The output topic defaults to /atlas/cmd_vel, which is what the official atlas
+robot bridge listens on (see topic2_official_system.launch.py). Override with
+-p cmd_vel_topic:=/cmd_vel for the legacy standalone simulation.
+
+The sign_controller ALWAYS forwards the wall_follower's Twist to the output topic.
 When YOLO detects a sign, the controller overrides the linear speed for a
 short window, while preserving the wall_follower's angular.z so the robot
 keeps following walls.
@@ -13,7 +17,9 @@ Behaviours:
     STOP     — zero linear + angular for stop_timeout seconds
     SLOW     — reduce linear speed for override_duration seconds
     FAST     — increase linear speed for override_duration seconds
-    COUNT_OBJ — crawl speed, tally detections, publish to /counting/status
+    COUNT_OBJ — crawl speed, tally detections, publish to /sign_controller/sector_counts
+                (a separate topic from topic2_yolo_counter's /counting/status so the
+                two nodes never publish conflicting counts on the same topic)
 """
 
 import json
@@ -54,6 +60,8 @@ class SignController(Node):
         self.declare_parameter('count_speed', 0.03)
         self.declare_parameter('stop_timeout', 3.0)
         self.declare_parameter('override_duration', 2.0)  # seconds to hold speed override
+        self.declare_parameter('cmd_vel_topic', '/atlas/cmd_vel')
+        self.declare_parameter('counts_topic', '/sign_controller/sector_counts')
         self.slow_speed = float(self.get_parameter('slow_speed').get_parameter_value().double_value)
         self.fast_speed = float(self.get_parameter('fast_speed').get_parameter_value().double_value)
         self.count_speed = float(self.get_parameter('count_speed').get_parameter_value().double_value)
@@ -72,8 +80,10 @@ class SignController(Node):
             Twist, '/wall_follower/cmd_vel', self._wall_cmd_cb, 10)
 
         # --- Publishers ---
-        self.pub_cmd = self.create_publisher(Twist, '/cmd_vel', 10)
-        self.pub_count = self.create_publisher(String, '/counting/status', 10)
+        cmd_vel_topic = self.get_parameter('cmd_vel_topic').get_parameter_value().string_value
+        counts_topic = self.get_parameter('counts_topic').get_parameter_value().string_value
+        self.pub_cmd = self.create_publisher(Twist, cmd_vel_topic, 10)
+        self.pub_count = self.create_publisher(String, counts_topic, 10)
 
         # --- Speed override state ---
         # When a sign is detected, we override the wall_follower's linear speed
@@ -93,7 +103,9 @@ class SignController(Node):
         self._last_wall_cmd_time = self.get_clock().now()
         self._heartbeat_timer = self.create_timer(0.2, self._heartbeat_cb)
 
-        self.get_logger().info('SignController initialized — forwarding wall_follower commands')
+        self.get_logger().info(
+            f'SignController initialized — forwarding wall_follower commands to {cmd_vel_topic}, '
+            f'sector counts on {counts_topic}')
 
     # ------------------------------------------------------------------ #
     #  Heartbeat: ensure robot moves even before wall_follower starts

@@ -3,8 +3,20 @@ Curiosity-inspired exploration goal selector.
 
 This node compares a classic nearest-frontier policy with a lightweight ICM-style
 intrinsic reward proxy. It is intentionally small enough for coursework demos:
-frontiers are extracted from /map, then scored either by distance-to-robot
-frontier selection or by novelty relative to previously selected goals.
+frontiers are extracted from an OccupancyGrid, then scored either by
+distance-to-robot frontier selection or by novelty relative to previously
+selected goals.
+
+Map source: by default /projected_map, the 2D projection OctoMap publishes
+while the robot explores (topic2_octomap_with_nav2.launch.py sets
+incremental_2D_projection). Unknown cells there are genuinely unexplored, so
+frontiers are meaningful. The static Nav2 map on /map can be used instead with
+-p map_topic:=/map, but its only unknown cells are outside the maze.
+
+Robot pose comes from /odom (republished by topic2_nav2_tf_helper), so the
+distance weighting follows the robot instead of a fixed start point.
+Decisions run on a timer against the latest map, so a map that is published
+only once (latched) still yields repeated goal selection.
 """
 
 import math
@@ -12,8 +24,9 @@ import math
 import rclpy
 from rclpy.executors import ExternalShutdownException
 from rclpy.node import Node
+from rclpy.qos import DurabilityPolicy, HistoryPolicy, QoSProfile, ReliabilityPolicy
 from geometry_msgs.msg import PoseStamped
-from nav_msgs.msg import OccupancyGrid
+from nav_msgs.msg import Odometry, OccupancyGrid
 from std_msgs.msg import String
 
 
@@ -22,35 +35,77 @@ class CuriosityExplorer(Node):
         super().__init__('curiosity_explorer')
 
         self.declare_parameter('mode', 'icm')
-        self.declare_parameter('robot_x', 0.0)
+        self.declare_parameter('map_topic', '/projected_map')
+        self.declare_parameter('map_transient_local', True)
+        self.declare_parameter('odom_topic', '/odom')
+        self.declare_parameter('robot_x', 0.0)   # initial pose until /odom arrives
         self.declare_parameter('robot_y', 0.0)
         self.declare_parameter('min_goal_separation', 0.5)
-        self.declare_parameter('publish_every_n_maps', 5)
+        self.declare_parameter('decision_period', 5.0)
+        self.declare_parameter('publish_goals', True)
 
         self.mode = self.get_parameter('mode').value
+        self.map_topic = self.get_parameter('map_topic').value
+        self.odom_topic = self.get_parameter('odom_topic').value
         self.robot_x = float(self.get_parameter('robot_x').value)
         self.robot_y = float(self.get_parameter('robot_y').value)
         self.min_goal_separation = float(self.get_parameter('min_goal_separation').value)
-        self.publish_every_n_maps = int(self.get_parameter('publish_every_n_maps').value)
+        self.decision_period = float(self.get_parameter('decision_period').value)
+        self.publish_goals = bool(self.get_parameter('publish_goals').value)
+        self.have_odom = False
 
         if self.mode not in ('icm', 'frontier'):
             self.get_logger().warn(f"Unknown mode '{self.mode}', defaulting to 'icm'")
             self.mode = 'icm'
 
-        self.map_count = 0
+        self.latest_map = None
         self.last_goal = None
         self.visited_goals = []
 
-        self.map_sub = self.create_subscription(OccupancyGrid, '/map', self.map_callback, 10)
+        # Latched map publishers (nav2 map_server, octomap_server) use
+        # TRANSIENT_LOCAL; a volatile subscriber that starts late never
+        # receives the map. Match the durability so the map arrives.
+        map_qos = QoSProfile(
+            reliability=ReliabilityPolicy.RELIABLE,
+            history=HistoryPolicy.KEEP_LAST,
+            depth=1,
+            durability=(
+                DurabilityPolicy.TRANSIENT_LOCAL
+                if bool(self.get_parameter('map_transient_local').value)
+                else DurabilityPolicy.VOLATILE
+            ),
+        )
+        self.map_sub = self.create_subscription(
+            OccupancyGrid, self.map_topic, self.map_callback, map_qos)
+        self.odom_sub = self.create_subscription(
+            Odometry, self.odom_topic, self.odom_callback, 10)
         self.goal_pub = self.create_publisher(PoseStamped, '/goal_pose', 10)
         self.metrics_pub = self.create_publisher(String, '/curiosity_explorer/metrics', 10)
+        self.decision_timer = self.create_timer(self.decision_period, self.decision_step)
 
-        self.get_logger().info(f'CuriosityExplorer started in {self.mode} mode')
+        self.get_logger().info(
+            f'CuriosityExplorer started in {self.mode} mode: map={self.map_topic}, '
+            f'odom={self.odom_topic}, decision every {self.decision_period:.1f}s, '
+            f'publish_goals={self.publish_goals}')
+
+    def odom_callback(self, msg):
+        self.robot_x = float(msg.pose.pose.position.x)
+        self.robot_y = float(msg.pose.pose.position.y)
+        self.have_odom = True
 
     def map_callback(self, msg):
-        self.map_count += 1
-        if self.publish_every_n_maps > 1 and self.map_count % self.publish_every_n_maps != 0:
+        self.latest_map = msg
+
+    def decision_step(self):
+        msg = self.latest_map
+        if msg is None:
+            self.get_logger().info(
+                f'Waiting for a map on {self.map_topic}', throttle_duration_sec=10.0)
             return
+        if not self.have_odom:
+            self.get_logger().info(
+                f'No odometry yet on {self.odom_topic}; using initial pose',
+                throttle_duration_sec=10.0)
 
         frontiers = self.extract_frontiers(msg)
         explored = sum(1 for cell in msg.data if cell == 0)
@@ -65,7 +120,8 @@ class CuriosityExplorer(Node):
         else:
             goal_cell, score = self.select_curiosity_frontier(frontiers, msg)
 
-        self.publish_goal(goal_cell, msg)
+        if self.publish_goals:
+            self.publish_goal(goal_cell, msg)
         self.publish_metrics(explored, unknown, len(frontiers), score)
 
     def extract_frontiers(self, msg):
