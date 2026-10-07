@@ -17,7 +17,7 @@ def generate_launch_description():
     # Resolve model path relative to home directory (portable across machines)
     model_path = os.path.join(
         os.path.expanduser('~'),
-        'ros2_coursework_ws', 'results', 'trafficsignv3', 'weights', 'best.pt'
+        'ros2_coursework_ws', 'results', 'trafficsignv2', 'weights', 'best.pt'
     )
 
     return LaunchDescription([
