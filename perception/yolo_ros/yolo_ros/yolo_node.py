@@ -1,4 +1,5 @@
 import json
+import os
 
 import cv2
 import rclpy
@@ -27,9 +28,14 @@ class YoloNode(Node):
     def __init__(self):
         super().__init__('yolo_node')
 
+        # Default to the committed model (results/trafficsignv2/weights/best.pt)
+        # inside the standard workspace location; override with -p model_path:=...
         self.declare_parameter(
             'model_path',
-            '/work/results/trafficsignv2/weights/best.pt'
+            os.path.join(
+                os.path.expanduser('~'),
+                'ros2_coursework_ws', 'results', 'trafficsignv2', 'weights', 'best.pt'
+            )
         )
         self.declare_parameter('confidence', 0.40)
 

@@ -20,6 +20,9 @@
   <depend>visualization_msgs</depend>
   <depend>octomap_msgs</depend>
 
+  <!-- Official coursework simulation (module-provided, not in this repository) -->
+  <exec_depend>ntu_robotsim</exec_depend>
+
   <!-- Nav2 stack (Person A) -->
   <exec_depend>nav2_msgs</exec_depend>
   <exec_depend>yolo_msgs</exec_depend>

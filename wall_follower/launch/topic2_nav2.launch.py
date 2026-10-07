@@ -34,7 +34,7 @@ def generate_launch_description():
 
     declare_map = DeclareLaunchArgument(
         'map',
-        default_value='/work/wall_follower/maps/topic2_nav2_clean_map.yaml',
+        default_value=os.path.join(pkg_share, 'maps', 'topic2_nav2_clean_map.yaml'),
         description='Clean Route A official Nav2 map yaml',
     )
 
