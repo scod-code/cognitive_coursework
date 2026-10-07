@@ -20,7 +20,7 @@ Your system is a complete cognitive robotics pipeline:
 
 - ✅ **Gazebo** simulates the cwmaze with an atlas robot
 - ✅ **Nav2** plans paths; robot navigates to clicked goals
-- ✅ **YOLO** detects 6 classes (traffic signs, oranges, trees, vehicles)
+- ✅ **YOLO** detects traffic signs, oranges, trees, and vehicles
 - ✅ **Traffic rules** adapt robot speed based on detected signs
 - ✅ **OctoMap** builds a live 3D occupancy map
 - ✅ **Object counter** confirms sectors by counting objects
@@ -50,7 +50,7 @@ Then open 6 terminals and follow `DEMO_INSTRUCTIONS.md` for launch commands.
 | Path Planning | ✅ | NavFn global planner active |
 | Local Control | ✅ | DWB local controller active |
 | Mapping (OctoMap) | ✅ | 3D voxels build in real-time |
-| YOLO Detection | ✅ | 6-class detector running |
+| YOLO Detection | ✅ | Multi-class detector running |
 | Traffic Rules | ✅ | Speed adapts to signs |
 | Object Counting | ✅ | Counts oranges, trees, vehicles |
 | Integration | ✅ | All subsystems via ROS2 topics |
@@ -59,29 +59,30 @@ Then open 6 terminals and follow `DEMO_INSTRUCTIONS.md` for launch commands.
 
 ## 📁 Repository Structure
 
-```
-wall_follower/
-├── launch/                          # Launch files
-│   ├── topic2_official_system.launch.py
-│   ├── topic2_nav2.launch.py
-│   └── topic2_octomap_with_nav2.launch.py
-├── wall_follower/                   # Python nodes
-│   ├── topic2_nav2_tf_helper.py
-│   ├── topic2_nav2_traffic_rules.py
-│   ├── topic2_yolo_counter.py
-│   └── [other nodes]
-├── config/                          # Configuration
-│   └── topic2_nav2_params.yaml
-├── maps/                            # Navigation maps
-│   ├── topic2_nav2_clean_map.yaml
-│   └── topic2_nav2_clean_map.pgm
-├── setup.py                         # Package setup
-├── package.xml                      # Dependencies
-└── CMakeLists.txt                   # Build config
-
-DEMO_INSTRUCTIONS.md                 # ← Read this to run
-COURSEWORK_SUBMISSION.md             # ← Read this for report
-README.md                            # ← You are here
+```text
+.
+├── wall_follower/               # Main ROS 2 package (navigation, mapping, rules)
+│   ├── launch/                  # System, Nav2, OctoMap and wall-follower launch files
+│   ├── wall_follower/           # Python nodes (traffic rules, YOLO counter, TF helpers,
+│   │                            #   POMDP goal selector, Kalman filter, and more)
+│   ├── config/                  # Nav2 parameter files (topic2, wall-follower, generic)
+│   ├── maps/                    # Maze maps and the cleaned Nav2 map (pgm + yaml)
+│   ├── urdf/                    # Atlas URDF for RViz
+│   └── rviz/                    # Saved RViz configurations
+├── perception/                  # YOLO perception packages
+│   ├── yolo_ros/                # Detection node plus explorer, landmark DB, and sign controller
+│   └── yolo_msgs/               # Custom Detection/DetectionArray msgs and StoreLandmark srv
+├── scan_filter/                 # LaserScan filtering package
+├── simple_robot_description/    # URDF, RViz config, worlds, and poster models
+│                                #   (stop/slow/fast signs, orange, tree, vehicle)
+├── dataset/                     # Roboflow traffic-sign dataset (train/valid/test, YOLO format)
+├── results/                     # YOLO training runs and weights (traffic_sign_v1-3, trafficsignv2)
+├── evidence/                    # Curves, confusion matrices, and metrics summaries for the report
+├── proper_images/               # Coursework brief PDFs and source images
+├── DEMO_INSTRUCTIONS.md         # ← Read this to run
+├── COURSEWORK_SUBMISSION.md     # ← Read this for the report
+├── INTERFACES.md                # Topic/message interface reference
+└── README.md                    # ← You are here
 ```
 
 ---
@@ -91,7 +92,7 @@ README.md                            # ← You are here
 **All implemented:**
 
 - ✅ Basic Navigation
-- ✅ Basic Mapping  
+- ✅ Basic Mapping
 - ✅ Object Detection
 - ✅ Traffic Rules
 - ✅ Enhanced Navigation
@@ -102,12 +103,11 @@ README.md                            # ← You are here
 
 ## 🔧 Key Dependencies
 
-```
+```text
 ROS2 Humble
 nav2_core, nav2_planner, nav2_controller
 octomap_server, octomap_ros
-yolo_ros
-tensorflow, ultralytics, opencv
+ultralytics (YOLO), opencv
 numpy<2 (CRITICAL)
 ```
 
@@ -126,7 +126,7 @@ numpy<2 (CRITICAL)
 
 ## 📊 System Diagram
 
-```
+```text
 User (RViz)
     ↓ clicks 2D Goal Pose
 Nav2 Planner
@@ -160,9 +160,11 @@ Gazebo Robot (/atlas/cmd_vel)
 ## 🎓 For Your Report
 
 Use these files as references:
+
 - `COURSEWORK_SUBMISSION.md` — What to write
-- `DEMO_INSTRUCTIONS.md` — How system works (architecture section)
-- Source code in `wall_follower/wall_follower/` — Implementation details
+- `DEMO_INSTRUCTIONS.md` — How the system works (architecture section)
+- `evidence/` — Training curves, confusion matrices, and metrics summaries
+- Source code in `wall_follower/wall_follower/` and `perception/` — Implementation details
 
 ---
 
