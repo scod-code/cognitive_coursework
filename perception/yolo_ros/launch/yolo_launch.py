@@ -4,6 +4,16 @@ import os
 
 
 def generate_launch_description():
+    """Person B perception/cognition stack.
+
+    Runs alongside the official Topic 2 stack (topic2_official_system +
+    topic2_nav2). wall_follower_node needs a LaserScan on /scan, which the
+    official atlas bridge does not provide; start
+    `ros2 launch wall_follower topic2_official_adapters.launch.py` first to
+    derive /scan from the RGB-D point cloud. sign_controller publishes to
+    /atlas/cmd_vel and will compete with Nav2 for the robot if both are
+    driving at once -- use one or the other for a given demo.
+    """
     # Resolve model path relative to home directory (portable across machines)
     model_path = os.path.join(
         os.path.expanduser('~'),
@@ -27,7 +37,7 @@ def generate_launch_description():
             parameters=[{'model_path': model_path}]
         ),
         # Sign controller: reads /wall_follower/cmd_vel + /yolo/detections_json
-        # -> publishes modified speed to /cmd_vel
+        # -> publishes modified speed to /atlas/cmd_vel
         Node(
             package='yolo_ros',
             executable='sign_controller',

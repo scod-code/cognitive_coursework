@@ -1,5 +1,7 @@
+import json
 import math
 import re
+import time
 from typing import Dict, List, Tuple
 
 import rclpy
@@ -21,10 +23,35 @@ class PomdpGoalSelector(Node):
         self.declare_parameter("belief_threshold", 0.65)
         self.declare_parameter("decision_period", 3.0)
         self.declare_parameter("map_frame", "map")
+        # YOLO integration: detections on this topic are turned into
+        # observations about which corridor/sector the robot is looking at.
+        self.declare_parameter("detections_topic", "/yolo/detections_json")
+        self.declare_parameter("detection_min_confidence", 0.45)
+        # Minimum seconds between belief updates for the same label, so a
+        # 10 Hz detection stream does not saturate the belief in one second.
+        self.declare_parameter("detection_update_interval", 1.0)
+        # Sector poster -> goal hypothesis. Matches the official maze layout
+        # used in DEMO_INSTRUCTIONS.md (oranges west, trees east, vehicles north).
+        self.declare_parameter(
+            "label_to_goal",
+            ["orange:left_corridor", "tree:right_corridor", "vehicle:top_corridor"],
+        )
 
         self.dry_run = self.get_parameter("dry_run").value
         self.belief_threshold = float(self.get_parameter("belief_threshold").value)
         self.map_frame = self.get_parameter("map_frame").value
+        self.detection_min_confidence = float(
+            self.get_parameter("detection_min_confidence").value
+        )
+        self.detection_update_interval = float(
+            self.get_parameter("detection_update_interval").value
+        )
+        self.label_to_goal: Dict[str, str] = {}
+        for entry in self.get_parameter("label_to_goal").value:
+            if ":" in entry:
+                label, goal = entry.split(":", 1)
+                self.label_to_goal[label.strip().lower()] = goal.strip()
+        self.last_update_by_label: Dict[str, float] = {}
 
         self.goals: Dict[str, Dict] = {
             "left_corridor":  {"label": "Explore left corridor",  "goal": (-3.5, 0.0, 0.0), "reward": 1.0},
@@ -40,12 +67,18 @@ class PomdpGoalSelector(Node):
 
         self.nav_client = ActionClient(self, NavigateToPose, "/navigate_to_pose")
 
+        # Manual / scripted observation channel (kept for testing).
         self.create_subscription(String, "/landmark_observation", self.observation_callback, 10)
+        # Live perception channel from yolo_node.
+        detections_topic = self.get_parameter("detections_topic").value
+        self.create_subscription(String, detections_topic, self.detections_callback, 10)
         self.create_timer(float(self.get_parameter("decision_period").value), self.decision_step)
 
         self.get_logger().info("POMDP-inspired goal selector started.")
-        self.get_logger().info(f"Dry run: {self.dry_run}")
-        self.get_logger().info("Publish observations like: left_corridor:0.82")
+        self.get_logger().info(f"Dry run: {self.dry_run} (set -p dry_run:=false to dispatch Nav2 goals)")
+        self.get_logger().info(f"Subscribed to {detections_topic} and /landmark_observation")
+        self.get_logger().info(f"Label -> goal mapping: {self.label_to_goal}")
+        self.get_logger().info("Manual observations may also be published like: left_corridor:0.82")
 
     def parse_observation(self, text):
         match = re.match(r"^([a-zA-Z0-9_]+)\s*[:=\s]\s*([0-9]*\.?[0-9]+)$", text.strip())
@@ -62,6 +95,15 @@ class PomdpGoalSelector(Node):
             return prior
         return numerator / denominator
 
+    def apply_observation(self, name, confidence, source):
+        old = self.beliefs[name]
+        new = self.bayes_update(old, confidence)
+        self.beliefs[name] = new
+        self.get_logger().info(
+            f"Observation ({source}): {name}, confidence={confidence:.2f}, "
+            f"belief {old:.2f} -> {new:.2f}"
+        )
+
     def observation_callback(self, msg):
         name, confidence = self.parse_observation(msg.data)
 
@@ -69,13 +111,42 @@ class PomdpGoalSelector(Node):
             self.get_logger().warn(f"Unknown observation: {msg.data}")
             return
 
-        old = self.beliefs[name]
-        new = self.bayes_update(old, confidence)
-        self.beliefs[name] = new
+        self.apply_observation(name, confidence, "manual")
 
-        self.get_logger().info(
-            f"Observation: {name}, confidence={confidence:.2f}, belief {old:.2f} -> {new:.2f}"
-        )
+    def detections_callback(self, msg):
+        """Turn YOLO detections (JSON list of {label, conf, xyxy}) into observations."""
+        try:
+            detections = json.loads(msg.data)
+        except Exception:
+            return
+        if not isinstance(detections, list):
+            return
+
+        # Highest-confidence detection per mapped label in this frame.
+        best_by_label: Dict[str, float] = {}
+        for det in detections:
+            label = str(det.get("label", "")).strip().lower()
+            if label not in self.label_to_goal:
+                continue
+            conf = float(det.get("conf", 0.0))
+            if conf < self.detection_min_confidence:
+                continue
+            if conf > best_by_label.get(label, 0.0):
+                best_by_label[label] = conf
+
+        now = time.monotonic()
+        for label, conf in best_by_label.items():
+            if now - self.last_update_by_label.get(label, 0.0) < self.detection_update_interval:
+                continue
+            goal_name = self.label_to_goal[label]
+            if goal_name not in self.goals:
+                self.get_logger().warn(
+                    f"label_to_goal maps '{label}' to unknown goal '{goal_name}'"
+                )
+                continue
+            confidence = max(0.01, min(0.99, conf))
+            self.apply_observation(goal_name, confidence, f"yolo:{label}")
+            self.last_update_by_label[label] = now
 
     def build_priority_queue(self) -> List[Tuple[float, str]]:
         queue = []

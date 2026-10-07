@@ -11,7 +11,15 @@ from yolo_msgs.srv import StoreLandmark
 
 
 class Topic2YoloLandmarkBridge(Node):
-    """Store YOLO detections as map-frame landmark observations."""
+    """Store YOLO detections as map-frame landmark *observations*.
+
+    What is stored is the robot's own map-frame pose (atlas/base_link) at the
+    moment the object was seen, with z = 0 -- i.e. "the robot was here when it
+    saw an <label>". It does not use depth, so it is not the object's position.
+    Object positions grounded by depth back-projection are stored by
+    yolo_ros/goal_publisher instead; the two can run side by side because the
+    landmark database records both under their label and timestamp.
+    """
 
     LANDMARK_LABELS = {
         'fastsign',

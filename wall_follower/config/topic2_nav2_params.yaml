@@ -19,6 +19,8 @@ controller_server:
     use_sim_time: true
     controller_frequency: 10.0
     odom_topic: /odom
+    # Absolute speed limits from topic2_nav2_traffic_rules (nav2_msgs/SpeedLimit)
+    speed_limit_topic: speed_limit
     min_x_velocity_threshold: 0.001
     min_y_velocity_threshold: 0.5
     min_theta_velocity_threshold: 0.001
@@ -42,12 +44,16 @@ controller_server:
       plugin: "dwb_core::DWBLocalPlanner"
       debug_trajectory_details: false
       min_vel_x: 0.0
-      max_vel_x: 0.15
+      # Hard ceiling. Must be >= the FAST limit (0.28) published by
+      # topic2_nav2_traffic_rules on /speed_limit, otherwise FAST/NORMAL
+      # limits can never take effect. The day-to-day cruising speed is set
+      # by the NORMAL speed limit (0.18), not by this value.
+      max_vel_x: 0.28
       max_vel_y: 0.0
       min_vel_y: 0.0
       max_vel_theta: 0.50
       min_speed_xy: 0.0
-      max_speed_xy: 0.15
+      max_speed_xy: 0.28
       min_speed_theta: 0.0
       acc_lim_x: 0.25
       acc_lim_y: 0.0
