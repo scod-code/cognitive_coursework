@@ -97,20 +97,10 @@ def generate_launch_description():
         parameters=[params_file]
     )
 
-    amcl_initializer = Node(
-        package='wall_follower',
-        executable='amcl_initializer',
-        name='amcl_initializer',
-        output='screen',
-        parameters=[
-            {'initial_pose_x': 0.0},
-            {'initial_pose_y': 0.0},
-            {'initial_pose_yaw': 0.0},
-            {'pose_covariance_linear': 0.25},
-            {'pose_covariance_angular': 0.785},
-            {'max_wait_time': 10.0}
-        ]
-    )
+    # Note: the legacy standalone sim uses AMCL here. Set the initial pose with
+    # RViz "2D Pose Estimate" (or publish /initialpose) after launch; the
+    # amcl_initializer helper node this file once referenced was never part of
+    # the package.
 
     return LaunchDescription([
         declare_use_sim_time,
@@ -118,7 +108,6 @@ def generate_launch_description():
         declare_map_file,
         map_server,
         amcl,
-        amcl_initializer,
         planner_server,
         controller_server,
         bt_navigator,

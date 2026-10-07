@@ -1,4 +1,7 @@
 import math
+import os
+
+MAPS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 resolution = 0.05
 width_m = 12.0
@@ -56,12 +59,12 @@ walls = [
 for wall in walls:
     draw_wall(*wall)
 
-with open('/work/wall_follower/maps/maze_map.pgm', 'wb') as f:
+with open(os.path.join(MAPS_DIR, 'maze_map.pgm'), 'wb') as f:
     f.write(f'P5\n{width} {height}\n255\n'.encode())
     for row in grid:
         f.write(bytes(row))
 
-with open('/work/wall_follower/maps/maze_map.yaml', 'w') as f:
+with open(os.path.join(MAPS_DIR, 'maze_map.yaml'), 'w') as f:
     f.write("""image: maze_map.pgm
 mode: trinary
 resolution: 0.05
