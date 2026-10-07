@@ -20,7 +20,7 @@ Your system is a complete cognitive robotics pipeline:
 
 - ✅ **Gazebo** simulates the cwmaze with an atlas robot
 - ✅ **Nav2** plans paths; robot navigates to clicked goals
-- ✅ **YOLO** detects traffic signs, oranges, trees, and vehicles
+- ✅ **YOLO** (YOLOv8n, `results/trafficsignv2/weights/best.pt`) detects traffic signs, oranges, trees, and vehicles
 - ✅ **Traffic rules** adapt robot speed based on detected signs
 - ✅ **OctoMap** builds a live 3D occupancy map
 - ✅ **Object counter** confirms sectors by counting objects
@@ -30,12 +30,17 @@ Your system is a complete cognitive robotics pipeline:
 
 ## 🚀 Quick Start
 
+**Prerequisite:** the module-provided `ntu_robotsim` package (official `cwmaze` world and
+`atlas` robot) must be cloned into the same workspace. It is not part of this repository —
+see the Prerequisites section of `DEMO_INSTRUCTIONS.md`.
+
 ```bash
-cd ~/ros2_coursework_ws
+cd ~/ros2_coursework_ws            # contains this repo and ntu_robotsim/
 source /opt/ros/humble/setup.bash
-source install/setup.bash
-pip3 install "numpy<2"
+pip3 install "numpy<2" ultralytics opencv-python psutil
+rosdep install --from-paths . --ignore-src -r -y
 colcon build --symlink-install
+source install/setup.bash
 ```
 
 Then open 6 terminals and follow `DEMO_INSTRUCTIONS.md` for launch commands.
@@ -46,12 +51,12 @@ Then open 6 terminals and follow `DEMO_INSTRUCTIONS.md` for launch commands.
 
 | Feature | Status | Evidence |
 |---------|--------|----------|
-| Navigation (Nav2) | ✅ | Robot reaches clicked goals |
+| Navigation (Nav2) | ✅ | Robot reaches clicked goals; localisation from ground-truth odometry (no AMCL) |
 | Path Planning | ✅ | NavFn global planner active |
 | Local Control | ✅ | DWB local controller active |
 | Mapping (OctoMap) | ✅ | 3D voxels build in real-time |
 | YOLO Detection | ✅ | Multi-class detector running |
-| Traffic Rules | ✅ | Speed adapts to signs |
+| Traffic Rules | ✅ | `/speed_limit` (Nav2 `SpeedLimit`) adapts DWB speed to signs |
 | Object Counting | ✅ | Counts oranges, trees, vehicles |
 | Integration | ✅ | All subsystems via ROS2 topics |
 
@@ -64,7 +69,7 @@ Then open 6 terminals and follow `DEMO_INSTRUCTIONS.md` for launch commands.
 ├── wall_follower/               # Main ROS 2 package (navigation, mapping, rules)
 │   ├── launch/                  # System, Nav2, OctoMap and wall-follower launch files
 │   ├── wall_follower/           # Python nodes (traffic rules, YOLO counter, TF helpers,
-│   │                            #   POMDP goal selector, Kalman filter, and more)
+│   │                            #   landmark bridge, POMDP goal selector, Kalman filter)
 │   ├── config/                  # Nav2 parameter files (topic2, wall-follower, generic)
 │   ├── maps/                    # Maze maps and the cleaned Nav2 map (pgm + yaml)
 │   ├── urdf/                    # Atlas URDF for RViz
@@ -72,16 +77,18 @@ Then open 6 terminals and follow `DEMO_INSTRUCTIONS.md` for launch commands.
 ├── perception/                  # YOLO perception packages
 │   ├── yolo_ros/                # Detection node plus explorer, landmark DB, and sign controller
 │   └── yolo_msgs/               # Custom Detection/DetectionArray msgs and StoreLandmark srv
-├── scan_filter/                 # LaserScan filtering package
-├── simple_robot_description/    # URDF, RViz config, worlds, and poster models
-│                                #   (stop/slow/fast signs, orange, tree, vehicle)
+├── scan_filter/                 # LaserScan filtering (legacy standalone sim only)
+├── simple_robot_description/    # Legacy standalone sim: URDF, worlds, and the poster
+│                                #   models (stop/slow/fast signs, orange, tree, vehicle)
+│                                #   used to render and photograph training signs
 ├── dataset/                     # Roboflow traffic-sign dataset (train/valid/test, YOLO format)
 ├── results/                     # YOLO training runs and weights (traffic_sign_v1-3, trafficsignv2)
-├── evidence/                    # Curves, confusion matrices, and metrics summaries for the report
+├── evidence/                    # 100-epoch training log (results.csv), curves, metrics summaries
 ├── proper_images/               # Coursework brief PDFs and source images
+├── docs/                        # Sign-rendering fix notes and docs/history/ (superseded snapshots)
 ├── DEMO_INSTRUCTIONS.md         # ← Read this to run
 ├── COURSEWORK_SUBMISSION.md     # ← Read this for the report
-├── INTERFACES.md                # Topic/message interface reference
+├── INTERFACES.md                # Every topic, service, and frame — the contract between nodes
 └── README.md                    # ← You are here
 ```
 
@@ -107,8 +114,9 @@ Then open 6 terminals and follow `DEMO_INSTRUCTIONS.md` for launch commands.
 ROS2 Humble
 nav2_core, nav2_planner, nav2_controller
 octomap_server, octomap_ros
-ultralytics (YOLO), opencv
+ultralytics (YOLO), opencv, psutil
 numpy<2 (CRITICAL)
+ntu_robotsim (module-provided cwmaze simulation — external)
 ```
 
 ---
@@ -152,8 +160,8 @@ Gazebo Robot (/atlas/cmd_vel)
 - **Real-Time Perception:** YOLO detects objects as robot moves
 - **Adaptive Behavior:** Speed changes based on traffic signs
 - **3D Mapping:** Live occupancy grid during exploration
-- **Integrated System:** All components communicate via ROS2 topics
-- **Easy to Demo:** Single command to launch everything
+- **Integrated System:** All components communicate via ROS2 topics (see `INTERFACES.md`)
+- **Modular Demo:** Six independent launch/run commands, so any subsystem can be restarted alone
 
 ---
 

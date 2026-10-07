@@ -65,7 +65,7 @@ Your system implements:
 Reference the system architecture above. Explain each layer.
 
 ### Implementation Details
-- **Navigation:** Nav2 with NavFn global planner, DWB local controller, AMCL localisation
+- **Navigation:** Nav2 with NavFn global planner, DWB local controller; localisation from ground-truth odometry via `topic2_nav2_tf_helper` (no AMCL)
 - **Perception:** YOLOv8 fine-tuned on 6 classes (fastsign, slowsign, stopsign, orange, tree, vehicle)
 - **Traffic Rules:** Speed mapping (FAST=0.28, SLOW=0.05, STOP=0.01, NORMAL=0.18)
 - **Mapping:** OctoMap processes point clouds from RGB-D camera
