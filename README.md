@@ -46,7 +46,8 @@ source install/setup.bash
 Then start the whole demo with one command (see `DEMO_INSTRUCTIONS.md` for options):
 
 ```bash
-ros2 launch wall_follower topic2_full_demo.launch.py
+ros2 launch wall_follower topic2_full_demo.launch.py      # you click goals in RViz
+ros2 launch wall_follower topic2_autonomous.launch.py     # robot chooses its own goals
 ```
 
 ---
@@ -63,6 +64,7 @@ ros2 launch wall_follower topic2_full_demo.launch.py
 | Traffic Rules | ✅ | `/speed_limit` (Nav2 `SpeedLimit`) adapts DWB speed to signs |
 | Object Counting | ✅ | Counts oranges, trees, vehicles |
 | Integration | ✅ | All subsystems via ROS2 topics |
+| Autonomous Mission | 🟡 | 4 self-chosen goals reached and 2 classes confirmed in simulation; full run to `COMPLETE` not yet recorded |
 
 ---
 
@@ -166,6 +168,7 @@ Gazebo Robot (/atlas/cmd_vel)
 - **3D Mapping:** Live occupancy grid during exploration
 - **Integrated System:** All components communicate via ROS2 topics (see `INTERFACES.md`)
 - **One-Command Demo:** `topic2_full_demo.launch.py` starts everything; each part can still be launched alone
+- **Autonomous Mission:** `topic2_autonomous.launch.py` adds `autonomous_mission`, which chooses, validates and dispatches Nav2 goals itself over the known map (see `DEMO_INSTRUCTIONS.md` for what has been verified)
 
 ---
 

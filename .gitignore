@@ -27,3 +27,5 @@ results/
 training_frames/
 training_signs_v2/
 yolov8n.pt
+mission_logs/
+.agents/

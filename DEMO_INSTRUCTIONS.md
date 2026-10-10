@@ -109,6 +109,58 @@ ros2 launch wall_follower topic2_full_demo.launch.py enable_curiosity:=true use_
 ros2 launch wall_follower topic2_full_demo.launch.py nav2_delay:=30.0 perception_delay:=45.0
 ```
 
+---
+
+## 🤖 Fully Autonomous Mission (No RViz Clicks)
+
+```bash
+cd ~/ros2_coursework_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+ros2 launch wall_follower topic2_autonomous.launch.py
+# or: bash scripts/run_autonomy.sh launch   (IDE task: "Autonomy: launch mission")
+```
+
+This starts the same stack as `topic2_full_demo.launch.py` (RViz off, goal bridge off,
+POMDP / curiosity / goal_publisher off) plus `autonomous_mission`, which becomes the
+**only** source of Nav2 goals. After its readiness checks (sim clock, TF, `/map`, robot
+pose, Nav2 lifecycle nodes and action servers, YOLO model and detections) it repeatedly:
+
+1. builds safe observation poses from the static `/map` (footprint clearance, connected
+   free space, rotated-origin-aware grid conversion), 4 headings per location;
+2. asks the planner (`compute_path_to_pose`) for paths and picks the nearest by
+   **planned** path length;
+3. sends exactly one `navigate_to_pose` goal and waits for its result
+   (timeouts, stall detection, cancel-and-wait, retry limits, suppression of failing poses);
+4. dwells and confirms classes from YOLO over several frames (per-frame counts are not summed);
+5. ends `COMPLETE` (orange, tree and vehicle confirmed, then returns home), `PARTIAL`
+   (budget used, some classes missing) or `FAILED_SAFE` (with a reason).
+
+Every run writes `~/ros2_coursework_ws/mission_logs/<timestamp>/events.csv` and
+`mission.json`; the outcome is also latched on `/autonomous_mission/outcome`.
+Do not click goals in RViz while it runs (it detects foreign `/goal_pose` messages).
+
+| Argument | Default | Effect |
+|----------|---------|--------|
+| `use_rviz` | `false` | RViz for watching only |
+| `model_path` | `trafficsignv2` weights | as above |
+| `nav2_delay` / `perception_delay` | `20.0` / `30.0` | as above |
+| `mission_delay` | `45.0` | Seconds after launch before `autonomous_mission` starts |
+| `mission_params` | `config/autonomous_mission.yaml` | All mission thresholds (untuned starting values) |
+| `mission_log_dir` | `~/ros2_coursework_ws/mission_logs` | Where run logs go |
+
+**Verified (10 Oct 2026, WSL, headless Gazebo, 600 s wall ≈ 194 s sim):** readiness
+passed; 40 locations / 160 poses generated; 4 consecutive autonomously chosen goals
+`SUCCEEDED` with no human input; `slowsign` and `orange` confirmed; a 5th goal (2.3 m
+across the maze) was still in progress when the test timeout stopped the launch.
+Logs: `evidence/autonomy_run_20261010/`.
+**Not yet verified:** a full run to `COMPLETE` (tree and vehicle) and return home. Allow
+15–20 min of wall time on WSL, where the simulator runs slower than real time.
+
+Scope: this is autonomous **surveying of a known, pre-built map**, not map-free
+exploration. PSO / evolutionary / RL selectors are not implemented; `goal_selection.py`
+provides the selector interface where they can be registered.
+
 Individual components can still be (re)started on their own, e.g.
 `ros2 launch wall_follower topic2_official_system.launch.py`, `topic2_nav2.launch.py`,
 `topic2_octomap_with_nav2.launch.py`, or `ros2 run yolo_ros yolo_node`,

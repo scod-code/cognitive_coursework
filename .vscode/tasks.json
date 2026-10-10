@@ -1,0 +1,23 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Autonomy: launch mission (WSL ~/ros2_coursework_ws)",
+      "type": "shell",
+      "command": "wsl",
+      "args": ["-d", "Ubuntu-22.04", "--", "bash", "-lc", "bash ~/ros2_coursework_ws/scripts/run_autonomy.sh launch"],
+      "problemMatcher": [],
+      "isBackground": true,
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "Autonomy: validate (WSL ~/ros2_coursework_ws)",
+      "type": "shell",
+      "command": "wsl",
+      "args": ["-d", "Ubuntu-22.04", "--", "bash", "-lc", "bash ~/ros2_coursework_ws/scripts/run_autonomy.sh validate"],
+      "problemMatcher": [],
+      "group": "test",
+      "presentation": { "reveal": "always", "panel": "shared" }
+    }
+  ]
+}

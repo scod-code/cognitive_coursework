@@ -43,6 +43,8 @@ setup(
             'topic2_yolo_landmark_bridge = wall_follower.topic2_yolo_landmark_bridge:main',
             # Include POMDP
             'pomdp_goal_selector = wall_follower.pomdp_goal_selector:main',
+            # Autonomous mission supervisor (sole goal owner)
+            'autonomous_mission = wall_follower.autonomous_mission:main',
         ],
     },
 )

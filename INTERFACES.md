@@ -45,7 +45,9 @@ The robot is the official `atlas` model spawned by the module-provided
 | `/odom` | `nav_msgs/Odometry` | `topic2_nav2_tf_helper` | Nav2, `curiosity_explorer` | Republished ground truth in `odom`/`atlas/base_link` frames |
 | `/map` | `nav_msgs/OccupancyGrid` | Nav2 `map_server` (latched) | Nav2 costmaps | Static pre-built map `topic2_nav2_clean_map.yaml` |
 | `/goal_pose` | `geometry_msgs/PoseStamped` | RViz 2D Goal Pose, `goal_publisher`, `curiosity_explorer` | `bt_navigator`, `topic2_goal_pose_bridge` | Must be in `map` frame. Note `bt_navigator` already consumes `/goal_pose` natively; the bridge duplicates this and each click produces two `NavigateToPose` goals (second preempts first). The bridge is kept by default; disable it with `use_goal_pose_bridge:=false` on `topic2_full_demo.launch.py` / `topic2_nav2.launch.py` |
-| `navigate_to_pose` | `nav2_msgs/action/NavigateToPose` | — | `topic2_goal_pose_bridge`, `pomdp_goal_selector` (clients) | |
+| `navigate_to_pose` | `nav2_msgs/action/NavigateToPose` | — | `topic2_goal_pose_bridge`, `pomdp_goal_selector`, `autonomous_mission` (clients) | `autonomous_mission` keeps at most one goal active and waits for its result |
+| `compute_path_to_pose` | `nav2_msgs/action/ComputePathToPose` | — | `autonomous_mission` (client) | Candidate validation and planned-path-length ranking |
+| `/autonomous_mission/outcome` | `std_msgs/String` (JSON) | `autonomous_mission` (latched) | monitoring | `COMPLETE` / `PARTIAL` / `FAILED_SAFE` / `ABORTED_BY_OPERATOR` + reason. The node also reads `/map`, `/yolo/detections_json`, `/traffic_rule_state`, and watches `/goal_pose` to detect a competing goal source |
 | `/speed_limit` | `nav2_msgs/SpeedLimit` | `topic2_nav2_traffic_rules` | Nav2 `controller_server` | Absolute (`percentage=false`). Requires DWB `max_vel_x` ≥ highest limit (0.28) |
 | `/traffic_rule_state` | `std_msgs/String` (JSON `{"rule","speed_limit"}`) | `topic2_nav2_traffic_rules` | monitoring | NORMAL 0.18 / FAST 0.28 / SLOW 0.05 / STOP 0.01, 2.5 s expiry |
 | `/atlas/rgbd_camera/points_filtered` | `sensor_msgs/PointCloud2` | `topic2_pointcloud_filter` | `octomap_server` | |

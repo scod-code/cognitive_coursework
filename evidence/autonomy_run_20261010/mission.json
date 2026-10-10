@@ -1,0 +1,170 @@
+{
+  "outcome": "ABORTED_BY_OPERATOR",
+  "reason": "OPERATOR_SHUTDOWN",
+  "missing_classes": [
+    "tree",
+    "vehicle"
+  ],
+  "confirmed": [
+    "orange",
+    "slowsign"
+  ],
+  "success": false,
+  "state": "ABORTED_BY_OPERATOR",
+  "detail": "",
+  "params": {
+    "required_classes": [
+      "orange",
+      "tree",
+      "vehicle"
+    ],
+    "min_conf": 0.45,
+    "confirm_frames": 3,
+    "confirm_window_s": 3.0,
+    "dwell_s": 3.0,
+    "dwell_extend_s": 1.5,
+    "dwell_extend_max": 2,
+    "yaw_count": 4,
+    "yaw_check_tol_rad": 0.5,
+    "yaw_fail_systemic_n": 3,
+    "same_location_m": 0.15,
+    "robot_radius_m": 0.18,
+    "safety_margin_m": 0.17,
+    "coverage_min": 0.95,
+    "spacing_m": 0.9,
+    "max_locations": 40,
+    "min_locations": 6,
+    "validate_k": 8,
+    "no_path_systemic_n": 4,
+    "max_planner_pauses": 3,
+    "max_attempts_per_candidate": 2,
+    "max_consecutive_failures": 5,
+    "timeout_base_s": 30.0,
+    "timeout_min_speed_mps": 0.08,
+    "stall_window_s": 45.0,
+    "stall_min_move_m": 0.1,
+    "stop_hold_grace_s": 4.0,
+    "max_stop_hold_extension_s": 60.0,
+    "plan_timeout_s": 5.0,
+    "cancel_timeout_s": 5.0,
+    "cancel_retries": 2,
+    "goal_response_timeout_s": 10.0,
+    "external_window_s": 3.0,
+    "external_settle_s": 5.0,
+    "mission_budget_s": 2400.0,
+    "max_goals": 0,
+    "ready_timeout_clock_s": 60.0,
+    "ready_timeout_tf_s": 60.0,
+    "ready_timeout_map_s": 60.0,
+    "ready_timeout_pose_s": 60.0,
+    "ready_timeout_nav_server_s": 90.0,
+    "ready_timeout_planner_server_s": 90.0,
+    "ready_timeout_lifecycle_s": 90.0,
+    "ready_timeout_perception_s": 90.0,
+    "ready_timeout_sole_owner_s": 30.0,
+    "paused_timeout_s": 60.0,
+    "tf_stale_s": 2.0,
+    "clock_stall_s": 5.0,
+    "require_perception": true,
+    "perception_min_msgs": 5,
+    "perception_silence_s": 15.0,
+    "perception_model_check": true,
+    "yolo_node_name": "yolo_node",
+    "lifecycle_nodes": [
+      "map_server",
+      "planner_server",
+      "controller_server",
+      "bt_navigator",
+      "behavior_server"
+    ],
+    "selector": "nearest_path",
+    "candidate_source": "lattice",
+    "log_dir": "/tmp/auto_ws/mission_logs",
+    "tick_hz": 5.0
+  },
+  "home": [
+    -3.000439953068556,
+    -2.999997604399286,
+    -0.001591335910591508
+  ],
+  "generation": {
+    "clearance_m": 0.35,
+    "locations": 40,
+    "poses": 160,
+    "min_locations_met": true
+  },
+  "perception": {
+    "fps_est_per_sim_s": 7.692307692307541,
+    "confirm_window_s_configured": 3.0,
+    "confirm_window_s_effective": 3.0,
+    "dwell_s_effective": 3.0,
+    "confirmation_feasible": true
+  },
+  "confirmed_detail": {
+    "slowsign": {
+      "pose": [
+        -3.171583657646192,
+        -3.3748452447021835,
+        1.2226739550302863
+      ],
+      "confirmed_at": 95.14,
+      "hits": 3,
+      "max_conf": 0.6942514181137085
+    },
+    "orange": {
+      "pose": [
+        -3.1710874852116975,
+        -3.377137229523541,
+        2.8092018708776343
+      ],
+      "confirmed_at": 115.59,
+      "hits": 3,
+      "max_conf": 0.9908700585365295
+    }
+  },
+  "reconfirmations": {
+    "slowsign": 4,
+    "orange": 6
+  },
+  "goals": [
+    {
+      "cid": 28,
+      "kind": "candidate",
+      "result": "SUCCEEDED"
+    },
+    {
+      "cid": 29,
+      "kind": "candidate",
+      "result": "SUCCEEDED"
+    },
+    {
+      "cid": 30,
+      "kind": "candidate",
+      "result": "SUCCEEDED"
+    },
+    {
+      "cid": 31,
+      "kind": "candidate",
+      "result": "SUCCEEDED"
+    },
+    {
+      "cid": 36,
+      "kind": "candidate",
+      "result": "TIMEOUT"
+    }
+  ],
+  "totals": {
+    "succeeded": 4,
+    "aborted": 0,
+    "timeouts": 1,
+    "stalls": 0,
+    "rejected": 0,
+    "preempted": 0,
+    "interventions": 0,
+    "yaw_not_reached": 0,
+    "goals_sent": 5,
+    "bad_frames": 0,
+    "planner_pauses": 0
+  },
+  "suppressed": {}
+}

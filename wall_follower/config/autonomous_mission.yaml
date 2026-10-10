@@ -1,0 +1,53 @@
+# Parameters for the autonomous mission supervisor (wall_follower/autonomous_mission).
+# Every numeric value is an UNTUNED starting point; the full set is written to mission.json.
+autonomous_mission:
+  ros__parameters:
+    # Evidence: classes that must be confirmed before returning home (signs are recorded only).
+    required_classes: [orange, tree, vehicle]
+    min_conf: 0.45
+    confirm_frames: 3          # hits (frames, not boxes) needed inside the window
+    confirm_window_s: 3.0      # sim seconds; raised automatically for a slow detector
+    dwell_s: 3.0               # sim seconds spent observing at each heading
+    dwell_extend_s: 1.5
+    dwell_extend_max: 2
+
+    # Candidates (survey of the KNOWN static map)
+    yaw_count: 4               # headings per location (0, 90, 180, 270 degrees)
+    yaw_check_tol_rad: 0.5     # SUCCEEDED but heading off by more than this = YAW_NOT_REACHED
+    yaw_fail_systemic_n: 3
+    robot_radius_m: 0.18       # copied from topic2_nav2_params.yaml; keep in sync by hand
+    safety_margin_m: 0.17
+    spacing_m: 0.9
+    max_locations: 40
+    min_locations: 6
+    validate_k: 8
+    selector: nearest_path     # extension point: register PSO/GA/RL selectors in goal_selection.py
+    candidate_source: lattice
+
+    # Failure handling
+    no_path_systemic_n: 4
+    max_planner_pauses: 3
+    max_attempts_per_candidate: 2
+    max_consecutive_failures: 5
+    mission_budget_s: 2400.0   # WALL seconds
+    max_goals: 0               # 0 = computed from max_locations and yaw_count
+
+    # Readiness deadlines (wall seconds from WAIT_READY entry)
+    ready_timeout_clock_s: 60.0
+    ready_timeout_tf_s: 60.0
+    ready_timeout_map_s: 60.0
+    ready_timeout_pose_s: 60.0
+    ready_timeout_nav_server_s: 90.0
+    ready_timeout_planner_server_s: 90.0
+    ready_timeout_lifecycle_s: 90.0
+    ready_timeout_perception_s: 90.0
+    ready_timeout_sole_owner_s: 30.0
+
+    require_perception: true
+    perception_min_msgs: 5
+    perception_model_check: true
+    yolo_node_name: yolo_node
+    lifecycle_nodes: [map_server, planner_server, controller_server, bt_navigator, behavior_server]
+
+    log_dir: ~/ros2_coursework_ws/mission_logs
+    tick_hz: 5.0

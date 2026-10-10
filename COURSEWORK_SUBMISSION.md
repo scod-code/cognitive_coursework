@@ -10,6 +10,8 @@
 - [ ] NumPy installed correctly: `pip3 install "numpy<2"`
 - [ ] `ros2 launch wall_follower topic2_full_demo.launch.py` starts all components without errors
 - [ ] Robot responds to 2D Goal Pose clicks in RViz
+- [ ] `ros2 launch wall_follower topic2_autonomous.launch.py` runs to `COMPLETE` or `PARTIAL` without clicks; keep `mission_logs/<timestamp>/mission.json` and `events.csv` as evidence
+- [ ] `bash scripts/run_autonomy.sh validate` passes (mission unit tests + launch check)
 - [ ] YOLO detects objects at sectors
 - [ ] Traffic rules adapt speed on sign detection
 - [ ] OctoMap builds 3D occupancy map
@@ -100,6 +102,9 @@ Include screenshots or terminal output showing:
 | File | Purpose | Lines |
 |------|---------|-------|
 | `wall_follower/launch/topic2_full_demo.launch.py` | Single-command demo launch | ~160 |
+| `wall_follower/launch/topic2_autonomous.launch.py` | Demo stack + autonomous mission, no clicks | ~90 |
+| `wall_follower/wall_follower/autonomous_mission.py`, `mission_core.py` | Mission supervisor: readiness, state machine, Nav2 action clients, outcomes | — |
+| `wall_follower/wall_follower/candidate_generator.py`, `goal_selection.py`, `mission_metrics.py` | Safe viewpoints from `/map`, goal choice (extension point for PSO/GA/RL), evidence + logs | — |
 | `wall_follower/launch/topic2_official_system.launch.py` | Gazebo integration + ROS bridge | ~50 |
 | `wall_follower/launch/topic2_nav2.launch.py` | Nav2 stack initialization | ~80 |
 | `wall_follower/wall_follower/topic2_nav2_traffic_rules.py` | Traffic rule logic | ~120 |
