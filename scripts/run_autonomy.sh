@@ -41,7 +41,7 @@ case "$MODE" in
     ros2 launch wall_follower topic2_autonomous.launch.py --show-args > /dev/null
     echo "== executable installed =="
     ros2 pkg executables wall_follower | grep autonomous_mission
-    echo "VALIDATION OK (simulation behaviour is not covered; see verification.md)"
+    echo "VALIDATION OK (simulation behaviour is not covered; see DEMO_INSTRUCTIONS.md, Fully Autonomous Mission)"
     ;;
   *)
     echo "usage: $0 [launch|validate] [launch args]" >&2
