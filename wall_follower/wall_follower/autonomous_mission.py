@@ -25,6 +25,7 @@ from rcl_interfaces.msg import ParameterDescriptor
 from rcl_interfaces.srv import GetParameters
 from rclpy.action import ActionClient
 from rclpy.clock import Clock, ClockType
+from rclpy.impl.rcutils_logger import LoggingSeverity
 from rclpy.node import Node
 from rclpy.qos import DurabilityPolicy, QoSProfile, ReliabilityPolicy
 from std_msgs.msg import String
@@ -122,8 +123,22 @@ class AutonomousMission(Node):
             values[f.name] = self.get_parameter(f.name).value
         return MissionParams.from_dict(values)
 
+    _SEVERITY = {
+        'debug': LoggingSeverity.DEBUG,
+        'info': LoggingSeverity.INFO,
+        'warn': LoggingSeverity.WARN,
+        'warning': LoggingSeverity.WARN,
+        'error': LoggingSeverity.ERROR,
+        'fatal': LoggingSeverity.FATAL,
+    }
+
     def _say(self, level, msg):
-        getattr(self.get_logger(), {'warn': 'warning'}.get(level, level))(msg)
+        # Use the explicit ``log(msg, severity)`` form with a LoggingSeverity enum.
+        # The attribute-style helpers (``get_logger().warning(...)`` etc.) raise
+        # "Logger severity cannot be changed between calls" in rclpy (Humble) when
+        # called at different levels from the same call site, which previously
+        # crashed the node on the first goal failure.
+        self.get_logger().log(str(msg), self._SEVERITY.get(level, LoggingSeverity.INFO))
 
     # ---------------------------------------------------------------- inputs
     def _on_map(self, msg):
