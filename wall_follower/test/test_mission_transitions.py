@@ -310,6 +310,66 @@ def test_stop_hold_is_not_a_stall_but_plain_standstill_is():
     assert rig.port.cancels == 0
 
 
+def test_slow_sign_crawl_no_progress_becomes_stall():
+    # Robot inches forward under a SLOW sign (0.05 m/s) but never makes real net
+    # progress: net displacement stays below no_progress_min_move_m. The crawl
+    # detector must end the goal as STALL before the plain stall window.
+    rig = Rig(stall_window_s=1e6, no_progress_window_s=25.0, no_progress_min_move_m=0.25)
+    rig.to_active_goal()
+    rig.core.on_traffic_rule('SLOW')
+    i = 0
+    for _ in range(120):                      # up to 60 s parked in front of the sign
+        i += 1
+        # Tiny per-tick jitter around the start pose: net displacement never 0.25 m.
+        rig.core.on_pose(0.05 * ((i % 2) * 2 - 1), 0.0, 0.0)
+        rig.step()                            # 0.5 s per step
+        if rig.core.state == State.CANCEL_AND_WAIT:
+            break
+    assert rig.core.totals['stalls'] == 1 and rig.core.totals['timeouts'] == 0
+    assert rig.core.state == State.CANCEL_AND_WAIT
+
+
+def test_slow_sign_hard_cap_times_out_when_crawl_detector_disabled():
+    # Even if the crawl detector never fires (robot keeps resetting net progress),
+    # a prolonged SLOW hold cannot extend the goal past timeout_s + the bounded
+    # max_stop_hold_extension_s: the hard cap ends it as TIMEOUT.
+    rig = Rig(stall_window_s=1e6, no_progress_window_s=1e6, max_stop_hold_extension_s=30.0)
+    gid = rig.to_active_goal()
+    rig.core.on_traffic_rule('SLOW')
+    moved = 0.0
+    for _ in range(1400):                     # well past timeout_s (clamped <= 300) + 30
+        moved += 0.3                          # keep making net progress each tick
+        rig.core.on_pose(moved, 0.0, 0.0)
+        rig.step()
+        if rig.core.state == State.CANCEL_AND_WAIT:
+            break
+    assert rig.core.totals['timeouts'] == 1
+    assert gid is not None
+
+
+def test_slow_sign_failure_suppresses_location_and_continues():
+    # A STALL from a SLOW crawl suppresses the location after max attempts and the
+    # mission proceeds instead of live-locking.
+    rig = Rig(stall_window_s=1e6, no_progress_window_s=25.0, max_attempts_per_candidate=1)
+    rig.to_active_goal()
+    loc = rig.core.goal['loc']
+    rig.core.on_traffic_rule('SLOW')
+    i = 0
+    for _ in range(120):
+        i += 1
+        rig.core.on_pose(0.05 * ((i % 2) * 2 - 1), 0.0, 0.0)
+        rig.step()
+        if rig.core.state == State.CANCEL_AND_WAIT:
+            break
+    gid = rig.core.goal['id']
+    rig.finish_goal(gid, 'CANCELED')
+    assert any(rig.core.suppressed.get(c.cid) == 'STALL'
+               for c in rig.core.candidates if c.location_id == loc)
+    rig.core.on_traffic_rule('NORMAL')
+    rig.until(lambda: rig.port.goals)         # a later goal is attempted
+    assert rig.core.state == State.NAVIGATE
+
+
 def test_yaw_only_motion_is_not_a_stall():
     rig = Rig()
     rig.to_active_goal()

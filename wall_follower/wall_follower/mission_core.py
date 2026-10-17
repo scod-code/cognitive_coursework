@@ -124,6 +124,23 @@ class ParamError(ValueError):
     """An invalid mission parameter."""
 
 
+def _coerce_sign_positions(value) -> List[List[float]]:
+    """Normalise ``sign_positions`` to a list of ``[x, y]`` float pairs.
+
+    Accepts a list of pairs (``[[x, y], ...]``) or a flat even-length list
+    (``[x1, y1, x2, y2, ...]``); the latter is how ROS parameters carry it.
+    """
+    seq = list(value)
+    if seq and all(isinstance(p, (list, tuple)) for p in seq):
+        pairs = [[float(p[0]), float(p[1])] for p in seq]
+    else:
+        flat = [float(v) for v in seq]
+        if len(flat) % 2 != 0:
+            raise ValueError('flat sign_positions must have an even length')
+        pairs = [[flat[i], flat[i + 1]] for i in range(0, len(flat), 2)]
+    return pairs
+
+
 @dataclass
 class MissionParams:
     """All tunables.  Every numeric default is an untuned starting point."""
@@ -145,6 +162,20 @@ class MissionParams:
     spacing_m: float = 0.9
     max_locations: int = 40
     min_locations: int = 6
+    sign_clearance_m: float = 0.8
+    sign_facing_min_dist_m: float = 1.2
+    sign_positions: List[List[float]] = field(default_factory=lambda: [
+        # Sign and poster world/map-frame positions [x, y], read from the cwmaze
+        # world SDF (ntu_robotsim/ntu_robotsim/worlds/cwmaze/cwmazenew.sdf).
+        # map -> odom is identity and the robot spawns at the world origin, so the
+        # Gazebo world positions below double as map-frame positions.
+        [-0.236212, 0.847038],    # Slow Sign
+        [-1.40546, -4.77867],     # Fast Sign
+        [0.244756, 2.58919],      # Stop Sign
+        [4.44671, -4.81541],      # Trees Picture (poster)
+        [7.98231, -4.78763],      # Cars Picture (poster)
+        [-4.74652, -2.61838],     # Oranges (poster)
+    ])
     validate_k: int = 8
     no_path_systemic_n: int = 4
     max_planner_pauses: int = 3
@@ -156,6 +187,9 @@ class MissionParams:
     stall_min_move_m: float = 0.10
     stop_hold_grace_s: float = 4.0
     max_stop_hold_extension_s: float = 60.0
+    no_progress_window_s: float = 25.0
+    no_progress_min_move_m: float = 0.25
+    slow_speed_mps: float = 0.06
     plan_timeout_s: float = 5.0
     cancel_timeout_s: float = 5.0
     cancel_retries: int = 2
@@ -216,6 +250,13 @@ class MissionParams:
             'clock_stall_s': self.clock_stall_s > 0,
             'paused_timeout_s': self.paused_timeout_s > 0,
             'lifecycle_nodes': bool(self.lifecycle_nodes),
+            'no_progress_window_s': self.no_progress_window_s > 0,
+            'no_progress_min_move_m': self.no_progress_min_move_m > 0,
+            'slow_speed_mps': self.slow_speed_mps > 0,
+            'sign_clearance_m': self.sign_clearance_m >= 0,
+            'sign_facing_min_dist_m': self.sign_facing_min_dist_m >= 0,
+            'sign_positions': all(
+                isinstance(p, (list, tuple)) and len(p) == 2 for p in self.sign_positions),
         }
         for name, ok in checks.items():
             if not ok:
@@ -245,6 +286,8 @@ class MissionParams:
                     v = bool(v)
                 elif f.type is str:
                     v = str(v)
+                elif f.name == 'sign_positions':
+                    v = _coerce_sign_positions(v)
                 else:
                     v = list(v)
             except (TypeError, ValueError) as exc:
@@ -466,6 +509,8 @@ class MissionCore:
         self.goal['start_sim'] = s
         self.goal['ref_pose'] = self.pose
         self.goal['ref_sim'] = s
+        self.goal['prog_pose'] = self.pose
+        self.goal['prog_sim'] = s
         self.log.event(self.now_sim(), 'GOAL_ACCEPTED', self.state.value, cid=self.goal['cid'])
         if self._pending_cancel:
             self._pending_cancel = False
@@ -599,6 +644,7 @@ class MissionCore:
         if self.goal:
             self.goal['start_sim'] = s
             self.goal['ref_sim'] = s
+            self.goal['prog_sim'] = s
         self._obs_start = s
 
     def _monitor_inputs(self) -> bool:
@@ -640,7 +686,10 @@ class MissionCore:
                     robot_radius_m=self.p.robot_radius_m,
                     safety_margin_m=self.p.safety_margin_m, spacing_m=self.p.spacing_m,
                     max_locations=self.p.max_locations, min_locations=self.p.min_locations,
-                    yaw_count=self.p.yaw_count, coverage_min=self.p.coverage_min)
+                    yaw_count=self.p.yaw_count, coverage_min=self.p.coverage_min,
+                    sign_positions=self.p.sign_positions,
+                    sign_clearance_m=self.p.sign_clearance_m,
+                    sign_facing_min_dist_m=self.p.sign_facing_min_dist_m)
             except cg.NoSafeStartError as exc:
                 reason = (Reason.START_OUTSIDE_MAP if 'outside' in str(exc)
                           else Reason.NO_SAFE_START)
@@ -763,7 +812,8 @@ class MissionCore:
         self.goal = {'id': self._goal_seq, 'kind': kind, 'cid': cid, 'loc': loc,
                      'x': x, 'y': y, 'yaw': yaw, 'timeout_s': timeout_s,
                      'start_sim': self.now_sim(), 'ref_pose': self.pose,
-                     'ref_sim': self.now_sim(), 'stop_ext': 0.0}
+                     'ref_sim': self.now_sim(), 'stop_ext': 0.0,
+                     'prog_pose': self.pose, 'prog_sim': self.now_sim()}
         self.nav_state = 'SENDING'
         self._send_wall = self.now_wall()
         self._sending_expired_wall = None
@@ -914,16 +964,43 @@ class MissionCore:
         stop_active = self.traffic_rule == 'STOP' or (
             self._stop_exit_sim is not None
             and s - self._stop_exit_sim < self.p.stop_hold_grace_s)
-        if stop_active:
-            if self._last_tick_sim is not None:
-                g['stop_ext'] = min(self.p.max_stop_hold_extension_s,
-                                    g['stop_ext'] + max(0.0, s - self._last_tick_sim))
-            g['ref_pose'], g['ref_sim'] = self.pose, s
+        # A speed-limit hold (STOP crawl, or SLOW while the sign is in view) buys the
+        # goal extra time, but only a bounded allowance: ``stop_ext`` is capped at
+        # ``max_stop_hold_extension_s`` so a sign can never extend a goal forever.
+        slow_hold = self.traffic_rule == 'SLOW'
+        speed_hold = stop_active or slow_hold
+        if speed_hold and self._last_tick_sim is not None:
+            g['stop_ext'] = min(self.p.max_stop_hold_extension_s,
+                                g['stop_ext'] + max(0.0, s - self._last_tick_sim))
+        # Hard per-goal cap: elapsed sim time minus the bounded hold allowance. Once
+        # the cap is hit the goal fails TIMEOUT even if a sign is still being seen.
         if s - g['start_sim'] - g['stop_ext'] > g['timeout_s']:
             self.totals['timeouts'] += 1
             self._fail_goal('TIMEOUT')
             return
-        if stop_active or self.pose is None or g['ref_pose'] is None:
+        if self.pose is None:
+            return
+        # No-progress (crawl) detector: if the robot's net displacement from the
+        # last progress reference stays below ``no_progress_min_move_m`` for
+        # ``no_progress_window_s`` while under a speed-limit hold, it is live-locked
+        # in front of a sign even though tiny per-tick motion keeps occurring.  The
+        # reference is advanced only on real net progress, so a slow crawl never
+        # resets it; the cumulative hold is still bounded by ``stop_ext`` above.
+        if g['prog_pose'] is None:
+            g['prog_pose'], g['prog_sim'] = self.pose, s
+        net_moved = math.hypot(self.pose[0] - g['prog_pose'][0],
+                               self.pose[1] - g['prog_pose'][1])
+        if net_moved >= self.p.no_progress_min_move_m:
+            g['prog_pose'], g['prog_sim'] = self.pose, s
+        elif slow_hold and s - g['prog_sim'] > self.p.no_progress_window_s:
+            self.totals['stalls'] += 1
+            self._fail_goal('STALL')
+            return
+        # Standstill stall detector (non-sign case): a STOP-sign crawl is exempt so a
+        # brief, deliberate pause is tolerated; genuine standstill still trips it.
+        if stop_active or g['ref_pose'] is None:
+            if stop_active:
+                g['ref_pose'], g['ref_sim'] = self.pose, s
             return
         moved = math.hypot(self.pose[0] - g['ref_pose'][0], self.pose[1] - g['ref_pose'][1])
         turned = abs(angle_diff(self.pose[2], g['ref_pose'][2]))

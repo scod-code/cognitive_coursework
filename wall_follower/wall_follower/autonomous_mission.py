@@ -114,6 +114,10 @@ class AutonomousMission(Node):
         values = {}
         for f in dataclasses.fields(MissionParams):
             default = getattr(defaults, f.name)
+            if f.name == 'sign_positions':
+                # ROS parameters cannot hold a list of lists; carry it as a flat
+                # [x1, y1, x2, y2, ...] list and let MissionParams re-pair it.
+                default = [float(v) for pair in default for v in pair]
             self.declare_parameter(f.name, default, desc)
             values[f.name] = self.get_parameter(f.name).value
         return MissionParams.from_dict(values)

@@ -24,6 +24,21 @@ autonomous_mission:
     selector: nearest_path     # extension point: register PSO/GA/RL selectors in goal_selection.py
     candidate_source: lattice
 
+    # Sign avoidance (UNTUNED). Keep viewpoints away from traffic signs/posters so the
+    # robot never parks facing a slow/stop sign and live-locks on the speed limit.
+    sign_clearance_m: 0.8          # drop any viewpoint within this radius of a sign
+    sign_facing_min_dist_m: 1.2    # drop any heading aimed at a sign closer than this
+    # Sign/poster positions [x, y] (map frame = Gazebo world frame; map->odom identity,
+    # robot spawns at the world origin). Read from the cwmaze world SDF:
+    # ntu_robotsim/ntu_robotsim/worlds/cwmaze/cwmazenew.sdf. Order: slow, fast, stop,
+    # trees poster, cars poster, oranges poster.
+    sign_positions: [-0.236212, 0.847038,
+                     -1.40546, -4.77867,
+                     0.244756, 2.58919,
+                     4.44671, -4.81541,
+                     7.98231, -4.78763,
+                     -4.74652, -2.61838]
+
     # Failure handling
     no_path_systemic_n: 4
     max_planner_pauses: 3
@@ -31,6 +46,18 @@ autonomous_mission:
     max_consecutive_failures: 5
     mission_budget_s: 2400.0   # WALL seconds
     max_goals: 0               # 0 = computed from max_locations and yaw_count
+
+    # Per-goal timeout / stall / crawl backstops (SIM seconds; all UNTUNED). A SLOW or
+    # STOP sign slows the robot; these stop a goal live-locking in front of a sign.
+    timeout_base_s: 30.0
+    timeout_min_speed_mps: 0.08
+    stall_window_s: 45.0           # standstill window (plain stall)
+    stall_min_move_m: 0.10
+    stop_hold_grace_s: 4.0         # tolerate a brief STOP-sign pause
+    max_stop_hold_extension_s: 60.0  # hard cap on total hold time a sign can add to a goal
+    no_progress_window_s: 25.0     # crawl window: SLOW + tiny net motion -> STALL
+    no_progress_min_move_m: 0.25   # net displacement that counts as real progress
+    slow_speed_mps: 0.06           # at/below this = crawling (slow-sign limit is 0.05)
 
     # Readiness deadlines (wall seconds from WAIT_READY entry)
     ready_timeout_clock_s: 60.0

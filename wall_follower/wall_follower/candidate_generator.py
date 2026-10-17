@@ -180,19 +180,44 @@ def sample_viewpoints(mask: np.ndarray, resolution: float, spacing_m: float,
     return kept
 
 
+def _facing_sign(x: float, y: float, yaw: float, sign_positions, min_dist_m: float) -> bool:
+    """Return True if heading ``yaw`` points the camera at a sign closer than ``min_dist_m``.
+
+    A sign counts as faced when it lies within ``min_dist_m`` and within a +/-45 degree
+    cone of the heading (the forward-facing camera's rough field of view).
+    """
+    if min_dist_m <= 0.0:
+        return False
+    for sx, sy in sign_positions:
+        dx, dy = sx - x, sy - y
+        dist = math.hypot(dx, dy)
+        if dist > min_dist_m or dist < 1e-6:
+            continue
+        bearing = math.atan2(dy, dx)
+        if abs(math.atan2(math.sin(bearing - yaw), math.cos(bearing - yaw))) <= math.pi / 4:
+            return True
+    return False
+
+
 def generate_candidates(spec: GridSpec, flat_data, robot_xy: Tuple[float, float], *,
                         robot_radius_m: float = 0.18, safety_margin_m: float = 0.17,
                         spacing_m: float = 0.9, max_locations: int = 40,
                         min_locations: int = 6, yaw_count: int = 4,
                         coverage_min: float = 0.95, snap_radius_m: float = 1.0,
-                        free_thresh: int = 25):
+                        free_thresh: int = 25, sign_positions=None,
+                        sign_clearance_m: float = 0.0,
+                        sign_facing_min_dist_m: float = 0.0):
     """
     Build safe, robot-connected observation poses.
 
     Returns ``(candidates, info)``.  Raises ``MapError``, ``NoSafeStartError`` or
     ``NoCandidatesError``.  Poses sit at least ``clearance`` from any wall or unknown
     cell, in the same free component as the robot, with ``yaw_count`` headings each.
+    Locations within ``sign_clearance_m`` of any ``sign_positions`` entry are excluded,
+    and headings that point the camera at a sign closer than ``sign_facing_min_dist_m``
+    are dropped, so the robot never parks facing a traffic sign.
     """
+    sign_positions = list(sign_positions or [])
     data = grid_array(spec, flat_data)
     free = free_mask(data, free_thresh)
     cell = world_to_grid(spec, robot_xy[0], robot_xy[1])
@@ -222,12 +247,32 @@ def generate_candidates(spec: GridSpec, flat_data, robot_xy: Tuple[float, float]
     if not cells:
         raise NoCandidatesError('no observation locations found')
     cands: List[Candidate] = []
-    for loc_id, (c, r) in enumerate(cells):
+    loc_id = 0
+    excluded_locations = 0
+    dropped_yaws = 0
+    for (c, r) in cells:
         x, y = grid_to_world(spec, c, r)
+        if sign_clearance_m > 0.0 and any(
+                math.hypot(sx - x, sy - y) <= sign_clearance_m for sx, sy in sign_positions):
+            excluded_locations += 1
+            continue
+        poses = []
         for k in range(max(1, yaw_count)):
             yaw = math.atan2(math.sin(2 * math.pi * k / max(1, yaw_count)),
                              math.cos(2 * math.pi * k / max(1, yaw_count)))
+            if _facing_sign(x, y, yaw, sign_positions, sign_facing_min_dist_m):
+                dropped_yaws += 1
+                continue
+            poses.append(yaw)
+        if not poses:
+            excluded_locations += 1
+            continue
+        for yaw in poses:
             cands.append(Candidate(cid=len(cands), location_id=loc_id, x=x, y=y, yaw=yaw))
-    info = {'clearance_m': clearance, 'locations': len(cells), 'poses': len(cands),
-            'min_locations_met': len(cells) >= min_locations}
+        loc_id += 1
+    if not cands:
+        raise NoCandidatesError('all observation locations excluded near signs')
+    info = {'clearance_m': clearance, 'locations': loc_id, 'poses': len(cands),
+            'min_locations_met': loc_id >= min_locations,
+            'sign_excluded_locations': excluded_locations, 'sign_dropped_yaws': dropped_yaws}
     return cands, info

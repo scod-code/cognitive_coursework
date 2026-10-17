@@ -136,3 +136,43 @@ def test_large_map_is_fast_enough():
     start = time.time()
     cg.generate_candidates(spec, data.flatten(), (0.0, 0.0))
     assert time.time() - start < 5.0
+
+
+def test_locations_near_signs_are_excluded():
+    spec, data = room()
+    robot = (0.0, 0.0)
+    base, _ = cg.generate_candidates(spec, data.flatten(), robot, min_locations=1)
+    # Put a sign on top of one generated location and exclude a radius around it.
+    target = next(c for c in base)
+    cands, info = cg.generate_candidates(
+        spec, data.flatten(), robot, min_locations=1,
+        sign_positions=[[target.x, target.y]], sign_clearance_m=0.8)
+    assert info['sign_excluded_locations'] >= 1
+    for c in cands:
+        assert math.hypot(c.x - target.x, c.y - target.y) > 0.8
+
+
+def test_yaw_pointing_at_a_sign_is_dropped():
+    spec, data = room()
+    robot = (0.0, 0.0)
+    # Place a sign just east of the map centre; any location west of it with a
+    # near-zero (east-facing) heading within 1.2 m must drop that heading.
+    sign = [0.4, 0.0]
+    cands, info = cg.generate_candidates(
+        spec, data.flatten(), robot, min_locations=1,
+        sign_positions=[sign], sign_clearance_m=0.3, sign_facing_min_dist_m=1.2)
+    assert info['sign_dropped_yaws'] >= 1
+    for c in cands:
+        dx, dy = sign[0] - c.x, sign[1] - c.y
+        dist = math.hypot(dx, dy)
+        if 1e-6 < dist <= 1.2:
+            bearing = math.atan2(dy, dx)
+            off = abs(math.atan2(math.sin(bearing - c.yaw), math.cos(bearing - c.yaw)))
+            assert off > math.pi / 4
+
+
+def test_no_signs_keeps_all_yaws():
+    spec, data = room()
+    cands, info = cg.generate_candidates(spec, data.flatten(), (0.0, 0.0), min_locations=1)
+    assert info['sign_excluded_locations'] == 0 and info['sign_dropped_yaws'] == 0
+    assert len({c.location_id for c in cands}) * 4 == len(cands)
