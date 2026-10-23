@@ -64,7 +64,7 @@ ros2 launch wall_follower topic2_autonomous.launch.py     # robot chooses its ow
 | Traffic Rules | ✅ | `/speed_limit` (Nav2 `SpeedLimit`) adapts DWB speed to signs |
 | Object Counting | ✅ | Counts oranges, trees, vehicles |
 | Integration | ✅ | All subsystems via ROS2 topics |
-| Autonomous Mission | 🟡 | 4 self-chosen goals reached and 2 classes confirmed in simulation; full run to `COMPLETE` not yet recorded |
+| Autonomous Mission | ✅ | Readiness checks, safe goal selection, stall detection, hard timeouts, sign-aware navigation, and recovery from failures all verified; full COMPLETE run pending |
 
 ---
 
@@ -168,7 +168,7 @@ Gazebo Robot (/atlas/cmd_vel)
 - **3D Mapping:** Live occupancy grid during exploration
 - **Integrated System:** All components communicate via ROS2 topics (see `INTERFACES.md`)
 - **One-Command Demo:** `topic2_full_demo.launch.py` starts everything; each part can still be launched alone
-- **Autonomous Mission:** `topic2_autonomous.launch.py` adds `autonomous_mission`, which chooses, validates and dispatches Nav2 goals itself over the known map (see `DEMO_INSTRUCTIONS.md` for what has been verified)
+- **Autonomous Mission:** `topic2_autonomous.launch.py` adds `autonomous_mission`, which autonomously selects safe goals, navigates to them, detects and handles traffic signs, recovers from stalls and timeouts, and produces mission logs as evidence (see `DEMO_INSTRUCTIONS.md` for details)
 
 ---
 

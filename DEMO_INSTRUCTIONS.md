@@ -61,6 +61,32 @@ ros2 pkg list | grep -E "wall_follower|yolo_ros|yolo_msgs|ntu_robotsim"
 ```
 All four packages must be listed.
 
+### Ubuntu/WSL verification status (19 October 2026)
+
+The core project has been verified in **Ubuntu 22.04.5 on WSL 2** with ROS 2 Humble,
+Python 3.10, `colcon` and SciPy installed:
+
+```bash
+# From the workspace root; this tests the ROS-free mission logic.
+export PYTHONPATH="$PWD/wall_follower"
+python3 -m pytest \
+  wall_follower/test/test_mission_transitions.py \
+  wall_follower/test/test_goal_selection.py \
+  wall_follower/test/test_candidate_generator.py \
+  wall_follower/test/test_mission_metrics.py -q
+# Result: 103 passed (2.60 s)
+```
+
+The three core ROS packages (`yolo_msgs`, `yolo_ros`, and `wall_follower`) also built
+successfully with `colcon` in that environment (23.8 s). The full Gazebo demo was not
+started during this verification because `ntu_robotsim` was not checked out/installed in
+that WSL workspace. Clone the module-provided package alongside this repository, then run
+the four-package build command above before launching the demo.
+
+The test run emitted one non-failing SciPy warning: the installed SciPy 1.8.0 expects
+NumPy `<1.25`, while the environment had NumPy 1.26.4. The tests passed, but align those
+versions before using this environment as a warning-free CI baseline.
+
 ---
 
 ## 🚀 Running the Complete System (One Command)
@@ -154,8 +180,14 @@ passed; 40 locations / 160 poses generated; 4 consecutive autonomously chosen go
 `SUCCEEDED` with no human input; `slowsign` and `orange` confirmed; a 5th goal (2.3 m
 across the maze) was still in progress when the test timeout stopped the launch.
 Logs: `evidence/autonomy_run_20261010/`.
-**Not yet verified:** a full run to `COMPLETE` (tree and vehicle) and return home. Allow
-15–20 min of wall time on WSL, where the simulator runs slower than real time.
+
+**Latest improvements (17 Oct 2026):**
+- **Sign-livelock prevention:** Viewpoints within 0.8 m of signs or facing signs < 1.2 m away are excluded from goal selection (extracted from Gazebo SDF)
+- **Crawl-stall detection:** Goals with < 0.25 m displacement over 25 s are marked `STALL` and abandoned; mission continues to next goal
+- **Hard timeout cap:** Base timeout plus bounded speed-hold extension prevents indefinite hangs
+- **Logging robustness:** Fixed dynamic severity changes (crashes in Humble); switched to static config
+
+**Not yet verified:** a full run to `COMPLETE` (orange, tree, vehicle confirmed) and return home. Allow 15–20 min of wall time on WSL, where the simulator runs slower than real time.
 
 Scope: this is autonomous **surveying of a known, pre-built map**, not map-free
 exploration. PSO / evolutionary / RL selectors are not implemented; `goal_selection.py`

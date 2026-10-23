@@ -61,7 +61,7 @@ Your system implements:
 ## 📝 What to Write in Your Report
 
 ### Executive Summary (1 paragraph)
-"The system integrates simulation (Gazebo), perception (YOLO), reasoning (traffic rules), navigation (Nav2), and mapping (OctoMap) in a unified ROS2 architecture. The robot autonomously navigates to user-clicked goals, detects traffic signs to adapt speed, counts objects to confirm sector location, and builds a live 3D map of the environment."
+"The system integrates simulation (Gazebo), perception (YOLO), reasoning (traffic rules), navigation (Nav2), and mapping (OctoMap) in a unified ROS2 architecture. The robot autonomously navigates to user-clicked goals, detects traffic signs to adapt speed, counts objects to confirm sector location, and builds a live 3D map of the environment. An optional autonomous mission layer (`autonomous_mission.py`) selects safe goals from the known map, handles traffic signs without stalling, detects and recovers from navigation failures, and produces mission logs as evidence."
 
 ### Architecture Section
 Reference the system architecture above. Explain each layer.
@@ -72,6 +72,14 @@ Reference the system architecture above. Explain each layer.
 - **Traffic Rules:** Speed mapping (FAST=0.28, SLOW=0.05, STOP=0.01, NORMAL=0.18)
 - **Mapping:** OctoMap processes point clouds from RGB-D camera
 - **Integration:** ROS2 topics connect all subsystems
+- **Autonomous Mission (Optional):** `autonomous_mission.py` + `mission_core.py` implement a state machine that:
+  - Validates readiness (simulator clock, TF chain, `/map`, Nav2 servers, YOLO model)
+  - Generates safe observation poses from the static `/map` (footprint-aware, sign-exclusion aware)
+  - Selects goals by shortest planned path length
+  - Sends `navigate_to_pose` actions with timeouts and cancellation on stall detection
+  - Dwells and confirms object detections from YOLO
+  - Recovers from failures by marking poses as invalid and trying next goal
+  - Logs all transitions to `mission_logs/<timestamp>/events.csv` and outcome to `mission.json`
 
 ### Evidence
 Include screenshots or terminal output showing:
@@ -154,15 +162,22 @@ Ensure these are in your repository:
 wall_follower/
 ├── launch/
 │   ├── topic2_full_demo.launch.py           ✅
+│   ├── topic2_autonomous.launch.py          ✅
 │   ├── topic2_official_system.launch.py     ✅
 │   ├── topic2_nav2.launch.py                ✅
 │   └── topic2_octomap_with_nav2.launch.py   ✅
 ├── wall_follower/
+│   ├── autonomous_mission.py                ✅
+│   ├── mission_core.py                      ✅
+│   ├── candidate_generator.py               ✅
+│   ├── goal_selection.py                    ✅
+│   ├── mission_metrics.py                   ✅
 │   ├── topic2_nav2_tf_helper.py             ✅
 │   ├── topic2_nav2_traffic_rules.py         ✅
 │   ├── topic2_yolo_counter.py               ✅
 │   └── [other nodes]
 ├── config/
+│   ├── autonomous_mission.yaml              ✅
 │   └── topic2_nav2_params.yaml              ✅
 ├── maps/
 │   ├── topic2_nav2_clean_map.yaml           ✅
@@ -181,7 +196,7 @@ When ready to submit:
 ```bash
 cd ~/ros2_coursework_ws
 git add -A
-git commit -m "Topic 2 submission: integrated navigation, perception, traffic rules, and 3D mapping"
+git commit -m "Topic 2 submission: integrated navigation, perception, traffic rules, 3D mapping, and autonomous mission with safety-aware goal selection"
 git push origin merge/integrate-person-a
 ```
 
